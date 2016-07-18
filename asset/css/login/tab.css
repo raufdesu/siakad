@@ -1,0 +1,104 @@
+/* Untuk Tab Awal */
+.basictab{
+padding: 8px 20px;
+margin: 20px 350px 0px 350px;
+font: bold 12px Arial;
+text-transform:uppercase;
+border-bottom: 1px solid #999;
+list-style-type: none;
+}
+
+.basictab li{
+display: inline;
+margin: 0;
+
+}
+
+.basictab li a{
+text-decoration: none;
+padding: 8px 10px;
+border: 1px solid #999;
+border-bottom: none;
+background-color: #cdebd8;
+color: #000;
+/*background: transparent url("../img/tabs.gif") repeat-x; */
+}
+
+*html .basictab li a{
+background-color:#FFF;
+/*background: #D9D7CC url("../img/tabs.gif") repeat-x 0px 3px; */
+}
+
+.basictab li a:visited{
+color: #2d2b2b;
+}
+
+.basictab li a:hover{
+background-image:none;
+background-color: #999;
+color: white;
+}
+
+.basictab li a:active{
+color: black;
+}
+
+
+.basictab li a.selected{ 
+position: relative;
+top: 1px;
+}
+
+.basictab li a.selected{ 
+background-color: #FFF;
+/*background: transparent url("../img/shadeactive.gif") repeat-x;*/
+border-bottom-color: white;
+}
+
+*html .basictab li a.selected {
+/*background: transparent url("../img/shadeactive.gif") repeat 2px 3px;*/
+	background-color:#EFEFEF;
+}
+
+.basictab li a.selected:hover{ 
+text-decoration: none;
+color: black;
+}
+
+.tabcontentstyle{ 
+width: 450px;
+margin-bottom: 1em;
+padding: 10px;
+}
+
+/* Untuk Halaman Tab*/
+.tabcontent{
+	margin: 0 350px;
+	border: 1px solid #999; 
+	display:none;
+	background-color:#FFF;
+	/*background: transparent url('../img/grd/bg_header.png');*/
+	padding: 10px;
+	border-top: none;
+	min-height:150px;
+}
+
+/* TAMBAHAN SETTINGAN TAMPILAN LOGIN */
+/* Start 1 */
+	#alert{width:100%;color:red;}
+	#title{padding:10px 10px 0px 10px;text-align:center;font-size:16px;}
+	#form{text-align:center;padding-top:15px;}
+	#form table{
+		text-align:center; position:relative; font-weight:bold; width:100%
+	}
+	#form td{ width:1%; }
+	#form td p{ text-align:right;	}
+	#inUsername{border:1px solid #cdebd8;font-size:14px;}
+	#password{border:1px solid #cdebd8;font-size:14px;}
+	#inButton{color:#FFF;font-weight:bold;background-color:#3f4043;padding:5px 10px 5px 10px;}
+	#inCancel{font-size:14px;padding-left:20px;font-weight:bold;}
+	#comment{font-size:13px;position:relative;border-left:1px solid silver;float:left;width:330px;
+		min-height:120px;margin-left:20px;padding:10px 10px 10px 40px;}
+	#fieldset{border:1px solid #EFEFEF;padding:10px 10px 10px 10px;margin:10px 10px 10px 10px;}
+	#fieldset legend{padding:5px 10px 5px 10px;border:1px solid #EFEFEF;text-align:left;font-weight:bold;font-size:13px;}
+/* End 1 */

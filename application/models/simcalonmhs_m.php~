@@ -1,0 +1,34 @@
+<?php
+	Class Simcalonmhs_m extends Model{
+		function __construct(){
+			parent::model();
+			$host = "localhost"; $user = "root"; $pass= ""; $dbase = "pmb";
+			$conn = mysql_connect($host, $user, $pass);
+			mysql_select_db($dbase, $conn);
+		}
+		function get_all($limit1,$limit2=''){
+			$data = array();
+			$sql = "SELECT * FROM siswa WHERE thajaran LIKE '2011%' ORDER BY no_daftar DESC";
+			$sql .= " LIMIT ".$limit1;
+			if($limit2){
+				$sql .= ",".$limit2;
+			}
+			return $sql;
+		}
+		function count_all(){
+			$sql = "SELECT COUNT(*) FROM siswa WHERE thajaran LIKE '2011%'";
+			$que = mysql_query($sql);
+			$d = mysql_fetch_array($que);
+			if($d[0]){
+				return $d[0];
+			}else{
+				return 0;
+			}
+			mysql_close();
+		}
+		function delete($id){
+			$sql = "DELETE FROM siswa WHERE no_daftar = ".$id;
+			mysql_query($sql);
+		}
+	}
+?>

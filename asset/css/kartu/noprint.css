@@ -1,0 +1,26 @@
+.noprint{ display:none; }
+.top-bar-adm{ display:none; }
+.select-bar{ display:none; }
+#left-column{ display:none; }
+#header{ display:none; }
+.print-only{ display:block; }
+.page-break{
+	display:block; page-break-before:always;
+}
+.custome{
+	border-left:1px solid #0c2469;
+	border-right:1px solid #0c2469;
+}
+.custome th{
+	padding:5px 5px 5px 5px;
+	border-left:1px solid #0c2469;
+	border-top:1px solid #0c2469;
+	border-bottom:1px solid #0c2469;
+	border-collapse:collapse;
+}
+.custome td{
+	padding:5px 5px 5px 5px;
+	border-left:1px solid #0c2469;
+	border-top:1px solid #0c2469;
+	border-bottom:1px solid #0c2469;
+}
