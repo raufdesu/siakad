@@ -98,5 +98,40 @@ Class Simambilmk extends Controller{
 		$data['browse_matrikulasi'] = $this->simtranskrip_m->get_onetranskrip($data['nim']);
 		$this->load->view('mhs/simambilmk/ttranskrip_v', $data);
 	}
+	
+	function cetak_transkrip(){
+		$this->load->model('simkrs_m');
+		$nim = $this->session->userdata('sesi_user_mhs');
+		$data['nim'] = $nim;
+		$set = $this->simsetting_m->select_active();
+		if(!$this->session->userdata('sesi_thajarankhs')){
+			$data['thakad'] = $set['thajaran'];
+		}else{
+			$data['thakad'] = $this->session->userdata('sesi_thajarankhs');
+		}
+		$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $data['thakad']);
+		$data['browse_thajar'] = $this->simsetting_m->select();
+		$data['browse_transkrip'] = $this->simambilmk_m->get_transkrip_bythajaran($data['nim'], $data['thakad']);
+		$dpa = $this->simdosenwali_m->get_namakaprodi($nim, $data['thakad']);
+		$cek = $this->simambilmk_m->get_idkrs_bynim($nim, $data['thakad']);
+		$data['cek_khs'] = $cek['idkrsnya'];
+		$data['nama_kaprodi'] = $dpa['nama'];
+
+		/*
+			$data['max_pengambilan_sks'] = $this->simkrs_m->res_sks($nim, $data['thakad']);
+		
+			$data['ipkabeh'] = $this->simkrs_m->get_ipk($nim);
+			$data['sksini'] = $this->simkrs_m->get_total($nim, $data['thakad'])->jumsks;
+			$data['skskabeh'] = $this->simkrs_m->get_total($nim)->jumsks;
+			$data['mutuini'] = $this->simkrs_m->get_total($nim, $data['thakad'])->mutu;
+			$data['mutukabeh'] = $this->simkrs_m->get_total($nim)->mutu;
+		*/
+		
+		if(!$data['cek_khs']){
+			echo "Anda tidak mempunyai kartu hasil studi pada tahun ajaran ".$data['thakad'];
+		}else{
+			$this->load->view('mhs/laporan/ctranskrip_v', $data);
+		}
+	}
 }
 ?>

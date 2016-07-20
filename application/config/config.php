@@ -13,7 +13,7 @@
 */
 /* $config['base_url']	= "http://localhost/simak/"; */
 /* $config['base_url']	= "http://localhost/simak/"; */
-$config['base_url']	= "http://".$_SERVER['SERVER_NAME']."/siakadmataram";
+$config['base_url']	= "http://".$_SERVER['SERVER_NAME']."/siakad";
 
 /*
 |--------------------------------------------------------------------------

@@ -38,7 +38,10 @@
 		$ipk = substr($ipk, 0, 4);
 	} */
 ?>
-<div id='noprint' style="margin-bottom:10px; float:right;"><a href='#' id="noprint" class='print-button' onclick='print()'>cetak</a></div>
+<div id="noprint" style="margin-bottom:10px;float:right;">
+	<!--<a href='javascript:void(0)' style="float:left;margin-top:-4px;border:1px solid #e8e8e8;padding:4px;" class='button' onclick='load_into_box("mhs/simambilmk/detailkhs")'>Detail Nilai</a>-->
+	<a href='javascript:void(0)' class='print-button' onclick='show("mhs/simambilmk/cetak_transkrip", "#center-column")'>Preview Tranksrip</a>
+</div>
 <h3>Hasil Nilai Keseluruhan</h3>
 <div class="top-bar">
 </div>
