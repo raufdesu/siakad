@@ -54,7 +54,7 @@
 			<th width='65'>Angkatan</th>
 			<?php if($this->session->userdata('sesi_user') == 'admin' || $this->session->userdata('sesi_user') == 'keuangan'){ ?>
 			<!--<th width="85">Tugas</th>-->
-			<th width='90'>Status</th>
+			<th width='110'>Status</th>
 			<th class="last" width='35'><center>#</center></th>
 			<?php } ?>
 		</tr>
@@ -80,11 +80,13 @@
 				if($bm->status == 'Cuti') $cuti = 'active'; else $cuti = '';
 				if($bm->status == 'Non Aktif') $non_aktif = 'active'; else $non_aktif = '';
 				if($bm->status == 'Keluar') $keluar = 'active'; else $keluar = '';
+				if($bm->status == '-') $normal = 'active'; else $normal = '';
 			?>
 			<a href="javascript:void(0)" class='ring <?php echo $aktif?>' <?php if(!$aktif == 'active'){ ?> onclick='tanya("<?php echo $bm->nim?>","Aktif")' <?php } ?>>A</a>
 			<a href="javascript:void(0)" class='ring <?php echo $cuti?>' <?php if(!$cuti == 'active'){ ?> onclick='tanya("<?php echo $bm->nim?>","Cuti")' <?php } ?>>C</a>
 			<a href="javascript:void(0)" class='ring <?php echo $non_aktif?>' <?php if(!$non_aktif == 'active'){ ?> onclick='tanya("<?php echo $bm->nim?>","Non Aktif")' <?php } ?>>N</a>
 			<a href="javascript:void(0)" class='ring <?php echo $keluar?>' <?php if(!$keluar == 'active'){ ?> onclick='tanya("<?php echo $bm->nim?>","Keluar")' <?php } ?>>K</a>
+			<a href="javascript:void(0)" class='ring <?php echo $normal?>' <?php if(!$normal == 'active'){ ?> onclick='tanya("<?php echo $bm->nim?>","-")' <?php } ?>>-</a>
 		</td>
 		<td class="last" style="text-align:center">
 			<a href="javascript:void(0)" onclick='return tanyahapus("<?php echo $bm->nim?>", "<?php echo $bm->thajaran?>")'>
