@@ -99,7 +99,7 @@
 			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
 			$data['nama_dpa'] = $dpa['nama'];
 			$this->load->view('prodi/laporan/ctranskrip_s', $data);
-	}
+		}
 		function khs(){
 			$data['title'] = 'Kartu Hasil Studi';
 			$data['browse_thajar'] = $this->simsetting_m->select();

@@ -108,3 +108,6 @@
 		</tr>
 	</table>
 </div>
+<div id="noprint" style="margin-bottom:10px;float:right;"><br><br>
+ <a href='javascript:void(0)' class='print-button' onclick='show("admin/nilai/cetak_transkrip", "#center-column")'>Preview Tranksrip</a>
+  </div>
