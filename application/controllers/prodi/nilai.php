@@ -84,6 +84,22 @@
 				redirect(base_url());
 			}
 		}
+		function cetak_transkrip(){
+			$nim = $this->session->userdata('sesi_nimtranskrip');
+			$data['cetak_transkrip'] = $this->simambilmk_m->get_transkrip($nim);
+			$data['cetak_matrikulasi'] = $this->simmatrikulasi_m->get_nolimit($nim);
+			if($this->session->userdata('sesi_khsthajaran') == false){
+				$set = $this->simsetting_m->select_active();
+				$data['thakad'] = $set['thajaran'];
+			}else{
+				$data['thakad'] = $this->session->userdata('sesi_khsthajaran');
+			}
+			$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $data['thakad']);
+			$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
+			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
+			$data['nama_dpa'] = $dpa['nama'];
+			$this->load->view('prodi/laporan/ctranskrip_s', $data);
+	}
 		function khs(){
 			$data['title'] = 'Kartu Hasil Studi';
 			$data['browse_thajar'] = $this->simsetting_m->select();

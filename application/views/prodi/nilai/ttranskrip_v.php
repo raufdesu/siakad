@@ -107,3 +107,9 @@
 		</tr>
 	</table>
 </div>
+
+
+<div id="noprint" style="margin-bottom:10px;float:right;"><br><br>
+	<!--<a href='javascript:void(0)' style="float:left;margin-top:-4px;border:1px solid #e8e8e8;padding:4px;" class='button' onclick='load_into_box("mhs/simambilmk/detailkhs")'>Detail Nilai</a>-->
+	<a href='javascript:void(0)' class='print-button' onclick='show("prodi/nilai/cetak_transkrip", "#center-column")'>Preview Tranksrip</a>
+</div>
