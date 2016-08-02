@@ -30,6 +30,7 @@
 					'kodeprodi'	=> $kodeprodi,
 				);
 				$this->db->insert('simkrs', $data1);
+				$this->db1->insert('simkrs', $data1);
 				$browse_paket = $this->paket_m->get_all('', '', '', $kodeprodi, $angkatan, $kelas, $thajaran);
 				$idkrs = $this->getIdkrs($nim);
 				foreach($browse_paket as $bp){

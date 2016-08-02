@@ -31,8 +31,8 @@
 		$jums = $jums+$js;
 	endforeach;
 ?>
-<div id='noprint' style="margin-bottom:10px; float:right;"><a href='#' id="noprint" class='print-button' onclick='print()'>cetak</a></div>
-<h3>Hasil Nilai Keseluruhan</h3>
+<div id='noprint' style="margin-bottom:10px; float:right;"><a href='javascript:void(0)' class='print-button' onclick='show("dosen/simambilmk/cetak_transkrip", "#center-column")'>Preview Tranksrip</a></div>
+<h3>Trnskrip Nilai</h3>
 <div class="top-bar">
 </div>
 <div class="select-bar">

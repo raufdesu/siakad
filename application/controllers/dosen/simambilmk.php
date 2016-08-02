@@ -2,7 +2,7 @@
 Class Simambilmk extends Controller{
 	function __construct(){
 		parent::Controller();
-		$this->load->model(array('simambilmk_m','simprodi_m', 'simsetting_m'));
+		$this->load->model(array('simdosenampu_m','simambilmk_m','simkrs_m','simprodi_m','simsetting_m','simmktawar_m','simdosenwali_m','maspegawai_m','masmahasiswa_m','simkurikulum_m','simmatrikulasi_m'));
 		$this->load->library(array('simpliparse','simplival','pquery','form_validation'));
 		$this->load->helper(array('globals','html'));
 	}
@@ -69,5 +69,21 @@ Class Simambilmk extends Controller{
 		$data['browse_transkrip'] = $this->simambilmk_m->get_transkrip_bythajaran($data['nim'], $data['thakad']);
 		$this->load->view('dosen/simambilmk/ttranskrip_v', $data);
 	}
+	function cetak_transkrip(){
+			$nim = $this->session->userdata('sesi_nimtranskrip');
+			$data['cetak_transkrip'] = $this->simambilmk_m->get_transkrip($nim);
+			$data['cetak_matrikulasi'] = $this->simmatrikulasi_m->get_nolimit($nim);
+			if($this->session->userdata('sesi_khsthajaran') == false){
+				$set = $this->simsetting_m->select_active();
+				$data['thakad'] = $set['thajaran'];
+			}else{
+				$data['thakad'] = $this->session->userdata('sesi_khsthajaran');
+			}
+			$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $data['thakad']);
+			$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
+			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
+			$data['nama_dpa'] = $dpa['nama'];
+			$this->load->view('dosen/simambilmk/ctranskrip_s', $data);
+		}
 }
 ?>
