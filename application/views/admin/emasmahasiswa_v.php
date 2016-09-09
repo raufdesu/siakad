@@ -14,6 +14,25 @@ $(document).ready(function() {
 	});
 })
 </script>
+	<script language='javascript' type='text/javascript'>
+	function load(page,div)
+	{
+		var site = "<?php echo site_url();?>";
+		$.ajax({
+			url: site+"/"+page,
+			success: function(response){
+				$(div).html(response);
+			},
+		dataType:"html"
+		});
+		return false;
+	}
+	function tampilkan_kabupten()
+	{
+		var selected_propinsi = $('select[name=propinsi]').val();
+		load('admin/masmahasiswa/tampilkan_kabupaten/'+selected_propinsi,'#kabupaten');
+	}
+	</script>
 <?php echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('admin/masmahasiswa/save'), 							
 	'update'=>'#center-column',
@@ -42,6 +61,13 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first" width="172"><strong>NIK</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $dm->nik;?>" name="nik" class="required" size="35"/>
+				<?php echo form_error('nik');?>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first" width="172"><strong>Nama Mahasiswa</strong></td>
 			<td class="last">
 				<input type="text" value="<?php echo $dm->nama;?>" name="nama" class="required" size="35"/>
@@ -51,8 +77,8 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first"><strong>Jenis Kelamin</strong></td>
 			<td class="last">
-				<input type="radio" <?php if($dm->jeniskelamin=='1') echo 'checked';?> name="jeniskelamin" class="required" value="1"/>Laki-laki
-				<input type="radio" <?php if($dm->jeniskelamin=='2') echo 'checked';?> name="jeniskelamin" class="required" value="2"/>Perempuan
+				<input type="radio" <?php if($dm->jeniskelamin=='L') echo 'checked';?> name="jeniskelamin" class="required" value="L"/>Laki-laki
+				<input type="radio" <?php if($dm->jeniskelamin=='P') echo 'checked';?> name="jeniskelamin" class="required" value="P"/>Perempuan
 				<?php echo form_error('jeniskelamin');?>
 			</td>
 		</tr>
@@ -70,12 +96,13 @@ $(document).ready(function() {
 			<td class="first"><strong>Agama</strong></td>
 			<td class="last">
 				<select name="agama">
-					<option <?php if($dm->agama='Islam') echo 'selected';?> value="Islam">Islam</option>
-					<option value="Kristen">Kristen</option>
-					<option value="Katolik">Katolik</option>
-					<option value="Hindu">Hindu</option>
-					<option value="Budha">Budha</option>
-					<option value="Lainnya">Lainnya</option>
+					<option <?php if($dm->agama='Islam') echo 'selected';?> value="<?php echo $dm->agama?>" >Islam</option>
+					<option value="Kristen,2">Kristen</option>
+					<option value="Katolik,3">Katolik</option>
+					<option value="Hindu,4">Hindu</option>
+					<option value="Budha,5">Budha</option>
+					<option value="Konghuchu,6">Konghuchu</option>
+					<option value="Lainnya,99">Lainnya</option>
 				</select>
 			</td>
 		</tr>
@@ -116,8 +143,8 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first"><strong>Status Masuk</strong></td>
 			<td class="last">
-				<input type="radio" <?php if($dm->statusmasuk == 'Baru') echo 'checked';?> name="statusmasuk" value="Baru"/> Baru
-				<input type="radio" <?php if($dm->statusmasuk == 'Pindahan') echo 'checked';?> name="statusmasuk" value="Pindahan"/> Pindahan
+				<input type="radio" <?php if($dm->statusmasuk == 'Baru') echo 'checked';?> name="statusmasuk" value="Baru, 1"/> Baru
+				<input type="radio" <?php if($dm->statusmasuk == 'Pindahan') echo 'checked';?> name="statusmasuk" value="Pindahan, 2"/> Pindahan
 				<?php echo form_error('statusmasuk');?>
 			</td>
 		</tr>
@@ -162,9 +189,28 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first"><strong>RT</strong></td>
+			<td class="last">
+				<input type="text" name="rt" value="<?php echo $dm->rt?>" size="5"/>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>RW</strong></td>
+			<td class="last">
+				<input type="text" name="rw" value="<?php echo $dm->rw?>" size="5"/>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Propinsi</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('propinsi',$propinsi,'idpropinsi','namapropinsi','onchange="tampilkan_kabupten()"');?>
+				<?php echo form_error('idpropinsi');?>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first"><strong>Kabupaten</strong></td>
 			<td class="last">
-				<input type="text" name="idkabupaten" class="required" size="30"/>
+				<input type="text" name="kabupaten"  value="<?php echo $dm->idkabupaten?>" class="required" size="30"/>
 				<?php echo form_error('idkabupaten');?>
 			</td>
 		</tr>

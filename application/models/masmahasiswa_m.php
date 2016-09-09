@@ -31,18 +31,22 @@
 				$kodeprodi	= '56401';
 			}
 			if($d['jeniskelamin'] == 'L'){
-				$jkel = 1;
+				$jkel = 'L';
 			}else{
-				$jkel = 0;
+				$jkel = 'P';
 			}
+			
 			$data = array(
 				'nim'		=> $nim,
+				'nik'		=> $nik,
 				'nama'		=> $d['nama'],
 				'kodeprodi'	=> $kodeprodi,
 				'kdkelas'	=> $kdkelas,
 				'angkatan'	=> date('Y'),
 				'statusmasuk'=> $d['status_baru'],
 				'alamatasal'=> $d['alamat_rumah'],
+				'rt'=> $d['rt'],
+				'rw'=> $d['rw'],
 				'kodepos'	=> '',
 				'alamatjogja'=> '',
 				'tlpdiymhs'	=> '',
@@ -64,6 +68,7 @@
 				'tgllahir'	=> $d['tgl_lahir'],
 				'tglmasuk'	=> '',
 				'agama'		=> $d['agama'],
+				'id_agama'	=> $id_agama,
 				'asalpt'	=> '',
 				'prodiasal'	=> '',
 				'statusakademik'=> 'Belum Lulus',
@@ -803,16 +808,21 @@
 			$this->db->delete("masmahasiswa");
 		}
 		function insert(){
+			$agama = explode (",", $_POST['agama']);
+			$statusmasuk = explode (",", $_POST['statusmasuk']);
 			$data = array(
 				"nim" => $this->input->post("nim"),
+				"nik" => $this->input->post("nik"),
 				"nama" => $this->input->post("nama"),
 				"kodeprodi" => $this->input->post("kodeprodi"),
 				"kdkelas" => $this->input->post("kdkelas"),
 				"angkatan" => $this->input->post("angkatan"),
-				"statusmasuk" => $this->input->post("statusmasuk"),
+				"statusmasuk" => $statusmasuk[0],
 				"alamatasal" => $this->input->post("alamatasal"),
+				"rt" => $this->input->post("rt"),
+				"rw" => $this->input->post("rw"),
 				"alamatsekarang" => $this->input->post("alamatsekarang"),
-				"idkabupaten" => $this->input->post("idkabupaten"),
+				"idkabupaten" => $this->input->post("kabupaten"),
 				"jeniskelamin" => $this->input->post("jeniskelamin"),
 				"namaortu" => $this->input->post("namaortu"),
 				"alamatortu" => $this->input->post("alamatortu"),
@@ -824,7 +834,8 @@
 				"tempatlahir" => $this->input->post("tempatlahir"),
 				"tgllahir" => tgl_ingg($this->input->post("tgllahir")),
 				"tglmasuk" => tgl_ingg($this->input->post("tglmasuk")),
-				"agama" => $this->input->post("agama"),
+				"agama" => $agama[0],
+				"id_agama" => $agama[1],
 				"asalpt" => $this->input->post("asalpt"),
 				"prodiasal" => $this->input->post("prodiasal"),
 				"statusakademik" => $this->input->post("statusakademik"),
@@ -835,15 +846,57 @@
 				"kodepossma" => $this->input->post("kodepossma"),
 				"statuspaket" => $this->input->post("statuspaket")
 			);
+			$data2 = array(
+				"nm_pd" => $this->input->post("nama"),
+				"jk" => $this->input->post("jeniskelamin"),
+				"nik" => $this->input->post("nik"),
+				"tmpt_lahir" => $this->input->post("tempatlahir"),
+				"tgl_lahir" => tgl_ingg($this->input->post("tgllahir")),
+				"id_agama" => $agama[1],
+				"id_kk" => '0',
+				"id_sp" => '',
+				"rt" => $this->input->post("rt"),
+				"rw" => $this->input->post("rw"),
+				"nm_dsn" => $this->input->post("alamatasal"),
+				"ds_kel" => '-',
+				"id_wil" => '999999',
+				"kode_pos" => $this->input->post("kodepos"),
+				"telepon_seluler" => $this->input->post("notelpmhs"),
+				"email" => $this->input->post("email"),
+				"a_terima_kps" => '0',
+				"no_kps" => '',
+				"stat_pd" => 'A',
+				"nm_ayah" => $this->input->post("namaortu"),
+				"id_kebutuhan_khusus_ayah" => '0',
+				"nm_ibu_kandung" => '-',
+				"id_kebutuhan_khusus_ibu" => '0',
+				"kewarganegaraan" => 'ID'
+			);
+			$data3 = array(
+				"kode_jurusan" => $this->input->post("kodeprodi"),
+				"id_jns_daftar" => $statusmasuk[1],
+				"nipd" => $this->input->post("nim"),
+				"tgl_masuk_sp" => tgl_ingg($this->input->post("tglmasuk")),
+				"mulai_smt" => $this->input->post("angkatan")
+			);
 			if($this->input->post('nim2')){
 				$this->db->where('nim', $this->input->post('nim2'));
 				$this->db->update("masmahasiswa", $data);
+				//$this->pmb = $this->load->database('pmb', TRUE);
+				//$this->pmb->update('mhs', $data2);
 			}else{
 				$this->db->trans_start();
 					$this->db->insert("masmahasiswa", $data);
 					$this->_insert_login($this->input->post('nim'), $this->input->post('nama'));
 					$this->_insert_simaktifsemester($this->input->post('nim'));
 				$this->db->trans_complete();
+				$this->pmb = $this->load->database('pmb', TRUE);
+					$this->pmb->insert('mhs', $data2);
+					$last_id = $this->pmb->insert_id();
+					$last = array('id_mhs' => $last_id);
+					$data3 = array_merge($data3,$last);
+					$this->pmb->insert('mhs_pt', $data3);
+					
 			}
 		}
 		function get_angkatan(){

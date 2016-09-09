@@ -31,6 +31,7 @@
 <div class="top-bar-adm">
 	<div style="float:right;margin:5px -32px 0">
 	<?php if($this->session->userdata('sesi_user') == 'admin'):?>
+	<a href="javascript:void(0)" class='button' onclick='show("admin/masmahasiswa/import_feeder","#center-column")'> add to feeder</a>
 	<a href="javascript:void(0)" class='button' onclick='show("admin/masmahasiswa/add","#center-column")'> Tambah</a>
 	<?php endif?>
 	<?php echo anchor('admin/masmahasiswa/cetak', 'Excel', array('class'=>'button'))?>
@@ -119,6 +120,7 @@
 	</table>
 <?php echo "<div class='pagination'>".($paging)."</div><div class='total-rows'> Total : ".$total_page."</div>";?>
 </div>
+<a href="<?php echo base_url().'application/feeder_importer/admina/check.php';?>" add</a>
 <script language="javascript">
 	function tanya(nim){
 		if(confirm("KONFIRMASI\nTekan OK Untuk Melanjutkan Penghapusan Data Terpilih")==true){

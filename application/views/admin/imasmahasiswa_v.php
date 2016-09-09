@@ -59,6 +59,13 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first" width="172"><strong>NIK</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $this->input->post('nik')?>" name="nik" class="required" size="35"/>
+				<?php echo form_error('nik');?>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first" width="172"><strong>Nama Mahasiswa</strong></td>
 			<td class="last">
 				<input type="text" value="<?php echo $this->input->post('nama')?>" name="nama" class="required" size="35"/>
@@ -86,12 +93,13 @@ $(document).ready(function() {
 			<td class="first"><strong>Agama</strong></td>
 			<td class="last">
 				<select name="agama">
-					<option value="Islam">Islam</option>
-					<option value="Kristen">Kristen</option>
-					<option value="Katolik">Katolik</option>
-					<option value="Hindu">Hindu</option>
-					<option value="Budha">Budha</option>
-					<option value="Lainnya">Lainnya</option>
+					<option value="Islam,1">Islam</option>
+					<option value="Kristen,2">Kristen</option>
+					<option value="Katolik,3">Katolik</option>
+					<option value="Hindu,4">Hindu</option>
+					<option value="Budha,5">Budha</option>
+					<option value="Konghuchu,6">Konghuchu</option>
+					<option value="Lainnya,99">Lainnya</option>
 				</select>
 			</td>
 		</tr>
@@ -120,17 +128,17 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
-			<td class="first"><strong>Angkatan</strong></td>
+			<td class="first"><strong>Mulai Semester</strong></td>
 			<td class="last">
-				<input type="text" name="angkatan" value="<?php echo $this->input->post('angkatan')?>" size="3"/>
+				<input type="text" name="angkatan" value="<?php echo $this->input->post('angkatan')?>" size="3"/>(contoh: 20151)
 				<?php echo form_error('angkatan');?>
 			</td>
 		</tr>
 		<tr class="bg">
 			<td class="first"><strong>Status Masuk</strong></td>
 			<td class="last">
-				<input type="radio" <?php if($this->input->post('statusmasuk')=='Baru') echo 'checked'?> name="statusmasuk" value="Baru"/> Baru
-				<input type="radio" <?php if($this->input->post('statusmasuk')=='Pindahan') echo 'checked'?> name="statusmasuk" value="Pindahan"/> Pindahan
+				<input type="radio" <?php if($this->input->post('statusmasuk')=='Baru') echo 'checked'?> name="statusmasuk" value="Baru,1"/> Baru
+				<input type="radio" <?php if($this->input->post('statusmasuk')=='Pindahan') echo 'checked'?> name="statusmasuk" value="Pindahan,2"/> Pindahan
 				<?php echo form_error('statusmasuk');?>
 			</td>
 		</tr>
@@ -171,6 +179,20 @@ $(document).ready(function() {
 			<td class="last">
 				<input type="text" name="alamatasal" value="<?php echo $this->input->post('alamatasal')?>" size="50"/>
 				<?php echo form_error('alamatasal');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>RT</strong></td>
+			<td class="last">
+				<input type="text" name="rt" value="<?php echo $this->input->post('rt')?>" size="5"/>
+				<?php echo form_error('rt');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>RW</strong></td>
+			<td class="last">
+				<input type="text" name="rw" value="<?php echo $this->input->post('rw')?>" size="5"/>
+				<?php echo form_error('rw');?>
 			</td>
 		</tr>
 		<tr class="bg">

@@ -87,12 +87,18 @@
 			$data["title"]	= "Form Tambah Data Mahasiswa";
 			$this->load->view("admin/imasmahasiswa_v",$data);
 		}
+		function import_feeder(){
+			$data["title"]	= "Form Tambah Data Mahasiswa";
+			$this->load->view("admin/check",$data);
+		}		
 		function edit($id = ''){
 			if($this->uri->segment(4) == false){
 				$id = $id;
 			}else{
 				$id = $this->uri->segment(4);
 			}
+			$data['propinsi'] = $this->db->get('tpropinsi');
+			$data['propinsi'] = $this->db->get('tpropinsi');
 			$data["title"]	= "Form Update Data Mahasiswa";
 			$data['browse_prodi'] = $this->simprodi_m->select('','');
 			$data["detail_masmahasiswa"] = $this->masmahasiswa_m->detail($id);

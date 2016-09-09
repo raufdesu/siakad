@@ -30,7 +30,6 @@
 					'kodeprodi'	=> $kodeprodi,
 				);
 				$this->db->insert('simkrs', $data1);
-				$this->db1->insert('simkrs', $data1);
 				$browse_paket = $this->paket_m->get_all('', '', '', $kodeprodi, $angkatan, $kelas, $thajaran);
 				$idkrs = $this->getIdkrs($nim);
 				foreach($browse_paket as $bp){
@@ -233,6 +232,7 @@
 					'tanggal' => date('Y-m-d H:i:s')
 				);
 				$this->db->insert('simkrs', $data);
+			
 			}
 			foreach($this->cart->contents() as $items):
 				$data = array(
@@ -243,6 +243,9 @@
 					'id_kelas_dosen' => '',
 				);
 				$this->db->insert('simambilmk', $data);
+//insert into the second database
+				//$this->pmb = $this->load->database('pmb', TRUE);
+				//$this->pmb->insert('simambilmk', $data);
 			endforeach;
 		}
 		// CEK QUOTA
