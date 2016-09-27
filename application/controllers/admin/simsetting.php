@@ -87,6 +87,16 @@
 						  'field'   => 'tglperubahankrsakhir',
 						  'label'   => 'Tgl. Perubahan KRS Akhir',
 						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tglkspawal',
+						  'label'   => 'Tgl KSP Awal',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tglkspakhir',
+						  'label'   => 'Tgl KSP Akhir',
+						  'rules'   => 'required'
 					   )
 					 );
 			$this->form_validation->set_rules($config);
@@ -134,6 +144,16 @@
 					array(
 						  'field'   => 'tglperubahankrsakhir',
 						  'label'   => 'Tgl. Perubahan KRS Akhir',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tglkspawal',
+						  'label'   => 'Tgl KSP Awal',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tglkspakhir',
+						  'label'   => 'Tgl KSP Akhir',
 						  'rules'   => 'required'
 					   )
 					 );

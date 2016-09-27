@@ -99,6 +99,11 @@
 				<a href="javascript:void(0)" class="tab" onclick='show("mhs/simkrs","#center-column");switch_tab(this)'>KRS</a>
 			</span></span></li>
 			<?php } ?>
+			<?php if($aktifksp){?>
+			<li class=""><span><span>
+				<a href="javascript:void(0)" class="tab" onclick='show("mhs/simkrs_ksp","#center-column");switch_tab(this)'>KRS KSP</a>
+			</span></span></li>
+			<?php } ?>
 			<li><span><span>
 				<!--<a href="javascript:void(0)" onclick='show("mhs/simkrs/khs","#center-column")'>KHS</a>-->
 				<a href="javascript:void(0)" class="tab" onclick='show("mhs/simambilmk/khs","#center-column");switch_tab(this)'>KHS</a>
@@ -118,6 +123,9 @@
 			<ul class="nav">
 			<?php if($aktifsemester){?>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simkrs","#center-column")'>KRS</a></li>
+			<?php } ?>
+			<?php if($aktifksp){?>
+				<li><a href="javascript:void(0)" onclick='show("mhs/simkrs_ksp","#center-column")'>KRS KSP</a></li>
 			<?php } ?>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simambilmk/khs","#center-column");switch_tab(this)'>KHS</a></li>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simambilmk/transkrip","#center-column");switch_tab(this)'>Transkrip</a></li>

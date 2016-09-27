@@ -102,6 +102,17 @@
 				return 0;
 			}
 		}
+		function cek_waktuksp(){
+			$sql3 = "SELECT aktif FROM simsetting WHERE aktif = 'Aktif' AND CURDATE()
+					BETWEEN (SELECT DISTINCT(tglkspawal) FROM simsetting WHERE aktif = 'Aktif')
+					AND (SELECT DISTINCT(tglkspakhir) FROM simsetting WHERE aktif = 'Aktif')";
+			$que3 = $this->db->query($sql3);
+			if($que3->num_rows()){
+				return 1;
+			}else{
+				return 0;
+			}
+		}
 		function get_nimkrs($thajaran){
 			$sql = "SELECT nim FROM simkrs WHERE thajaran = ".$thajaran;
 			$hasil = $this->db->query($sql);

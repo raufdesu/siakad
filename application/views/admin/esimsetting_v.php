@@ -66,6 +66,22 @@ $(document).ready(function() {
 				<?php echo form_error('tglperubahankrsakhir');?>
 			</td>
 		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tgl. ksp Awal</strong></td>
+			<td class="last">
+				<input type="text" name="tglkspawal" value="<?php echo tgl_indo($ds->tglkspawal)?>" size="8"/>
+				<input type="button" value=".." OnClick="displayDatePicker('tglkspawal', false, 'dmy', '-')">
+				<?php echo form_error('tglkspawal');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tgl. ksp Akhir</strong></td>
+			<td class="last">
+				<input type="text" name="tglkspakhir" value="<?php echo tgl_indo($ds->tglkspakhir)?>" size="8"/>
+				<input type="button" value=".." OnClick="displayDatePicker('tglkspakhir', false, 'dmy', '-')">
+				<?php echo form_error('tglkspakhir');?>
+			</td>
+		</tr>
 		<tr>
 			<td class="first"></td>
 			<td class="last">

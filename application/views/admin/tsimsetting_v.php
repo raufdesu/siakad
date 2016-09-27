@@ -79,6 +79,8 @@
 			<th>Tgl. KRS Akhir</th>
 			<th>Tgl. PKRS Awal</th>
 			<th>Tgl. PKRS Akhir</th>
+			<th>Tgl. KSP Awal</th>
+			<th>Tgl. KSP Akhir</th>
 			<th class="last">Kelola</th>
 		</tr>
 <?php
@@ -114,6 +116,8 @@
 		<td class="first"><?php echo tgl_indo($bm->tglkrsakhir);?></td>
 		<td class="first"><?php echo tgl_indo($bm->tglperubahankrsawal);?></td>
 		<td class="first"><?php echo tgl_indo($bm->tglperubahankrsakhir);?></td>
+		<td class="first"><?php echo tgl_indo($bm->tglkspawal);?></td>
+		<td class="first"><?php echo tgl_indo($bm->tglkspakhir);?></td>
 		<td class="first">
 			<a href="javascript:void(0)" onclick='show("admin/simsetting/edit/<?php echo $bm->thajaran?>","#center-column")'>
 				<?php echo img('asset/images/design/edit-icon.gif')?>

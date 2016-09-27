@@ -130,7 +130,7 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first"><strong>Mulai Semester</strong></td>
 			<td class="last">
-				<input type="text" name="angkatan" value="<?php echo $this->input->post('angkatan')?>" size="3"/>(contoh: 20151)
+				<input type="text" name="angkatan" value="<?php echo $this->input->post('angkatan')?>" size="3"/>
 				<?php echo form_error('angkatan');?>
 			</td>
 		</tr>

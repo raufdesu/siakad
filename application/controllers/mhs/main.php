@@ -30,8 +30,10 @@ Class Main extends Controller {
 	function index(){
 		$this->load->model(array("masmahasiswa_m", "profil_m"));
 		$this->load->model("simaktifsemester_m");
+		$this->load->model("simaktifksp_m");
 		$data['pt'] = $this->profil_m->get_one();
 		$data["aktifsemester"] = $this->simaktifsemester_m->cek_aktifsemester($this->session->userdata("sesi_user_mhs"));
+		$data["aktifksp"] = $this->simaktifksp_m->cek_aktifsemester($this->session->userdata("sesi_user_mhs"));
 		$data["browse_mahasiswa"] = $this->masmahasiswa_m->detail_awal($this->session->userdata("sesi_user_mhs"));
 		$this->load->view("mhs/main_v",$data);
 	}

@@ -16,5 +16,9 @@
 		<td>Tanggal Perubahan KRS</td>
 		<td> : <?php echo tgl_indo($ds->tglperubahankrsawal,1).' sampai dengan '.tgl_indo($ds->tglperubahankrsakhir,1); ?></td>
 	</tr>
+	<tr>
+		<td>Tanggal KSP Awal</td>
+		<td> : <?php echo tgl_indo($ds->tglkspawal,1).' sampai dengan '.tgl_indo($ds->tglkspakhir,1); ?></td>
+	</tr>
 </table>
 </body>

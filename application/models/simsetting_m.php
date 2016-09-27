@@ -79,7 +79,9 @@
 				"tglkrsawal"	=> tgl_ingg($this->input->post("tglkrsawal")),
 				"tglkrsakhir"	=> tgl_ingg($this->input->post("tglkrsakhir")),
 				"tglperubahankrsawal"	=> tgl_ingg($this->input->post("tglperubahankrsawal")),
-				"tglperubahankrsakhir"	=> tgl_ingg($this->input->post("tglperubahankrsakhir"))
+				"tglperubahankrsakhir"	=> tgl_ingg($this->input->post("tglperubahankrsakhir")),
+				"tglkspawal"	=> tgl_ingg($this->input->post("tglkspawal")),
+				"tglkspakhir"	=> tgl_ingg($this->input->post("tglkspakhir"))
 			);
 			$this->db->insert("simsetting",$data);
 		}
@@ -90,7 +92,9 @@
 				"tglkrsawal"	=> tgl_ingg($this->input->post("tglkrsawal")),
 				"tglkrsakhir"	=> tgl_ingg($this->input->post("tglkrsakhir")),
 				"tglperubahankrsawal"	=> tgl_ingg($this->input->post("tglperubahankrsawal")),
-				"tglperubahankrsakhir"	=> tgl_ingg($this->input->post("tglperubahankrsakhir"))
+				"tglperubahankrsakhir"	=> tgl_ingg($this->input->post("tglperubahankrsakhir")),
+				"tglkspawal"	=> tgl_ingg($this->input->post("tglkspawal")),
+				"tglkspakhir"	=> tgl_ingg($this->input->post("tglkspakhir"))
 			);
 			$this->db->where("thajaran",$this->input->post("thajaran"));
 			$this->db->update("simsetting",$data);

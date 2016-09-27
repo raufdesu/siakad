@@ -7,6 +7,7 @@
 	<?php if($this->session->userdata('sesi_status') == 'admin'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifsemester","#center-column")'>Aktif Semester</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifksp","#center-column")'>Aktif KSP</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simdosenampu","#center-column")'>Dosen Ampu</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/paket","#center-column")'>Matakuliah Paket</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simmktawar","#center-column")'>Matakuliah Tawar</a></li>
