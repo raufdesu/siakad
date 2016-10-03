@@ -74,7 +74,7 @@
 		function detail_mahasiswa($nim){
 			$dm = $this->simkrs_m->detail_mahasiswa($nim);
 			// echo $this->db->last_query();
-			$this->session->set_userdata('sesi_jumgab', 9);
+			$this->session->set_userdata('sesi_jumgab', ($this->simkrs_m->res_sks($nim))+9);
 			$arsesi = array(
 				'sesi_krs_nim' => $dm['nim'],
 				'sesi_krs_nama' => $dm['nama'],
