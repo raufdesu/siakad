@@ -154,14 +154,14 @@
 </table>
 <div class='panel'>
 	<strong>Dosen Pembimbing Akademik</strong>
-		<input type='text' id='nama_dpa' name='nama_dpa' value='<?php echo $nama_dpa?>' readonly style='width: 330px'/>
+		<input type='text' id='nama_dpa' name='nama_dpa' value='<?php echo $nama_dpa?>' readonly style='width: 280px'/>
 		<input type='hidden' id='id_dpa' name='id_dpa'/>
 	<?php
-		if($nama_dpa == false){
+		{
 			$atrpop = array(
 				'width'=>520,'height'=>450,'screenx'=>200,'screeny'=>50				
 			);
-			echo anchor_popup('admin/simkrs/browse_dpa','[..]',$atrpop);
+			echo anchor_popup('admin/simkrs/browse_dpa','[ubah]',$atrpop);
 		}
 		if($this->cart->contents() == true){
 	?>

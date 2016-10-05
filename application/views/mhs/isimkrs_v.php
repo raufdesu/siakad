@@ -155,23 +155,23 @@
 </table>
 <div class='panel'>
 	<strong> &nbsp; Nama DPA</strong>
-		<input type='text' id='nama_dpa' name='nama_dpa' value='<?php echo $nama_dpa?>' readonly size='42'/>
+		<input type='text' id='nama_dpa' name='nama_dpa' value='<?php echo $nama_dpa?>' readonly size='40'/>
 		<input type='hidden' value='<?php echo $id_dpa?>' id='id_dpa' name='id_dpa'/>
 	<?php
-		if($nama_dpa == false){
+		{
 			$atrpop = array(
 				'width'=>410,'height'=>450,'screenx'=>200,'screeny'=>50				
 			);
-			echo anchor_popup('mhs/simkrs/browse_dpa','[..]',$atrpop);
+			echo anchor_popup('mhs/simkrs/browse_dpa','[ubah]',$atrpop);
 		}
-		if($this->cart->contents() == true){
+		{
 	?>
 			<input type='hidden' value='<?php echo $jum?>' name='jum_sks_input'/>
 			<input type='submit' id="tombolSubmit" value='Simpan dan Lanjutkan' onclick='setujui()' id='cmdSimpanKRS'/>
 	<?php
-		}else{
+		}/*else{
 			echo '<input type="button" disabled value="Simpan dan Lanjutkan"/>';
-		}
+		}*/
 	?>
 </div>
 </div>
