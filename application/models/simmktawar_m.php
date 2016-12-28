@@ -31,7 +31,7 @@
 			return $this->db->query($sql);
 		}
 		function get_namamatkul_one($kodemk = ''){
-			$sql = "SELECT sks, kodemk, namamk FROM simkurikulum kur WHERE
+			$sql = "SELECT sks, kodemk, namamk, kodeprodi FROM simkurikulum kur WHERE
 					kodemk IN(SELECT twr.kodemk FROM simmktawar twr WHERE twr.kodemk LIKE '%".$kodemk."%')";
 			$sql .= " LIMIT 1 ";
 			$hasil = $this->db->query($sql);
@@ -86,7 +86,11 @@
 					(SELECT namamk FROM simkurikulum WHERE kodemk=simmktawar.kodemk AND kodeprodi=simmktawar.kodeprodi)
 					AS namamk,
 					(SELECT DISTINCT(semester) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
-					AS semester FROM simmktawar";
+					AS semester,
+					(SELECT DISTINCT(sks) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
+					AS sks,
+					(SELECT DISTINCT(thnkur) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
+					AS thnkur FROM simmktawar";
 			$sql .= " WHERE kodemk <> '' AND kodeprodi = '".$kodeprodi."' AND thajaran = '".$thajaran."'";
 			return $this->db->query($sql);
 		}

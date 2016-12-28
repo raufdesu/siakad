@@ -101,6 +101,8 @@ $(document).ready(function() {
 					<option value="MPK" <?php if($dk->sifat == 'MPK') echo 'selected'?>>MPK</option>
 					<option value="MPB" <?php if($dk->sifat == 'MPB') echo 'selected'?>>MPB</option>
 					<option value="MBB" <?php if($dk->sifat == 'MBB') echo 'selected'?>>MBB</option>
+					<option value="MKDU" <?php if($dk->sifat == 'MKDU') echo 'selected'?>>MKDU</option>
+					<option value="MKDK" <?php if($dk->sifat == 'MKDK') echo 'selected'?>>MKDK</option>
 				</select>
 				<?php echo form_error('sifat');?>
 			</td>

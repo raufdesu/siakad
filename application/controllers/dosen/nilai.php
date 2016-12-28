@@ -96,8 +96,14 @@
 				$thajaran = $this->session->userdata('sesi_thajaran');
 				$kodemk = $this->session->userdata('sesi_kodemk');
 				for($i=1;$i<=$n;$i++){
-					$this->simkrs_m->update_nilai($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilaiuts_'.$i),$this->input->post('nilaiuas_'.$i),$this->input->post('q1_'.$i),$this->input->post('q2_'.$i),$this->input->post('q3_'.$i),$this->input->post('t1_'.$i),$this->input->post('t2_'.$i),$this->input->post('t3_'.$i));
+					$this->simkrs_m->update_nilai($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i),$this->input->post('nilaiuts_'.$i),$this->input->post('nilaiuas_'.$i),$this->input->post('q1_'.$i),$this->input->post('q2_'.$i),$this->input->post('q3_'.$i),$this->input->post('t1_'.$i),$this->input->post('t2_'.$i),$this->input->post('t3_'.$i));
 					/*echo $this->db->last_query();*/
+				}
+				for($i=0;$i<=$n;$i++){
+					// echo $this->input->post('nim_'.$i).'='.$this->input->post('nilai_'.$i).'<br />';
+					//$this->simkrs_m->update_nilai_admin($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
+					$this->simkrs_m->update_nilai_feeder($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
+					// echo $this->db->last_query().'<br />';
 				}
 			}
 			$data['title'] = 'Konfirmasi Simpan';

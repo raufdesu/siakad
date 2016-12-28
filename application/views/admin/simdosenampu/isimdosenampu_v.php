@@ -20,7 +20,7 @@
 </script>
 <div class="top-bar-adm">
 	<h1>Penentuan Pengampu Matakuliah</h1>
-	<div class="breadcrumbs"><a href="#">Matakuiah Yang Diampu Dosen dan Asisten Dosen</a></div>
+	<div class="breadcrumbs"><a href="#">Matakuliah Yang Diampu Dosen dan Asisten Dosen</a></div>
 </div><br />
 <div class="table">
 	<table class="listing form" cellpadding="0" cellspacing="0">
@@ -33,12 +33,24 @@
 			<td class="last"><?php echo $npp = $d->npp?></td>
 		</tr>
 		<tr class="bg">
+			<td class="first" width="172"><strong>NIDN</strong></td>
+			<td class="last"><?php echo $nidn = $d->nidn ?></td>
+		</tr>
+		<tr class="bg">
 			<td class="first" width="172"><strong>Nama Dosen</strong></td>
-			<td class="last"><?php echo $d->nama?></td>
+			<td class="last"><?php echo $nama = $d->nama?></td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>Kode Prodi</strong></td>
+			<td class="last"><?php echo $d->kodeprodi?></td>
 		</tr>
 		<?php endforeach ?>
 	</table>
 </div>
+<?php
+$_SESSION['nidn'] = $nidn;
+$_SESSION['nama'] = $nama;
+?>
 <?php
 if($this->session->userdata('sesi_status') == 'admin'):
 	echo $this->pquery->form_remote_tag(array(

@@ -83,7 +83,7 @@
 			return $data;
 		}
 		function get_one($id){
-			$sql = "SELECT id_kelas_dosen,kodemk,npp,thajaran,jamawal,jamselesai,hari,id_ruang,
+			$sql = "SELECT id_kelas_dosen,kodemk,npp,thajaran,jamawal,jamselesai,rencana_tatap_muka,tatap_muka_real,hari,id_ruang,
 					(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)namamatkul,kelas,
 					(SELECT nama FROM maspegawai WHERE npp = simdosenampu.npp)namadosen
 					FROM simdosenampu WHERE id_kelas_dosen = ".$id." ";
@@ -206,9 +206,35 @@
 				"kelas" => $this->input->post("kelas"),
 				"hari" => $this->input->post("hari"),
 				"jamawal" => $this->input->post("jamawal"),
-				"jamselesai" => $this->input->post("jamselesai")
+				"jamselesai" => $this->input->post("jamselesai"),
+				"rencana_tatap_muka" => $this->input->post("rencana_tatap_muka"),
+				"tatap_muka_real" => $this->input->post("tatap_muka_real")
 			);
 			$this->db->insert("simdosenampu",$data);
+			
+			$data2 = array(
+				"semester" => $this->session->userdata('sesi_thajaran'),
+				"kode_mk" => $this->input->post("txt_kode_mk"),
+				"nama_mk" => $this->input->post("txt_nama_mk"),
+				"nama_kelas" => $this->input->post("kelas"),
+				"kode_jurusan" => $this->input->post("txt_kode_prodi")
+			);
+			$this->pmb = $this->load->database('pmb', TRUE);
+			$this->pmb->insert('kelas_kuliah', $data2);
+			
+			$data3 = array(
+				"semester" => $this->session->userdata('sesi_thajaran'),
+				"nidn" => $this->input->post("txt_nidn"),
+				"nama_dosen" => $this->input->post("txt_nama"),
+				"kode_mk" => $this->input->post("txt_kode_mk"),
+				"nama_mk" => $this->input->post("txt_nama_mk"),
+				"nama_kelas" => $this->input->post("kelas"),
+				"rencana_tatap_muka" => $this->input->post("rencana_tatap_muka"),
+				"tatap_muka_real" => $this->input->post("tatap_muka_real"),
+				"kode_jurusan" => $this->input->post("txt_kode_prodi")
+			);
+			$this->pmb = $this->load->database('pmb', TRUE);
+			$this->pmb->insert('ajar_dosen', $data3);
 		}
 		function update(){
 			$data = array(
@@ -219,7 +245,9 @@
 				"kelas" => $this->input->post("kelas"),
 				"hari" => $this->input->post("hari"),
 				"jamawal" => $this->input->post("jamawal"),
-				"jamselesai" => $this->input->post("jamselesai")
+				"jamselesai" => $this->input->post("jamselesai"),
+				"rencana_tatap_muka" => $this->input->post("rencana_tatap_muka"),
+				"tatap_muka_real" => $this->input->post("tatap_muka_real")
 			);
 			$this->db->where('id_kelas_dosen', $this->input->post('id_kelas_dosen'));
 			$this->db->update("simdosenampu",$data);

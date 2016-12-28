@@ -85,6 +85,18 @@
 		</td>
 	</tr>
 	<tr>
+		<td align="right"><strong>Tatap Muka</strong></td>
+		<td>
+			<input type="text" name="rencana_tatap_muka" value="<?php echo $dosenampu->rencana_tatap_muka?>" size="2" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right"><strong>Tatap Muka Real</strong></td>
+		<td>
+			<input type="text" name="tatap_muka_real" value="<?php echo $dosenampu->tatap_muka_real?>" size="2" />
+		</td>
+	</tr>
+	<tr>
 		<td>&nbsp;</td>
 		<td>
 			<input type='submit' value='Update' name='tambah' OnClick='jQuery.facebox.close()'/>

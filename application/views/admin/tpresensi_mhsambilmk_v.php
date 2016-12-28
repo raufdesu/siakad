@@ -44,6 +44,7 @@
 		echo $ampu->namadosen;
 		echo form_hidden('id_kelas_dosen',$id_kelas_dosen);
 		echo form_hidden('kodemk',$kodemk);
+		echo form_hidden('kelas',$ampu->kelas);
 	?>
 </div><div class='clear'></div>
 <table cellspacing='0'>

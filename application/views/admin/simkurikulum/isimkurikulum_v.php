@@ -104,6 +104,8 @@ function submitChangeKurikulum(){
 					<option value="MPK">MPK</option>
 					<option value="MPB">MPB</option>
 					<option value="MBB">MBB</option>
+					<option value="MPB">MKDU</option>
+					<option value="MBB">MKDK</option>
 				</select>
 				<?php echo form_error('sifat');?>
 			</td>

@@ -83,6 +83,12 @@
 		function add(){
 			$data['propinsi'] = $this->db->get('tpropinsi');
 			$data['propinsi'] = $this->db->get('tpropinsi');
+			$data['pendidikan'] = $this->db->get('jenjang_pendidikan');
+			$data['pekerjaan'] = $this->db->get('pekerjaan');
+			$data['penghasilan'] = $this->db->get('penghasilan');
+			$data['jenis_tinggal'] = $this->db->get('jenis_tinggal');
+			$data['alat_transport'] = $this->db->get('alat_transport');
+			$data['wilayah'] = $this->db->get('wilayah');
 			$data['browse_prodi'] = $this->simprodi_m->select('','');
 			$data["title"]	= "Form Tambah Data Mahasiswa";
 			$this->load->view("admin/imasmahasiswa_v",$data);
@@ -110,15 +116,75 @@
 						  'field'   => 'nim',
 						  'label'   => 'NIM',
 						  'rules'   => 'required'
-					   )
-					/*array(
+					   ),
+					array(
+						  'field'   => 'tempatlahir',
+						  'label'   => 'Tempat Lahir',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tgllahir',
+						  'label'   => 'Tanggal Lahir',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'agama',
+						  'label'   => 'Agama',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'nm_ibu_kandung',
+						  'label'   => 'Nama Ibu',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'nik',
+						  'label'   => 'NIK',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'wilayah',
+						  'label'   => 'Kewarganegaraan',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'ds_kel',
+						  'label'   => 'Desa/Kelurahan',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'a_terima_kps',
+						  'label'   => 'Penerima KPS',
+						  'rules'   => 'required'
+					   )/*,
+					array(
+						  'field'   => 'nik',
+						  'label'   => 'NIK',
+						  'rules'   => 'required'
+					   ),
+					array(
 						  'field'   => 'nama',
-						  'label'   => 'Nama mahasiswa',
+						  'label'   => 'Nama',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tempatlahir',
+						  'label'   => 'Tempat Lahir',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'tgllahir',
+						  'label'   => 'Tanggal Lahir',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'agama',
+						  'label'   => 'Agama',
 						  'rules'   => 'required'
 					   ),
 					array(
 						  'field'   => 'kodeprodi',
-						  'label'   => 'PRODI',
+						  'label'   => 'Kode Prodi',
 						  'rules'   => 'required'
 					   ),
 					array(
@@ -127,8 +193,8 @@
 						  'rules'   => 'required'
 					   ),
 					array(
-						  'field'   => 'kdkelas',
-						  'label'   => 'Kelas',
+						  'field'   => 'nm_ibu_kandung',
+						  'label'   => 'Nama Ibu',
 						  'rules'   => 'required'
 					   )*/
 					/*array(

@@ -1,10 +1,10 @@
 <?php if($this->session->userdata('sesi_status') != 'keuangan'){ ?>
 <h3>Menu Akademik</h3>
 <ul class="nav">
-	<?php if($this->session->userdata('sesi_status') == 'operator'){ ?>
+<?php if($this->session->userdata('sesi_status') == 'operator'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simdosenampu","#center-column")'>Dosen Ampu</a></li>
 	<?php } ?>
-	<?php if($this->session->userdata('sesi_status') == 'admin'){ ?>
+<?php if($this->session->userdata('sesi_status') == 'admin'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifsemester","#center-column")'>Aktif Semester</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifksp","#center-column")'>Aktif KSP</a></li>
@@ -37,7 +37,7 @@
 	<li class=""><a href="javascript:void(0)" onclick='show("dosen/login/gantipassword/","#center-column")'>Ganti Password</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("dosen/simupload/","#center-column")'>Panduan & Download</a></li>
 	<!--<li class=""><a href="</?php echo base_url()?>asset/upload/help/Panduan-simak-dosen.docx">? Panduan</a></li>-->
-	<?php }elseif($this->session->userdata('sesi_status') == 'prodi'){ ?>
+<?php }elseif($this->session->userdata('sesi_status') == 'prodi'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simaktifsemester/","#center-column")'>Aktif Semester</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simmktawar","#center-column")'>Matakuliah Tawar</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>

@@ -68,6 +68,20 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first" width="172"><strong>NISN</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $dm->nisn;?>" name="nisn" class="required" size="35"/>
+				<?php echo form_error('nisn');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>NPWP</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $dm->npwp;?>" name="npwp" class="required" size="35"/>
+				<?php echo form_error('npwp');?>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first" width="172"><strong>Nama Mahasiswa</strong></td>
 			<td class="last">
 				<input type="text" value="<?php echo $dm->nama;?>" name="nama" class="required" size="35"/>
@@ -77,8 +91,8 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first"><strong>Jenis Kelamin</strong></td>
 			<td class="last">
-				<input type="radio" <?php if($dm->jeniskelamin=='L') echo 'checked';?> name="jeniskelamin" class="required" value="L"/>Laki-laki
-				<input type="radio" <?php if($dm->jeniskelamin=='P') echo 'checked';?> name="jeniskelamin" class="required" value="P"/>Perempuan
+				<input type="radio" <?php if($dm->jeniskelamin=='1') echo 'checked';?> name="jeniskelamin" class="required" value="1, L"/>Laki-laki
+				<input type="radio" <?php if($dm->jeniskelamin=='0') echo 'checked';?> name="jeniskelamin" class="required" value="0, P"/>Perempuan
 				<?php echo form_error('jeniskelamin');?>
 			</td>
 		</tr>
@@ -104,6 +118,28 @@ $(document).ready(function() {
 					<option value="Konghuchu,6">Konghuchu</option>
 					<option value="Lainnya,99">Lainnya</option>
 				</select>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Penerima KPS ? </strong></td>
+			<td class="last">
+				<input type="radio" <?php if($dm->a_terima_kps=='0') echo 'checked';?> name="a_terima_kps" class="required" value="0"/>Tidak
+				<input type="radio" <?php if($dm->a_terima_kps=='1') echo 'checked';?> name="a_terima_kps" class="required" value="1"/>Ya
+				<?php echo form_error('a_terima_kps');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>No KPS</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $dm->no_kps;?>" name="no_kps" class="required" size="35"/>
+				<?php echo form_error('no_kps');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>Kewarganegaraan</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $dm->kewarganegaraan;?>" name="kewarganegaraan" class="required" size="35"/>
+				<?php echo form_error('kewarganegaraan');?>
 			</td>
 		</tr>
 		<tr>
@@ -189,6 +225,20 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first"><strong>Dusun</strong></td>
+			<td class="last">
+				<input type="text" name="nm_dsn" value="<?php echo $dm->nm_dsn?>" size="50"/>
+				<?php echo form_error('nm_dsn');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Desa/Kelurahan</strong></td>
+			<td class="last">
+				<input type="text" name="ds_kel" value="<?php echo $dm->ds_kel?>" size="50"/>
+				<?php echo form_error('ds_kel');?>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first"><strong>RT</strong></td>
 			<td class="last">
 				<input type="text" name="rt" value="<?php echo $dm->rt?>" size="5"/>
@@ -242,15 +292,150 @@ $(document).ready(function() {
 				<?php echo form_error('alamatsekarang');?>
 			</td>
 		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Jenis Tinggal</strong></td>
+			<td class="last">
+				<input type="text" name="id_jns_tinggal" value="<?php echo $dm->id_jns_tinggal?>" size="50"/>
+				<?php echo form_error('id_jns_tinggal');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Alat Transportasi</strong></td>
+			<td class="last">
+				<input type="text" name="id_alat_transport" value="<?php echo $dm->id_alat_transport?>" size="50"/>
+				<?php echo form_error('id_alat_transport');?>
+			</td>
+		</tr>
 		<tr>
 			<td class="first"></td>
 			<td class="last"><font color='blue'><b>Data Orang Tua / Wali</b></font></td>
 		</tr>
 		<tr class="bg">
-			<td class="first"><strong>Nama Orang Tua</strong></td>
+			<td class="first"><strong>NIK Ayah</strong></td>
 			<td class="last">
-				<input type="text" name="namaortu" value="<?php echo $dm->namaortu?>" size="35"/>
-				<?php echo form_error('namaortu');?>
+				<input type="text" name="nik_ayah" value="<?php echo $dm->nik_ayah?>" size="35"/>
+				<?php echo form_error('nik_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="nm_ayah" value="<?php echo $dm->nm_ayah?>" size="35"/>
+				<?php echo form_error('nm_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_ayah" value="<?php echo $dm->tempatlahir_ayah;?>" size="20"/>/
+				<input type='text' name='tgl_lahir_ayah' value='<?php echo tgl_indo($dm->tgl_lahir_ayah)?>' size='8'/>
+				<input type='button' value='..' class='date' OnClick="displayDatePicker('tgl_lahir_ayah', false, 'dmy', '-')"/>
+				<?php echo form_error('tempatlahir_ayah');?>
+				<?php echo form_error('tgl_lahir_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pendidikan Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="id_jenjang_pendidikan_ayah" value="<?php echo $dm->id_jenjang_pendidikan_ayah?>" size="50"/>
+				<?php echo form_error('id_jenjang_pendidikan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pekerjaan Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="id_pekerjaan_ayah" value="<?php echo $dm->id_pekerjaan_ayah?>" size="50"/>
+				<?php echo form_error('id_pekerjaan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID penghasilan Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="id_penghasilan_ayah" value="<?php echo $dm->id_penghasilan_ayah?>" size="50"/>
+				<?php echo form_error('id_penghasilan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>NIK Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="nik_ibu" value="<?php echo $dm->nik_ibu?>" size="35"/>
+				<?php echo form_error('nik_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="nm_ibu_kandung" value="<?php echo $dm->nm_ibu_kandung?>" size="35"/>
+				<?php echo form_error('nm_ibu_kandung');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_ibu" value="<?php echo $dm->tempatlahir_ibu;?>" size="20"/>/
+				<input type='text' name='tgl_lahir_ibu' value='<?php echo tgl_indo($dm->tgl_lahir_ibu)?>' size='8'/>
+				<input type='button' value='..' class='date' OnClick="displayDatePicker('tgl_lahir_ibu', false, 'dmy', '-')"/>
+				<?php echo form_error('tempatlahir_ibu');?>
+				<?php echo form_error('tgl_lahir_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pendidikan Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="id_jenjang_pendidikan_ibu" value="<?php echo $dm->id_jenjang_pendidikan_ibu?>" size="50"/>
+				<?php echo form_error('id_jenjang_pendidikan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pekerjaan Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="id_pekerjaan_ibu" value="<?php echo $dm->id_pekerjaan_ibu?>" size="50"/>
+				<?php echo form_error('id_pekerjaan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID penghasilan Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="id_penghasilan_ibu" value="<?php echo $dm->id_penghasilan_ibu?>" size="50"/>
+				<?php echo form_error('id_penghasilan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Wali</strong></td>
+			<td class="last">
+				<input type="text" name="nm_wali" value="<?php echo $dm->nm_wali?>" size="35"/>
+				<?php echo form_error('nm_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Wali</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_wali" value="<?php echo $dm->tempatlahir_wali;?>" size="20"/>/
+				<input type='text' name='tgl_lahir_wali' value='<?php echo tgl_indo($dm->tgl_lahir_wali)?>' size='8'/>
+				<input type='button' value='..' class='date' OnClick="displayDatePicker('tgl_lahir_wali', false, 'dmy', '-')"/>
+				<?php echo form_error('tempatlahir_wali');?>
+				<?php echo form_error('tgl_lahir_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pendidikan Wali</strong></td>
+			<td class="last">
+				<input type="text" name="id_jenjang_pendidikan_wali" value="<?php echo $dm->id_jenjang_pendidikan_wali?>" size="50"/>
+				<?php echo form_error('id_jenjang_pendidikan_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID Pekerjaan Wali</strong></td>
+			<td class="last">
+				<input type="text" name="id_pekerjaan_wali" value="<?php echo $dm->id_pekerjaan_wali?>" size="50"/>
+				<?php echo form_error('id_pekerjaan_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>ID penghasilan Wali</strong></td>
+			<td class="last">
+				<input type="text" name="id_penghasilan_wali" value="<?php echo $dm->id_penghasilan_wali?>" size="50"/>
+				<?php echo form_error('id_penghasilan_wali');?>
 			</td>
 		</tr>
 		<tr class="bg">

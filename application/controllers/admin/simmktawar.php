@@ -60,10 +60,12 @@
 					$krs = $this->simambilmk_m->get_idkrs_bynim($nim, $thajaran);
 					$idkrsnya = $krs['idkrsnya'];
 					$this->simambilmk_m->update_pilihkelas($idkrsnya, $kodemk, '');
+					$this->simambilmk_m->update_pilihkelas_feeder($nim, $kodemk, '');
 				$id_kelas_dosen = $this->uri->segment(5);
 				redirect('admin/simmktawar/mhsambilmk/'.$id_kelas_dosen);
 			}else{
 				$kodemk		= $this->input->post('kodemk');
+				$kelas		= $this->input->post('kelas');
 				$id_kelas_dosen = $this->input->post('id_kelas_dosen');
 				if($thajaran == false){
 					redirect(base_url().'admin/login/','REFRESH');
@@ -75,6 +77,7 @@
 							$krs = $this->simambilmk_m->get_idkrs_bynim($nim, $thajaran);
 							$idkrsnya = $krs['idkrsnya'];
 							$this->simambilmk_m->update_pilihkelas($idkrsnya, $kodemk, $id_kelas_dosen);
+							$this->simambilmk_m->update_pilihkelas_feeder($nim, $kodemk, $kelas);
 						}
 					}
 					redirect('admin/simmktawar/mhsambilmk/'.$id_kelas_dosen);

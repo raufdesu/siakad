@@ -87,10 +87,12 @@
 				$data['nama_matkul'] = $nm['namamk'];
 				$data['kode_matkul'] = $nm['kodemk'];
 				$data['sks'] = $nm['sks'];
+				$data['kode_prodi'] = $nm['kodeprodi'];
 			}else{
 				$data['nama_matkul'] = '';
 				$data['kode_matkul'] = '';
 				$data['sks'] = '';
+				$data['kode_prodi'] = '';
 			}
 			$data['browse_simruang'] = $this->simruang_m->getAll();
 			$this->load->view('admin/simdosenampu/isimdosenampu2_v', $data);

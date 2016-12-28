@@ -147,9 +147,16 @@
 				'thajaran'	=> $thajaran,
 				'npp'		=> $dpa,
 			);
+			$where = array(
+				"nim" => $nim,
+				"thajaran" => $thajaran,
+			);
 			$cekada = $this->cek_dosenwali($nim, $thajaran);
 			if(!$cekada){
 				$this->db->insert("simdosenwali",$data);
+			}
+			else {
+				$this->db->update("simdosenwali",$data, $where);
 			}
 		}
 		function insert_dosenwali($nim, $thajaran){

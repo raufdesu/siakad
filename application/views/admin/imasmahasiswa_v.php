@@ -32,6 +32,8 @@ $(document).ready(function() {
 		var selected_propinsi = $('select[name=propinsi]').val();
 		load('admin/masmahasiswa/tampilkan_kabupaten/'+selected_propinsi,'#kabupaten');
 	}
+	
+
 	</script>
 <?php echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('admin/masmahasiswa/save'), 							
@@ -54,7 +56,7 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first" width="172"><strong>NIM</strong></td>
 			<td class="last">
-				<input type="text" value="<?php echo $this->input->post('nim')?>" name="nim" class="required" size="8"/>
+				<input type="text" value="<?php echo $this->input->post('nim')?>" name="nim" class="required" size="12"/>
 				<?php echo form_error('nim');?>
 			</td>
 		</tr>
@@ -63,6 +65,20 @@ $(document).ready(function() {
 			<td class="last">
 				<input type="text" value="<?php echo $this->input->post('nik')?>" name="nik" class="required" size="35"/>
 				<?php echo form_error('nik');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>NISN</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $this->input->post('nisn')?>" name="nisn" class="required" size="35"/>
+				<?php echo form_error('nisn');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>NPWP</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $this->input->post('npwp')?>" name="npwp" class="required" size="35"/>
+				<?php echo form_error('npwp');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -75,8 +91,8 @@ $(document).ready(function() {
 		<tr class="bg">
 			<td class="first"><strong>Jenis Kelamin</strong></td>
 			<td class="last">
-				<input type="radio" name="jeniskelamin" <?php if($this->input->post('jeniskelamin')=='L') echo 'checked'?> class="required" value="L"/>Laki-laki
-				<input type="radio" name="jeniskelamin" <?php if($this->input->post('jeniskelamin')=='P') echo 'checked'?> class="required" value="P"/>Perempuan
+				<input type="radio" name="jeniskelamin" <?php if($this->input->post('jeniskelamin')=='1') echo 'checked'?> class="required" value="1, L"/>Laki-laki
+				<input type="radio" name="jeniskelamin" <?php if($this->input->post('jeniskelamin')=='0') echo 'checked'?> class="required" value="0, P"/>Perempuan
 				<?php echo form_error('jeniskelamin');?>
 			</td>
 		</tr>
@@ -101,6 +117,29 @@ $(document).ready(function() {
 					<option value="Konghuchu,6">Konghuchu</option>
 					<option value="Lainnya,99">Lainnya</option>
 				</select>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Penerima KPS ? </strong></td>
+			<td class="last">
+				<input type="radio" <?php if($this->input->post('a_terima_kps')=='0') echo 'checked'?> name="a_terima_kps" value="0"/> Tidak
+				<input type="radio" <?php if($this->input->post('a_terima_kps')=='1') echo 'checked'?> name="a_terima_kps" value="1"/> Ya
+				<?php echo form_error('a_terima_kps');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>No KPS</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $this->input->post('no_kps')?>" name="no_kps" class="required" size="35"/>
+				<?php echo form_error('no_kps');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Kewarganegaraan</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('wilayah',$wilayah,'id_negara','nm_wil');?>
+			<span id='wilayah'></span>
+				<?php echo form_error('wilayah');?>
 			</td>
 		</tr>
 		<tr>
@@ -128,10 +167,10 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
-			<td class="first"><strong>Mulai Semester</strong></td>
+			<td class="first"><strong>Angkatan</strong></td>
 			<td class="last">
 				<input type="text" name="angkatan" value="<?php echo $this->input->post('angkatan')?>" size="3"/>
-				<?php echo form_error('angkatan');?>
+				<?php echo form_error('angkatan'); $mulai_smt = str_pad('angkatan', 5, '1', STR_PAD_RIGHT);?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -179,6 +218,20 @@ $(document).ready(function() {
 			<td class="last">
 				<input type="text" name="alamatasal" value="<?php echo $this->input->post('alamatasal')?>" size="50"/>
 				<?php echo form_error('alamatasal');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Dusun</strong></td>
+			<td class="last">
+				<input type="text" name="nm_dsn" value="<?php echo $this->input->post('nm_dsn')?>" size="50"/>
+				<?php echo form_error('nm_dsn');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Desa/Kelurahan</strong></td>
+			<td class="last">
+				<input type="text" name="ds_kel" value="<?php echo $this->input->post('ds_kel')?>" size="50"/>
+				<?php echo form_error('ds_kel');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -236,15 +289,158 @@ $(document).ready(function() {
 				<?php echo form_error('alamatsekarang');?>
 			</td>
 		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Jenis Tinggal</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('jenis_tinggal',$jenis_tinggal,'id_jns_tinggal','nm_jns_tinggal');?>
+			<span id='jenis_tinggal'></span>
+				<?php echo form_error('jenis_tinggal');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Alat Transportasi</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('alat_transport',$alat_transport,'id_alat_transport','nm_alat_transport');?>
+			<span id='alat_transport'></span>
+				<?php echo form_error('alat_transport');?>
+			</td>
+		</tr>
 		<tr>
 			<td class="first"></td>
 			<td class="last"><font color='blue'><b>Data Orang Tua / Wali</b></font></td>
 		</tr>
 		<tr class="bg">
-			<td class="first"><strong>Nama Orang Tua</strong></td>
+			<td class="first" width="172"><strong>NIK Ayah</strong></td>
 			<td class="last">
-				<input type="text" name="namaortu" value="<?php echo $this->input->post('namaortu')?>" size="35"/>
-				<?php echo form_error('namaortu');?>
+				<input type="text" value="<?php echo $this->input->post('nik_ayah')?>" name="nik_ayah" class="required" size="35"/>
+				<?php echo form_error('nik_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="nm_ayah" value="<?php echo $this->input->post('nm_ayah')?>" size="35"/>
+				<?php echo form_error('nm_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Ayah</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_ayah" value="<?php echo $this->input->post('tempatlahir_ayah')?>" size="20"/>/
+				<input type="text" name="tgl_lahir_ayah" value="<?php echo $this->input->post('tgl_lahir_ayah')?>" class="required" size="8"/>dd-mm-yyyy
+				<?php echo form_error('tempatlahir_ayah');?>
+				<?php echo form_error('tgl_lahir_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pendidikan Ayah</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_jenjang_pendidikan_ayah',$pendidikan,'id_jenj_didik','nm_jenj_didik');?>
+			<span id='id_jenjang_pendidikan_ayah'></span>
+				<?php echo form_error('id_jenjang_pendidikan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pekerjaan Ayah</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_pekerjaan_ayah',$pekerjaan,'id_pekerjaan','nm_pekerjaan');?>
+			<span id='id_pekerjaan_ayah'></span>
+				<?php echo form_error('id_pekerjaan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>penghasilan Ayah</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_penghasilan_ayah',$penghasilan,'id_penghasilan','nm_penghasilan');?>
+			<span id='id_penghasilan_ayah'></span>
+				<?php echo form_error('id_penghasilan_ayah');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="172"><strong>NIK Ibu</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo $this->input->post('nik_ibu')?>" name="nik_ibu" class="required" size="35"/>
+				<?php echo form_error('nik_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="nm_ibu_kandung" value="<?php echo $this->input->post('nm_ibu_kandung')?>" size="35"/>
+				<?php echo form_error('nm_ibu_kandung');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Ibu</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_ibu" value="<?php echo $this->input->post('tempatlahir_ibu')?>" size="20"/>/
+				<input type="text" name="tgl_lahir_ibu" value="<?php echo $this->input->post('tgl_lahir_ibu')?>" class="required" size="8"/>dd-mm-yyyy
+				<?php echo form_error('tempatlahir_ibu');?>
+				<?php echo form_error('tgl_lahir_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pendidikan Ibu</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_jenjang_pendidikan_ibu',$pendidikan,'id_jenj_didik','nm_jenj_didik');?>
+			<span id='id_jenjang_pendidikan_ibu'></span>
+				<?php echo form_error('id_jenjang_pendidikan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pekerjaan Ibu</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_pekerjaan_ibu',$pekerjaan,'id_pekerjaan','nm_pekerjaan');?>
+			<span id='id_pekerjaan_ibu'></span>
+				<?php echo form_error('id_pekerjaan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>penghasilan Ibu</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_penghasilan_ibu',$penghasilan,'id_penghasilan','nm_penghasilan');?>
+			<span id='id_penghasilan_ibu'></span>
+				<?php echo form_error('id_penghasilan_ibu');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Nama Wali</strong></td>
+			<td class="last">
+				<input type="text" name="nm_wali" value="<?php echo $this->input->post('nm_wali')?>" size="35"/>
+				<?php echo form_error('nm_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Tempat/Tgl. Lahir Wali</strong></td>
+			<td class="last">
+				<input type="text" name="tempatlahir_wali" value="<?php echo $this->input->post('tempatlahir_wali')?>" size="20"/>/
+				<input type="text" name="tgl_lahir_wali" value="<?php echo $this->input->post('tgl_lahir_wali')?>" class="required" size="8"/>dd-mm-yyyy
+				<?php echo form_error('tempatlahir_wali');?>
+				<?php echo form_error('tgl_lahir_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pendidikan Wali</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_jenjang_pendidikan_wali',$pendidikan,'id_jenj_didik','nm_jenj_didik');?>
+			<span id='id_jenjang_pendidikan_wali'></span>
+				<?php echo form_error('id_jenjang_pendidikan_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Pekerjaan Wali</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_pekerjaan_wali',$pekerjaan,'id_pekerjaan','nm_pekerjaan');?>
+			<span id='id_pekerjaan_wali'></span>
+				<?php echo form_error('id_pekerjaan_wali');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>penghasilan Wali</strong></td>
+			<td class="last">
+			<?php echo $this->fungsi->create_combobox('id_penghasilan_wali',$penghasilan,'id_penghasilan','nm_penghasilan');?>
+			<span id='id_penghasilan_wali'></span>
+				<?php echo form_error('id_penghasilan_wali');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -321,3 +517,74 @@ $(document).ready(function() {
   <p>&nbsp;</p>
 </div>
 <?php echo form_close();?>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+
+$('.up_feeder').on('click', function() {
+
+  if ($('#isi_drop_up').is(":visible")){
+    $("#isi_drop_up").hide();
+    $("#isi_drop").hide();
+    $("hasil_up").hide();
+  } else {
+    $("#isi_drop_up").show();
+    $("#isi_drop").hide();
+    $("hasil_up").hide();
+  }
+
+
+});
+
+   $.ajax({
+     url: '<?=base_admin();?>modul/mahasiswa/create_json.php?jurusan='+<?=$id_jur;?>,
+      });
+
+$('.cmdSimpan').on('click', function() {
+
+//$("#loadnya").show();
+//$(".text-wait-up").show();
+$("#isi_drop_up").hide();
+ 
+window.finished = false;
+        $.getJSON('<?=base_admin();?>modul/mahasiswa/push_mhs.php?sem='+<?=$mulai_smt;?>+"&jurusan="+$("#kodeprodi").val(),
+            function(data){
+             //   console.log("ALL DONE", data);
+                clearInterval(window.progressInterval);
+                window.finished = true;
+                if(typeof data.error == 'undefined' || data.error === true){
+                    displayError(data);
+                } else {
+                    checkProgress();
+                    $('.tertiary-status').remove();
+                    if(!$('#script-progress').hasClass('hidden')){
+                        $('#script-progress').fadeOut(200,function(){$('#script-progress').addClass('hidden');});
+                    }
+                    alert('Upload Data Selesai');
+                    $("#loadnya").hide();
+                   $(".text-wait-up").hide();
+                    $("#isi_drop_up").hide();
+                    $("#progress_nya").hide();
+                    $("#isi_informasi").html(data.message);
+                    $('#informasi').modal('show');
+                    
+                   // window.location.reload();
+                }
+            }
+        ).error(function(data){
+            window.hasError = true;
+            console.log("ERROR", data);
+            displayError(data);
+        });
+        window.progressInterval = setInterval(checkProgress, window.updatePeriod);
+
+
+});
+
+
+});
+
+
+</script>  

@@ -105,7 +105,7 @@
 					(SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')namamk,
 					(SELECT sks FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')jumlahsks
 					FROM simambilmk WHERE nilaihuruf <> '' AND idkrs IN(".$res.")";
-			$sql .= " ORDER BY (SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') ASC";
+			$sql .= " GROUP BY simambilmk.kodemk ORDER BY (SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') ASC";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				$data = $hasil->result();
@@ -170,6 +170,15 @@
 			$this->db->where('idkrs', $idkrsnya);
 			$this->db->where('kodemk', $kodemk);
 			$this->db->update('simambilmk', $data);
+		}
+		function update_pilihkelas_feeder($nim, $kodemk, $kelas){
+			$data2 = array(
+				"nama_kelas"	=> $kelas
+			);
+			$this->pmb = $this->load->database('pmb', TRUE);
+			$this->pmb->where('nim', $nim);
+			$this->pmb->where('kode_mk', $kodemk);
+			$this->pmb->update('krs', $data2);
 		}
 	}
 ?>

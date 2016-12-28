@@ -204,26 +204,68 @@
 		}
 		/* Update Nilai By Dosen*/
 				/* Solusi bug dari pak yuli itu cek kosongnya bukan nilai uts saja oke mas gatot? */
-		function update_nilai($nim, $thajaran, $kodemk, $nilai = ''){
+		function update_nilai($nim, $thajaran, $kodemk, $nilai = '', $nilai_angka = ''){
 			$id_krs = $this->_getIdKrs($nim, $thajaran);
 			$idkrs = $id_krs['idkrs'];
 			$data = array(
-				'nilaihuruf' => $nilai
+				'nilaihuruf' => $nilai,
+				'nilaiangka' => $nilai_angka
 			);
 			$this->db->where('kodemk',$kodemk);
 			$this->db->where('idkrs',$idkrs);
 			$this->db->update('simambilmk', $data);
 		}
-		function update_nilai_admin($nim, $thajaran, $kodemk, $nilai = ''){
+		function update_nilai_admin($nim, $thajaran, $kodemk, $nilai = '', $nilai_angka = ''){
 			$id_krs = $this->_getIdKrs($nim, $thajaran);
 			// echo $this->db->query();
 			$idkrs = $id_krs['idkrs'];
+			
 			$data = array(
+				'nilaiangka' => $nilai_angka,
 				'nilaihuruf' => $nilai
 			);
 			$this->db->where('kodemk',$kodemk);
 			$this->db->where('idkrs',$idkrs);
 			$this->db->update('simambilmk', $data);
+			
+			/* echo $this->db->last_query();*/
+		}
+		function update_nilai_feeder($nim, $thajaran, $kodemk, $nilai = '', $nilai_angka = ''){
+			$nilaiindex = '';
+			if ($nilai == 'A')
+			{
+				$nilaiindex = 4;
+			}
+			else if ($nilai == 'B')
+			{
+				$nilaiindex = 3;
+			}
+			else if ($nilai == 'C')
+			{
+				$nilaiindex = 2;
+			}
+			else if ($nilai == 'D')
+			{
+				$nilaiindex = 1;
+			}
+			else if ($nilai == 'E')
+			{
+				$nilaiindex = 0;
+			}
+			$data2 = array(
+				'nilai_angka' => $nilai_angka,
+				'nilai_indek' => $nilaiindex,
+				'nilai_huruf' => $nilai
+			);
+			$this->pmb = $this->load->database('pmb', TRUE);
+			$this->pmb->where('kode_mk',$kodemk);
+			$this->pmb->where('nim',$nim);
+			$this->pmb->update('nilai', $data2);
+			//$this->pmb->insert('nilai', $data2);
+			
+			
+			
+			
 			/* echo $this->db->last_query();*/
 		}
 		/*SELESAI */
@@ -254,7 +296,22 @@
 					'id_kelas_dosen' => '',
 				);
 				$this->db->insert('simambilmk', $data);
-//insert into the second database
+			endforeach;
+			foreach($this->cart->contents() as $items):
+				$data2 = array(
+					'nim' => $this->session->userdata('sesi_krs_nim'),
+					'nama' => $this->session->userdata('sesi_krs_nama'),
+					'kode_mk' => $items['id'],
+					'nama_mk' => $items['name'],
+					'nama_kelas' => 'A',
+					'semester' => $this->session->userdata('sesi_krs_thajaran_aktif'),
+					'kode_jurusan' => $this->session->userdata('sesi_krs_kodeprodi'),
+					'status_error' => '0',
+				);
+				$this->pmb = $this->load->database('pmb', TRUE);
+				$this->pmb->insert('krs', $data2);
+				$this->pmb->insert('nilai', $data2);
+				//insert into the second database
 				//$this->pmb = $this->load->database('pmb', TRUE);
 				//$this->pmb->insert('simambilmk', $data);
 			endforeach;
@@ -360,7 +417,7 @@
 			}
 		}
 		function detail_mahasiswa($nim){
-			$sql = "SELECT nim,nama,kdkelas,(SELECT namaprodi FROM simprodi WHERE kodeprodi=mhs.kodeprodi) nama_prodi, ";
+			$sql = "SELECT nim,nama,kdkelas,kodeprodi,(SELECT namaprodi FROM simprodi WHERE kodeprodi=mhs.kodeprodi) nama_prodi, ";
 					/* (SELECT LEFT(nim,2) FROM simprodi WHERE kodeprodi=mhs.kodeprodi) pref_prodi, */
 				$sql .= "(SELECT jenjang FROM simprodi WHERE kodeprodi=mhs.kodeprodi) jenjang
 					FROM masmahasiswa mhs WHERE mhs.nim = '".$nim."'";

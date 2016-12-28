@@ -87,14 +87,14 @@
 	echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('prodi/simkrs/simpan'), 'update'=>'#center-column', 'name'=>'pilih', 'id'=>'form',	'type'=>'post'));
 ?>
-	<!--<input type='text' style='float:left;' name='txt_kodemk' value='<?php echo $this->session->userdata('sesi_kodemk')?>' id='txt_kodemk' size='8'/>
+	--<input type='text' style='float:left;' name='txt_kodemk' value='<?php echo $this->session->userdata('sesi_kodemk')?>' id='txt_kodemk' size='8'/>
 	<input type='hidden' name='txt_sks' value='<?php echo $sks?>'/>
 	<div id='nama_mk'><input type='text' readonly style='float:left' size='45'/></div>
 	<div id='kode_mk' style='float:left'></div>
 	<input type='submit' value='Tambah'/><br />
 	<input type='radio' name='status' checked value='baru'> Baru |
 	<input type='radio' name='status' value='mengulang'> Mengulang
-</form>-->
+</form>-
 <?php
 	echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('prodi/simkrs/simpan_tabel'), 'update'=>'#center-column', 'name'=>'pilih', 'id'=>'form', 'type'=>'post'));
@@ -157,7 +157,7 @@
 		<input type='text' id='nama_dpa' name='nama_dpa' value='<?php echo $nama_dpa?>' readonly style='width: 330px'/>
 		<input type='hidden' id='id_dpa' name='id_dpa'/>
 	<?php
-		if($nama_dpa == false){
+		{
 			$atrpop = array(
 				'width'=>520,'height'=>450,'screenx'=>200,'screeny'=>50				
 			);

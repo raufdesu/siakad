@@ -114,6 +114,7 @@
 			// $this->db->last_query();
 			$data['nama_dpa'] = $dpa['nama'];
 			$this->session->userdata('sesi_krs_nim');
+			$this->session->userdata('sesi_krs_kodeprodi');
 			if($this->session->userdata('sesi_krs_nim')){
 				$data['browse_krs'] = $this->simkrs_m->get_one_krs($this->session->userdata('sesi_krs_nim'),$this->session->userdata('sesi_krs_thajaran_aktif'));
 				$data['sudah_krs'] = $this->simkrs_m->cek_sudah_krs($this->session->userdata('sesi_krs_nim'),$this->session->userdata('sesi_krs_thajaran_aktif'));

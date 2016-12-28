@@ -79,7 +79,8 @@
 				'sesi_krs_nama' => $dm['nama'],
 				'sesi_krs_prodi' => $dm['nama_prodi'],
 				/* 'sesi_krs_prefprodi' => $dm['pref_prodi'], */
-				'sesi_krs_kelas' => $dm['kdkelas']
+				'sesi_krs_kelas' => $dm['kdkelas'],
+				'sesi_krs_kodeprodi' => $dm['kodeprodi']
 			);
 			$this->session->set_userdata($arsesi);
 			$data['nama_matkul'] = '';
