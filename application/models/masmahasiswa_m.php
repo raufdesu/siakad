@@ -810,11 +810,38 @@
 			$this->db->delete("masmahasiswa");
 		}
 		function insert(){
+			$nm_kk = implode(",", $_POST['id_kk']);
+			$sql10 = "SELECT id_kk from kebutuhan_khusus WHERE nm_kk = '".$nm_kk."'";
+			$hasil = mysql_query($sql10);
+			$idkkmhs = mysql_fetch_row($hasil);
+			$nm_kk_ayah = implode(",", $_POST['id_kebutuhan_khusus_ayah']);
+			$sql11 = "SELECT id_kk from kebutuhan_khusus WHERE nm_kk = '".$nm_kk_ayah."'";
+			$hasil2 = mysql_query($sql11);
+			$idkkayah = mysql_fetch_row($hasil2);
+			$nm_kk_ibu = implode(",", $_POST['id_kebutuhan_khusus_ibu']);
+			$sql12 = "SELECT id_kk from kebutuhan_khusus WHERE nm_kk = '".$nm_kk_ibu."'";
+			$hasil3 = mysql_query($sql12);
+			$idkkibu = mysql_fetch_row($hasil3);
 			$agama = explode (",", $_POST['agama']);
 			$statusmasuk = explode (",", $_POST['statusmasuk']);
 			$jeniskelamin = explode (",", $_POST['jeniskelamin']);
 			$angkatan = $_POST['angkatan'];
 			$mulai_smt = str_pad($angkatan, 5, '1', STR_PAD_RIGHT);
+			$tgl_lahir_ayah = tgl_ingg($_POST['tgl_lahir_ayah']);
+			if($tgl_lahir_ayah == '--')
+			{
+				$tgl_lahir_ayah = '';
+			}
+			$tgl_lahir_ibu = tgl_ingg($_POST['tgl_lahir_ibu']);
+			if($tgl_lahir_ibu == '--')
+			{
+				$tgl_lahir_ibu = '';
+			}
+			$tgl_lahir_wali = tgl_ingg($_POST['tgl_lahir_wali']);
+			if($tgl_lahir_wali == '--')
+			{
+				$tgl_lahir_wali = '';
+			}
 			$data = array(
 				"nim" => $this->input->post("nim"),
 				"nik" => $this->input->post("nik"),
@@ -878,23 +905,27 @@
 				"thlulus" => $this->input->post("thlulus"),
 				"alamatsma" => $this->input->post("alamatsma"),
 				"kodepossma" => $this->input->post("kodepossma"),
-				"statuspaket" => $this->input->post("statuspaket")
+				"statuspaket" => $this->input->post("statuspaket"),
+				"id_kk" => $nm_kk,
+				"id_kk_ayah" => $nm_kk_ayah,
+				"id_kk_ibu" => $nm_kk_ibu
 			);
 			$data2 = array(
 				"nm_pd" => $this->input->post("nama"),
 				"jk" => $jeniskelamin[1],
 				"nisn" => $this->input->post("nisn"),
+				"npwp" => $this->input->post("npwp"),
 				"nik" => $this->input->post("nik"),
 				"tmpt_lahir" => $this->input->post("tempatlahir"),
 				"tgl_lahir" => tgl_ingg($this->input->post("tgllahir")),
 				"id_agama" => $agama[1],
-				"id_kk" => '0',
-				"jln" => tgl_ingg($this->input->post("alamatsekarang")),
+				"id_kk" => $idkkmhs[0],
+				"jln" => $this->input->post("alamatsekarang"),
 				"rt" => $this->input->post("rt"),
 				"rw" => $this->input->post("rw"),
 				"nm_dsn" => $this->input->post("nm_dsn"),
 				"ds_kel" => $this->input->post("ds_kel"),
-				"id_wil" => '999999',
+				"id_wil" => $this->input->post("kecamatan"),
 				"kode_pos" => $this->input->post("kodepos"),
 				"id_jns_tinggal" => $this->input->post("jenis_tinggal"),
 				"id_alat_transport" => $this->input->post("alat_transport"),
@@ -904,20 +935,22 @@
 				"a_terima_kps" => $this->input->post("a_terima_kps"),
 				"no_kps" => $this->input->post("no_kps"),
 				"stat_pd" => 'A',
+				"nik_ayah" => $this->input->post("nik_ayah"),
 				"nm_ayah" => $this->input->post("nm_ayah"),
-				"tgl_lahir_ayah" => tgl_ingg($this->input->post("tgl_lahir_ayah")),
+				"tgl_lahir_ayah" => $tgl_lahir_ayah,
 				"id_jenjang_pendidikan_ayah" => $this->input->post("id_jenjang_pendidikan_ayah"),
 				"id_pekerjaan_ayah" => $this->input->post("id_pekerjaan_ayah"),
 				"id_penghasilan_ayah" => $this->input->post("id_penghasilan_ayah"),
-				"id_kebutuhan_khusus_ayah" => '0',
+				"id_kebutuhan_khusus_ayah" => $idkkayah[0],
+				"nik_ibu" => $this->input->post("nik_ibu"),
 				"nm_ibu_kandung" => $this->input->post("nm_ibu_kandung"),
-				"tgl_lahir_ibu" => tgl_ingg($this->input->post("tgl_lahir_ibu")),
+				"tgl_lahir_ibu" => $tgl_lahir_ibu,
 				"id_jenjang_pendidikan_ibu" => $this->input->post("id_jenjang_pendidikan_ibu"),
 				"id_pekerjaan_ibu" => $this->input->post("id_pekerjaan_ibu"),
 				"id_penghasilan_ibu" => $this->input->post("id_penghasilan_ibu"),
-				"id_kebutuhan_khusus_ibu" => '0',
+				"id_kebutuhan_khusus_ibu" => $idkkibu[0],
 				"nm_wali" => $this->input->post("nm_wali"),
-				"tgl_lahir_wali" => tgl_ingg($this->input->post("tgl_lahir_wali")),
+				"tgl_lahir_wali" => $tgl_lahir_wali,
 				"id_jenjang_pendidikan_wali" => $this->input->post("id_jenjang_pendidikan_wali"),
 				"id_pekerjaan_wali" => $this->input->post("id_pekerjaan_wali"),
 				"id_penghasilan_wali" => $this->input->post("id_penghasilan_wali"),
@@ -949,6 +982,9 @@
 					$this->pmb->insert('mhs_pt', $data3);
 					
 			}
+			$data["sem"] = $mulai_smt;
+			$data["jurusan"] = $_POST['kodeprodi'];
+			$this->load->view("admin/push_mhs",$data);
 		}
 		function get_angkatan(){
 			$data = array();

@@ -22,8 +22,9 @@
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/kelaspaket","#center-column")'>Kelas Paket</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simruang","#center-column")'>Data Ruangan</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simsetting","#center-column")'>Setting SIAKAD</a></li>
-	<!--<li class=""><a href="javascript:void(0)" onclick='show("admin/importold","#center-column")'>Import from Old Data</a></li>-->
-	<li class=""><a href="<?php echo base_url().'application/feeder_importer/admina/index.php';?>" target="_blank">Export Ke PDPT</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/feeder","#center-column")'>Setting Akun Feeder</a></li>
+	<!--<li class=""><a href="javascript:void(0)" onclick='show("admin/importold","#center-column")'>Import from Old Data</a></li-->
+	<!--<li class=""><a href="<?php echo base_url().'application/feeder_importer/admina/index.php';?>" target="_blank">Export Ke PDPT</a></li>-->
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/login/index_browse","#center-column")'>Pengelolaan Akun</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("dosen/login/gantipassword/","#center-column")'>Ganti Password</a></li>
 	<?php }elseif($this->session->userdata('sesi_status') == 'dosen'){ ?>

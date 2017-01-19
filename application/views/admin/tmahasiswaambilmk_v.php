@@ -22,9 +22,15 @@
 		<td class="last">
 			<select name='nilai_<?php echo $i?>'>
 				<option <?php if($ds->nilaihuruf == "") echo "selected";?> value=""></option>
+				<option <?php if($ds->nilaihuruf == "A+") echo "selected";?> value="A+">A+</option>
 				<option <?php if($ds->nilaihuruf == "A") echo "selected";?> value="A">A</option>
+				<option <?php if($ds->nilaihuruf == "A-") echo "selected";?> value="A-">A-</option>
+				<option <?php if($ds->nilaihuruf == "B+") echo "selected";?> value="B+">B+</option>
 				<option <?php if($ds->nilaihuruf == "B") echo "selected";?> value="B">B</option>
+				<option <?php if($ds->nilaihuruf == "B-") echo "selected";?> value="B-">B-</option>
+				<option <?php if($ds->nilaihuruf == "C+") echo "selected";?> value="C+">C+</option>
 				<option <?php if($ds->nilaihuruf == "C") echo "selected";?> value="C">C</option>
+				<option <?php if($ds->nilaihuruf == "C-") echo "selected";?> value="C-">C-</option>
 				<option <?php if($ds->nilaihuruf == "D") echo "selected";?> value="D">D</option>
 				<option <?php if($ds->nilaihuruf == "E") echo "selected";?> value="E">E</option>
 			</select>

@@ -30,10 +30,9 @@ $(document).ready(function() {
 	function tampilkan_kabupten()
 	{
 		var selected_propinsi = $('select[name=propinsi]').val();
-		load('admin/masmahasiswa/tampilkan_kabupaten/'+selected_propinsi,'#kabupaten');
+		load('admin/masmahasiswa/tampilkan_kabupaten/'+selected_propinsi,'#kecamatan');
 	}
 	
-
 	</script>
 <?php echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('admin/masmahasiswa/save'), 							
@@ -256,9 +255,9 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
-			<td class="first"><strong>Kabupaten</strong></td>
+			<td class="first"><strong>Kabupaten/Kecamatan</strong></td>
 			<td class="last">
-				<span id='kabupaten'></span>
+				<span id='kecamatan'></span>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -444,6 +443,75 @@ $(document).ready(function() {
 			</td>
 		</tr>
 		<tr class="bg">
+			<td class="first"><strong>Kebutuhan Khusus Mahasiswa</strong></td>
+			<td class="last">
+				<select multiple name="id_kk[]" size="16">
+					<option value="A">Tuna netra</option>
+					<option value="B">Tuna rungu</option>
+					<option value="C">Tuna grahita ringan</option>
+					<option value="C1">Tuna grahita sedang</option>
+					<option value="D">Tuna daksa ringan</option>
+					<option value="D1">Tuna daksa sedang</option>
+					<option value="E">Tuna laras</option>
+					<option value="F">Tuna wicara</option>
+					<option value="H">Hiperaktif</option>
+					<option value="I">Cerdas Istimewa</option>
+					<option value="J">Bakat Istimewa</option>
+					<option value="K">Kesulitan Belajar</option>
+					<option value="N">Narkoba</option>
+					<option value="O">Indigo</option>
+					<option value="P">Down Syndrome</option>
+					<option value="Q">Autis</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Kebutuhan Khusus Ayah</strong></td>
+			<td class="last">
+				<select multiple name="id_kebutuhan_khusus_ayah[]" size="16">
+					<option value="A">Tuna netra</option>
+					<option value="B">Tuna rungu</option>
+					<option value="C">Tuna grahita ringan</option>
+					<option value="C1">Tuna grahita sedang</option>
+					<option value="D">Tuna daksa ringan</option>
+					<option value="D1">Tuna daksa sedang</option>
+					<option value="E">Tuna laras</option>
+					<option value="F">Tuna wicara</option>
+					<option value="H">Hiperaktif</option>
+					<option value="I">Cerdas Istimewa</option>
+					<option value="J">Bakat Istimewa</option>
+					<option value="K">Kesulitan Belajar</option>
+					<option value="N">Narkoba</option>
+					<option value="O">Indigo</option>
+					<option value="P">Down Syndrome</option>
+					<option value="Q">Autis</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first"><strong>Kebutuhan Khusus Ibu</strong></td>
+			<td class="last">
+				<select multiple name="id_kebutuhan_khusus_ibu[]" size="16">
+					<option value="A">Tuna netra</option>
+					<option value="B">Tuna rungu</option>
+					<option value="C">Tuna grahita ringan</option>
+					<option value="C1">Tuna grahita sedang</option>
+					<option value="D">Tuna daksa ringan</option>
+					<option value="D1">Tuna daksa sedang</option>
+					<option value="E">Tuna laras</option>
+					<option value="F">Tuna wicara</option>
+					<option value="H">Hiperaktif</option>
+					<option value="I">Cerdas Istimewa</option>
+					<option value="J">Bakat Istimewa</option>
+					<option value="K">Kesulitan Belajar</option>
+					<option value="N">Narkoba</option>
+					<option value="O">Indigo</option>
+					<option value="P">Down Syndrome</option>
+					<option value="Q">Autis</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="bg">
 			<td class="first"><strong>Alamat Orang Tua</strong></td>
 			<td class="last">
 				<input type="text" name="alamatortu" value="<?php echo $this->input->post('alamatortu')?>" size="50"/>
@@ -511,6 +579,7 @@ $(document).ready(function() {
 				<a href="javascript:void(0)" onclick='show("admin/masmahasiswa","#center-column")'>
 					&laquo; Batal
 				</a>
+				
 			</td>
 		</tr>
 	</table>
@@ -519,37 +588,14 @@ $(document).ready(function() {
 <?php echo form_close();?>
 
 <script type="text/javascript">
-
-$(document).ready(function() {
-
-
-$('.up_feeder').on('click', function() {
-
-  if ($('#isi_drop_up').is(":visible")){
-    $("#isi_drop_up").hide();
-    $("#isi_drop").hide();
-    $("hasil_up").hide();
-  } else {
-    $("#isi_drop_up").show();
-    $("#isi_drop").hide();
-    $("hasil_up").hide();
-  }
-
-
-});
-
-   $.ajax({
-     url: '<?=base_admin();?>modul/mahasiswa/create_json.php?jurusan='+<?=$id_jur;?>,
-      });
-
-$('.cmdSimpan').on('click', function() {
+function feeder_import() {
 
 //$("#loadnya").show();
 //$(".text-wait-up").show();
-$("#isi_drop_up").hide();
+//$("#isi_drop_up").hide();
  
 window.finished = false;
-        $.getJSON('<?=base_admin();?>modul/mahasiswa/push_mhs.php?sem='+<?=$mulai_smt;?>+"&jurusan="+$("#kodeprodi").val(),
+        $.getJSON('push_mhs.php?sem='+<?=$mulai_smt;?>+"&jurusan="+$("#kodeprodi").val(),
             function(data){
              //   console.log("ALL DONE", data);
                 clearInterval(window.progressInterval);
@@ -581,10 +627,5 @@ window.finished = false;
         window.progressInterval = setInterval(checkProgress, window.updatePeriod);
 
 
-});
-
-
-});
-
-
+}
 </script>  

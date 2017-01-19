@@ -228,6 +228,10 @@
 					// echo $this->input->post('nim_'.$i).'='.$this->input->post('nilai_'.$i).'<br />';
 					//$this->simkrs_m->update_nilai_admin($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
 					$this->simkrs_m->update_nilai_feeder($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
+					$nim = $this->input->post('nim_'.$i);
+					$data["kodemk"] = $kodemk;
+					$data["nim"] = $nim;
+					$this->load->view("admin/push_nilai",$data);
 					// echo $this->db->last_query().'<br />';
 				}
 				$this->load->view('admin/nilai/tsukses_simpan_v.php');

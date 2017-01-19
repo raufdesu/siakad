@@ -75,6 +75,10 @@
 							$krs = $this->simambilmk_m->get_idkrs_bynim($nim, $thajaran);
 							$idkrsnya = $krs['idkrsnya'];
 							$this->simambilmk_m->update_pilihkelas($idkrsnya, $kodemk, $id_kelas_dosen);
+							$this->simambilmk_m->update_pilihkelas_feeder($nim, $kodemk, $kelas);
+							$data["kodemk"] = $kodemk;
+							$data["nim"] = $nim;
+							$this->load->view("admin/push_krs",$data);
 						}
 					}
 					redirect('prodi/simmktawar/mhsambilmk/'.$id_kelas_dosen);

@@ -167,9 +167,11 @@
 			$data = array(
 				"id_kelas_dosen"	=> $id_kelas_dosen
 			);
+			$this->db->initialize();
 			$this->db->where('idkrs', $idkrsnya);
 			$this->db->where('kodemk', $kodemk);
 			$this->db->update('simambilmk', $data);
+			$this->db->close();
 		}
 		function update_pilihkelas_feeder($nim, $kodemk, $kelas){
 			$data2 = array(
@@ -179,6 +181,11 @@
 			$this->pmb->where('nim', $nim);
 			$this->pmb->where('kode_mk', $kodemk);
 			$this->pmb->update('krs', $data2);
+			$this->pmb->where('nim', $nim);
+			$this->pmb->where('kode_mk', $kodemk);
+			$this->pmb->update('nilai', $data2);
+			$this->pmb->close();
+			
 		}
 	}
 ?>

@@ -235,6 +235,13 @@
 			);
 			$this->pmb = $this->load->database('pmb', TRUE);
 			$this->pmb->insert('ajar_dosen', $data3);
+			
+			$data4["sem"] = $this->session->userdata('sesi_thajaran');
+			$data4["jurusan"] = $_POST['txt_kode_prodi'];
+			$data4["kode_mk"] = $_POST['txt_kode_mk'];
+			$data4["nama_kelas"] = $_POST['kelas'];
+			$this->load->view("admin/push_kelas",$data4);
+			//$this->load->view("admin/push_dosen_ajar",$data4);
 		}
 		function update(){
 			$data = array(

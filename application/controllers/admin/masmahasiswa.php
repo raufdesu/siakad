@@ -79,10 +79,19 @@
 			$sql = "SELECT * FROM tkabupaten WHERE idkabupaten LIKE '$kat%'";
 			$kabupaten = $this->db->query($sql);
 			echo $this->fungsi->create_combobox('kabupaten',$kabupaten,'idkabupaten','namakabupaten');
+			echo '/';
+			$this->tampilkan_kacamatan();
+		}
+		function tampilkan_kacamatan(){
+			$kategori = $this->uri->segment(4,0);
+			$kat = substr($kategori, 0, 2);
+			$sql = "SELECT * FROM tkecamatan WHERE idkecamatan LIKE '$kat%'";
+			$kecamatan = $this->db->query($sql);
+			echo $this->fungsi->create_combobox('kecamatan',$kecamatan,'idkecamatan','namakecamatan');
 		}
 		function add(){
 			$data['propinsi'] = $this->db->get('tpropinsi');
-			$data['propinsi'] = $this->db->get('tpropinsi');
+			$data['kabupaten'] = $this->db->get('tkabupaten');
 			$data['pendidikan'] = $this->db->get('jenjang_pendidikan');
 			$data['pekerjaan'] = $this->db->get('pekerjaan');
 			$data['penghasilan'] = $this->db->get('penghasilan');
@@ -118,6 +127,11 @@
 						  'rules'   => 'required'
 					   ),
 					array(
+						  'field'   => 'nama',
+						  'label'   => 'Nama',
+						  'rules'   => 'required'
+					   ),
+					array(
 						  'field'   => 'tempatlahir',
 						  'label'   => 'Tempat Lahir',
 						  'rules'   => 'required'
@@ -143,13 +157,33 @@
 						  'rules'   => 'required'
 					   ),
 					array(
+						  'field'   => 'ds_kel',
+						  'label'   => 'Desa/Kelurahan',
+						  'rules'   => 'required'
+					   ),
+					array(
 						  'field'   => 'wilayah',
 						  'label'   => 'Kewarganegaraan',
 						  'rules'   => 'required'
 					   ),
 					array(
-						  'field'   => 'ds_kel',
-						  'label'   => 'Desa/Kelurahan',
+						  'field'   => 'kodeprodi',
+						  'label'   => 'PRODI',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'kelas',
+						  'label'   => 'Kelas',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'angkatan',
+						  'label'   => 'Angkatan',
+						  'rules'   => 'required'
+					   ),
+					array(
+						  'field'   => 'kecamatan',
+						  'label'   => 'Propinsi, Kabupaten/Kecamatan',
 						  'rules'   => 'required'
 					   ),
 					array(

@@ -232,25 +232,49 @@
 		}
 		function update_nilai_feeder($nim, $thajaran, $kodemk, $nilai = '', $nilai_angka = ''){
 			$nilaiindex = '';
-			if ($nilai == 'A')
+			if ($nilai == 'A+')
 			{
-				$nilaiindex = 4;
+				$nilaiindex = '4';
+			}
+			else if ($nilai == 'A')
+			{
+				$nilaiindex = '3.75';
+			}
+			else if ($nilai == 'A-')
+			{
+				$nilaiindex = '3.50';
+			}
+			else if ($nilai == 'B+')
+			{
+				$nilaiindex = '3.25';
 			}
 			else if ($nilai == 'B')
 			{
-				$nilaiindex = 3;
+				$nilaiindex = '3';
+			}
+			else if ($nilai == 'B-')
+			{
+				$nilaiindex = '2.75';
+			}
+			else if ($nilai == 'C+')
+			{
+				$nilaiindex = '2.50';
 			}
 			else if ($nilai == 'C')
 			{
-				$nilaiindex = 2;
+				$nilaiindex = '2.25';
+			}
+			else if ($nilai == 'C-')
+			{
+				$nilaiindex = '2';
 			}
 			else if ($nilai == 'D')
 			{
-				$nilaiindex = 1;
+				$nilaiindex = '1.75';
 			}
 			else if ($nilai == 'E')
 			{
-				$nilaiindex = 0;
+				$nilaiindex = '0';
 			}
 			$data2 = array(
 				'nilai_angka' => $nilai_angka,
