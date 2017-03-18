@@ -57,10 +57,10 @@ $token = $result;
 
 $table1 = 'kelas_kuliah';
 
-	$arr_data = $db->fetch_custom("select mhs.*,mhs_pt.nipd from mhs inner join mhs_pt on mhs.id=mhs_pt.id_mhs where kode_jurusan='".$jurusan."' and mulai_smt='".$sem."' and status_error!=1");
+	$arr_data = $db->fetch_custom("select mhs.*,mhs_pt.nipd from mhs inner join mhs_pt on mhs.id=mhs_pt.id_mhs where status_error!=1");
 
 $options = array(
-    'filename' => $jurusan.'_progress.json',
+    'filename' => 'progress.json',
     'autoCalc' => true,
     'totalStages' => 1
 );

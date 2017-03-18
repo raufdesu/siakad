@@ -19,7 +19,7 @@
 				$data['semester'] = 'Gasal';
 			}
 			$data['tahunajaran'] = substr($thajaran,0,4);
-			$data['browse_mktawar'] = $this->simmktawar_m->get_byprodi($kodeprodi, $thajaran);
+			$data['browse_mktawar'] = $this->simmktawar_m->get_byprodi($kodeprodi, $semester);
 			$this->load->view('mhs/tdownload_v', $data);
 		}
 	}

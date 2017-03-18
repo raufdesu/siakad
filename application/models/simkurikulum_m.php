@@ -45,17 +45,18 @@
 		/* GET_ALL DIBUAT PAS BUAT FITUR PAKET... JADI BISA DI HAJAR... */
 		function get_all($limit1=10, $limit2=0, $cari = '', $kodeprodi = '', $angkatan = '', $kelas = '', $thajaran = ''){
 			$data = array();
-			$sql = 'SELECT * FROM simkurikulum INNER JOIN simprodi ON simkurikulum.kodeprodi = simprodi.kodeprodi WHERE 1 ';
+			$sql = 'SELECT matkul.kodemk as kodemk, matkul.namamk as namamk, matkul_kurikulum.sks as sks, kurikulum_sp.nm_kurikulum_sp 
+			from matkul inner join matkul_kurikulum on matkul.id_mk = matkul_kurikulum.id_mk 
+			inner join kurikulum_sp on matkul_kurikulum.id_kurikulum_sp = kurikulum_sp.id_kurikulum INNER JOIN simprodi ON matkul.kodeprodi = simprodi.kodeprodi WHERE 1 ';
 			if($cari){
-				$sql .= ' AND (simkurikulum.kodemk LIKE "%'.$cari.'%" OR namamk LIKE "%'.$cari.'%") ';
+				$sql .= ' AND (matkul.kodemk LIKE "%'.$cari.'%" OR namamk LIKE "%'.$cari.'%") ';
 			}
 			if($kodeprodi){
 				$sql .= ' AND simprodi.kodeprodi = "'.$kodeprodi.'" ';
 			}
-			$sql .= ' AND simkurikulum.kodemk NOT IN(
+			$sql .= ' AND matkul.kodemk NOT IN(
 					SELECT kodemk FROM paket INNER JOIN detpaket ON paket.idpaket = detpaket.idpaket
 					WHERE 1 AND kodeprodi = "'.$kodeprodi.'" AND angkatan = "'.$angkatan.'" AND kelas = "'.$kelas.'" AND thajaran = "'.$thajaran.'"	)';
-			$sql .= ' ORDER BY tglinput DESC ';
 			$sql .= ' LIMIT '.$limit2.', '.$limit1;
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){

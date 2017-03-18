@@ -1,10 +1,10 @@
 <?php
 //include "inc/config.php";
-include_once "/../../libraries/nusoap/nusoap.php";
+include_once (APPPATH.'libraries/nusoap/nusoap.php');
 
-require_once "/../../inc/config.php";
+include_once (APPPATH.'inc/config.php');
 
-include_once "/../../libraries/prosesupdate/ProgressUpdater.php";
+include_once (APPPATH.'libraries/prosesupdate/ProgressUpdater.php');
 
 $db=new Database("mysql");
 $config = $db->fetch_single_row('config_user','id',1);

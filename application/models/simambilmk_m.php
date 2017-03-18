@@ -102,10 +102,9 @@
 			else
 				$res = "''";
 			$sql = "SELECT *,
-					(SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')namamk,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')jumlahsks
+					(SELECT DISTINCT sks FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk)jumlahsks
 					FROM simambilmk WHERE nilaihuruf <> '' AND idkrs IN(".$res.")";
-			$sql .= " GROUP BY simambilmk.kodemk ORDER BY (SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') ASC";
+			$sql .= " ORDER BY (SELECT DISTINCT namamk FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk) ASC";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				$data = $hasil->result();
@@ -125,11 +124,10 @@
 				$res=substr($res,0,strlen($res)-1);
 			else
 				$res = "''";
-			$sql = "SELECT idkrs,kodemk,id_kelas_dosen,status,nilaihuruf,
-					(SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')namamk,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."')jumlahsks
+			$sql = "SELECT idkrs,kodemk,id_kelas_dosen,status,nilaihuruf,namamk,
+					(SELECT DISTINCT sks FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk)jumlahsks
 					FROM simambilmk WHERE nilaihuruf <> '' AND idkrs IN(".$res.")";
-			$sql .= " ORDER BY (SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') ASC";
+			$sql .= " ORDER BY (SELECT DISTINCT namamk FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk) ASC";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				$data = $hasil->result();
@@ -150,8 +148,7 @@
 			$idkrs = $gi['idkrsnya'];
 			if($idkrs){
 				$sql = "SELECT *,
-					(SELECT namamk FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') AS namamk,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simambilmk.kodemk AND kodeprodi = '".$kodeprodi."') AS jumlahsks
+					(SELECT DISTINCT sks FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk)jumlahsks
 					FROM simambilmk WHERE idkrs = ".$idkrs;
 				$hasil = $this->db->query($sql);
 				if($hasil->num_rows() > 0){

@@ -1,10 +1,11 @@
 <?php
 //include "inc/config.php";
-include_once "/../../libraries/nusoap/nusoap.php";
+include_once (APPPATH.'libraries/nusoap/nusoap.php');
 
-include_once "/../../inc/config.php";
+include_once (APPPATH.'inc/config.php');
 
-include_once "/../../libraries/prosesupdate/ProgressUpdater.php";
+include_once (APPPATH.'libraries/prosesupdate/ProgressUpdater.php');
+
 
 
 $msg = 'semester = '.$sem;

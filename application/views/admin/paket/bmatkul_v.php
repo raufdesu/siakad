@@ -17,6 +17,7 @@
 			<th class="first" width="5">No.</th>
 			<th>Kode MK</th>
 			<th>Nama Matakuliah</th>
+			<th>Kurikulum</th>
 			<th>SKS</th>
 			<th style="width:20px" class="last">Pilih</th>
 		</tr>
@@ -28,6 +29,7 @@
 		<td class="first"><?php echo $i++.'.';?></td>
 		<td class="first"><?php echo $bm->kodemk;?></td>
 		<td class="first"><a href="javascript:void(0)"><?php echo $bm->namamk?></a></td>
+		<td class="first"><?php echo $bm->nm_kurikulum_sp;?></td>
 		<td class="first"><?php echo $bm->sks?></td>
 		<td align='center'>
 			<a href="javascript:void(0)" onclick='pilih("<?php echo $bm->kodemk?>","<?php echo $bm->namamk?>","<?php echo $bm->sks?>")'>

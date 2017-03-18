@@ -36,6 +36,7 @@
 					$data2 = array(
 						'idkrs'		=> $idkrs,
 						'kodemk'	=> $bp->kodemk,
+						'namamk'	=> $bp->namamk,
 						'nilaihuruf'=> '',
 						'id_kelas_dosen' => '',
 						'status'	=> 'baru'
@@ -315,7 +316,9 @@
 				$data = array(
 					'idkrs' => $maxidkrs,
 					'kodemk' => $items['id'],
+					'namamk' => $items['name'],
 					'status' => $items['options']['status'],
+					'thajaran' => $this->session->userdata('sesi_krs_thajaran_aktif'),
 					'nilaihuruf' => '',
 					'id_kelas_dosen' => '',
 				);
@@ -500,17 +503,20 @@
 				$thajaran = $act['thajaran'];
 			}
 			$kodeprodi = $this->auth->get_kodeprodibynim($nim);
-			$sql = "SELECT sks, kodemk, namamk FROM simkurikulum kur WHERE
-					kodemk IN(SELECT twr.kodemk FROM simmktawar twr WHERE twr.thajaran = '".$thajaran."'
-					AND twr.kodemk LIKE '%".$kodemk."%')";
+			$sql = "SELECT kur.sks, kur.kodemk, kur.namamk FROM matkul kur INNER JOIN matkul_kurikulum on kur.id_mk = matkul_kurikulum.id_mk INNER JOIN
+			kurikulum_sp on matkul_kurikulum.id_kurikulum_sp = kurikulum_sp.id_kurikulum
+			WHERE kur.kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE kur.id_mk = twr.id_mk and twr.kodemk LIKE '%".$kodemk."%')";
 			if($kodeprodi){
-				$sql .= " AND kodeprodi = '".$kodeprodi."'";
+				$sql .= " AND kurikulum_sp.kodeprodi = '".$kodeprodi."'";
 			}
-			$sql .= " LIMIT 1 ";
+			//$sql .= " LIMIT 1 ";
 			$hasil = $this->db->query($sql);
+			
 			if($hasil->num_rows() > 0){
-				return $hasil->row_array();
+				return $hasil->result_array();
 			}
+				
+		
 		}
 		function get_idkrs($nim, $thakad){
 			$sql = "SELECT DISTINCT(idkrs) idkrs FROM simkrs WHERE nim='".$nim."' AND thajaran='".$thakad."'";
@@ -533,8 +539,8 @@
 		function get_one_krs($nim,$thakad){
 			$id_krs = $this->get_idkrs($nim, $thakad);
 			$idkrs = $id_krs['idkrs'];
-			$sql = "SELECT idkrs,kodemk,status, (SELECT DISTINCT(sim.namamk) FROM simkurikulum sim WHERE kodemk = siam.kodemk GROUP BY sim.kodemk) nama_mk,
-					(SELECT DISTINCT(s.sks) FROM simkurikulum s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
+			$sql = "SELECT idkrs,kodemk,status, namamk as nama_mk,
+					(SELECT DISTINCT(s.sks) FROM matkul_kurikulum s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
 					FROM simambilmk siam WHERE siam.idkrs = '".$idkrs."'";
 			return $this->db->query($sql);
 		}

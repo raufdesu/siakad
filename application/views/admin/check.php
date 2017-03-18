@@ -3,7 +3,7 @@ error_reporting(E_ERROR);
 // database variables
 $hostname = "localhost";
 $user = "root";
-$password = "";
+$password = "qwerty123";
 $database = "importer";
 // Database connecten 
 $connection= mysql_connect($hostname, $user, $password);    
@@ -65,4 +65,6 @@ $list_1st = "SELECT nim FROM siakadmataram.masmahasiswa where nim not in (SELECT
 					{
 					echo "Semua data mahasiswa telah di import";
 					}
+	
+	$this->load->view('admin/push_mhs_all');
 ?>	

@@ -15,7 +15,7 @@ class Database {
     {
         try {
             if ($type=='mysql') {
-                  $this->pdo = new PDO($type.":host=".HOST.":".PORT.";dbname=".DATABASE_NAME, DB_USERNAME, DB_PASSWORD );
+                  $this->pdo = new PDO($type.":host=".HOST.";dbname=".DATABASE_NAME, DB_USERNAME, DB_PASSWORD );
       
             } else {
                   $this->pdo = new PDO($type.":host=".PG_HOST.";port=".PG_PORT.";dbname=".PG_DATABASE_NAME.";user=".PG_DB_USERNAME.";password=".PG_DB_PASSWORD );

@@ -110,13 +110,25 @@
 			$this->db->where('thajaran', $thajaran);
 			return $this->db->count_all_results();
 		}
-		function export_toaktifsemester(){
+		/*function export_toaktifsemester(){
 			$output = '';
-			$sql_mhs = "SELECT masmahasiswa.nim, simaktifsemester.status, masmahasiswa.statusakademik FROM masmahasiswa, simaktifsemester  WHERE statusakademik ='Belum Lulus' and masmahasiswa.nim = simaktifsemester.nim group by masmahasiswa.nim";
+			//$sql_mhs = "SELECT masmahasiswa.nim, simaktifsemester.status, masmahasiswa.statusakademik FROM masmahasiswa, simaktifsemester  WHERE statusakademik ='Belum Lulus' and masmahasiswa.nim = simaktifsemester.nim group by masmahasiswa.nim";
+			$sql_mhs = "SELECT nim, statusakademik FROM masmahasiswa WHERE statusakademik ='Belum Lulus'";
 			$query = $this->db->query($sql_mhs);
 			foreach ($query->result() as $rec)
 			{
 				$this->insert($rec->nim, $rec->status);
+			}
+			
+			return $output;
+		}*/
+		function export_toaktifsemester(){
+			$output = '';
+			$sql_mhs = "SELECT nim, statusakademik FROM masmahasiswa WHERE statusakademik ='Belum Lulus'";
+			$query = $this->db->query($sql_mhs);
+			foreach ($query->result() as $rec)
+			{
+				$this->insert($rec->nim);
 			}
 			
 			return $output;
@@ -132,7 +144,7 @@
 			);
 			$this->db->insert("simaktifsemester",$data);
 		}
-		function insert($nim, $status){
+		/*function insert($nim, $status){
 			if ($status == 'Aktif'){
 			$thajaran_active = $this->thajaran_active();
 			$thajaran = $thajaran_active['thajaran'];
@@ -153,6 +165,16 @@
 			);
 			$this->db->insert("simaktifsemester",$data);
 			}
+		}*/
+		function insert($nim){
+			$thajaran_active = $this->thajaran_active();
+			$thajaran = $thajaran_active['thajaran'];
+			$data = array(
+				"nim" => $nim,
+				"thajaran" => $thajaran,
+				"status" => 'Non Aktif',
+			);
+			$this->db->insert("simaktifsemester",$data);
 		}
 		function cek_to_move(){
 			$thajaran_active = $this->thajaran_active();

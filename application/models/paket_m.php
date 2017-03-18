@@ -6,7 +6,7 @@
 		function get_all($limit1='', $limit2='', $cari = '', $prodi = '', $angkatan = '', $kelas = '', $thajaran = ''){
 			$data = array();
 			$sql = 'SELECT *,(SELECT namaprodi FROM simprodi WHERE kodeprodi = k.kodeprodi)namaprodi FROM paket p
-					INNER JOIN detpaket d ON p.idpaket = d.idpaket INNER JOIN simkurikulum k ON d.kodemk = k.kodemk WHERE 1 ';
+					INNER JOIN detpaket d ON p.idpaket = d.idpaket INNER JOIN matkul k ON d.kodemk = k.kodemk WHERE 1 ';
 			if($cari){
 				$sql .= ' AND (k.namamk LIKE "%'.$cari.'%" OR k.kodemk LIKE "%'.$cari.'%")';
 			}
@@ -22,7 +22,7 @@
 			if($thajaran){
 				$sql .= ' AND p.thajaran = "'.$thajaran.'" ';
 			}
-			$sql .= ' ORDER BY k.kodemk DESC ';
+			$sql .= 'group by k.kodemk ORDER BY k.kodemk DESC ';
 			if($limit1 || $limit2){
 				$sql .= " LIMIT ".$limit1;
 				if($limit2 == true){
@@ -126,6 +126,7 @@
 			$data2 = array(
 				'idpaket'	=> $idpaket,
 				'kodemk'	=> $this->input->post('kodemk'),
+				'namamk'	=> $this->input->post('namamk'),
 				'tglinput'	=> date('Y-m-d H:i:s')
 			);
 			$this->db->insert('detpaket', $data2);

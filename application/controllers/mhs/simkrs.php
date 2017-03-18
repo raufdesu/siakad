@@ -16,16 +16,23 @@
 			$nim = $this->session->userdata('sesi_krs_nim');
 			if($this->session->userdata('sesi_kodemk')){
 				$nm = $this->simkrs_m->get_namamatkul_one($this->session->userdata('sesi_kodemk'), '', $nim);
-				$nama_matkul = $nm['namamk'];
-				$kode_matkul = $nm['kodemk'];
-				$sks = $nm['sks'];
+				echo '<select name="txt_nama_mk" id="txt_nama_mk">';
+				foreach($nm as $each){
+				$nama_matkul = $each['namamk'];
+				$kode_matkul = $each['kodemk'];
+				$sks = $each['sks'];
+				
+				echo '<option value="'.$nama_matkul.'">'.$nama_matkul.'</option>';
+				
+			}
+			echo '</select>';
+			//echo "<input type='hidden' readonly name='txt_nama_mk' value='".$_POST['nama_mat']."' size='45' style='float:left'>";
 			}else{
 				$nama_matkul = '';
 				$kode_matkul = '';
 				$sks = '';
 			}
 			echo "<input type='hidden' readonly name='txt_kode_mk' value='".$kode_matkul."' size='8' style='float:left'>";
-			echo "<input type='text' readonly name='txt_nama_mk' value='".$nama_matkul."' size='45' style='float:left'>";
 			echo "<input type='hidden' name='txt_sks' value='".$sks."'>";
 		}
 		function awal_input(){
@@ -87,7 +94,8 @@
 		}
 		function simpan(){
 			$ceksama = $this->simkrs_m->ceksama_tabel($this->input->post('txt_kode_mk'),$this->session->userdata('sesi_user_mhs'),$this->session->userdata('sesi_krs_thajaran_aktif'));
-			$cekquota = $this->simmktawar_m->cekquota($this->input->post('txt_kode_mk'),$this->session->userdata('sesi_thajaran'));
+			//$cekquota = $this->simmktawar_m->cekquota($this->input->post('txt_kode_mk'),$this->session->userdata('sesi_thajaran'));
+			$cekquota = false;
 			if($cekquota == false){
 				if($ceksama == false){
 					$data = array(
@@ -132,13 +140,13 @@
 				$this->load->view('mhs/peringatan_v', $data);
 				return false;
 			}
-			if($this->simkrs_m->cekquota_all()){
+			/*if($this->simkrs_m->cekquota_all()){
 				$data['err'] = 'quota_habis';
 				$data['kodehabis'] = $this->simkrs_m->cekquota_all();
 				$this->load->view('mhs/peringatan_v', $data);
 				$this->input();
 				return false;
-			}
+			}*/
 			if($this->input->post('id_dpa')){
 				$this->simdosenwali_m->insert_dosenwali($this->session->userdata('sesi_user_mhs'),$this->session->userdata('sesi_thajaran'));
 			}

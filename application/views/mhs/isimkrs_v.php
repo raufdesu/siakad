@@ -39,6 +39,9 @@
 <div style="clear:both;"></div>
 <div class="top-bar-adm">
 	<h2>Form Input KRS Mahasiswa</h2>
+	<h2>PENTING!!!</h2> <h2>PASTIKAN KODE MATAKULIAH YANG ANDA MASUKKAN SESUAI DENGAN KURIKULUM YANG DIPROGRAMKAN OLEH PRODI UNTUK ANGKATAN ANDA</h2>
+	<h2>JIKA KODE MATAKULIAH YANG ANDA MASUKKAN SALAH, NAMA ANDA TIDAK AKAN MUNCUL DI ABSEN!</h2>
+	<h2>KONSULTASIKAN KE PRODI, KURIKULUM YANG DIGUNAKAN MASING-MASING ANGKATAN!</h2>
 	<!--<div class="breadcrumbs"><a href="#">tes&nbsp;</a></div>-->
 </div>
 <div class="select-bar">
@@ -90,6 +93,7 @@
 	<input type='text' style='float:left;' name='txt_kodemk' value='<?php echo $this->session->userdata('sesi_kodemk')?>' id='txt_kodemk' size='8'/>
 	<input type='hidden' name='txt_sks' value='<?php echo $sks?>'/>
 	<div id='nama_mk'><input type='text' readonly style='float:left' size='45'/></div>
+	
 	<div id='kode_mk' style='float:left'></div>
 	<input type='submit' value='Tambah' onclick='setujui()' /><br />
 	<input type='radio' name='status' checked value='baru'> Baru |
@@ -181,8 +185,11 @@
 		echo "<p>Anda tidak dapat melakukan input atau perubahan KRS hari ini. Untuk waktu input
 			KRS dapat dilihat pada waktu berikut ini.</p>";
 		$this->load->view('mhs/simsetting/twaktukrs_v');
-	}
+	
 ?>
+<a href="javascript:void(0)" onclick='show("mhs/simkrs/cetak_krs","#center-column")' class='print-button'>Preview KRS</a>
+	<?php }
+	?>
 <script language="javascript">
 	function tanya(idkrs, kodemk){
 		if(confirm('KONFIRMASI\nTekan OK untuk melanjutkan penghapusan data')){

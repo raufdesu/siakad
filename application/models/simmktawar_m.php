@@ -31,8 +31,8 @@
 			return $this->db->query($sql);
 		}
 		function get_namamatkul_one($kodemk = ''){
-			$sql = "SELECT sks, kodemk, namamk, kodeprodi FROM simkurikulum kur WHERE
-					kodemk IN(SELECT twr.kodemk FROM simmktawar twr WHERE twr.kodemk LIKE '%".$kodemk."%')";
+			$sql = "SELECT sks, kodemk, namamk, kodeprodi FROM matkul kur WHERE
+					kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE twr.kodemk LIKE '%".$kodemk."%')";
 			$sql .= " LIMIT 1 ";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
@@ -80,19 +80,28 @@
 				$this->db->update('simmktawar', $data);
 			}
 		}
-		function get_byprodi($kodeprodi='',$thajaran=''){
+		function get_byprodi($kodeprodi='',$semester=''){
 			$data = array();
-			$sql = "SELECT kodemk,thajaran,kuota,kodeprodi,
-					(SELECT namamk FROM simkurikulum WHERE kodemk=simmktawar.kodemk AND kodeprodi=simmktawar.kodeprodi)
-					AS namamk,
-					(SELECT DISTINCT(semester) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
-					AS semester,
-					(SELECT DISTINCT(sks) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
-					AS sks,
-					(SELECT DISTINCT(thnkur) FROM simkurikulum WHERE kodemk = simmktawar.kodemk)
-					AS thnkur FROM simmktawar";
-			$sql .= " WHERE kodemk <> '' AND kodeprodi = '".$kodeprodi."' AND thajaran = '".$thajaran."'";
+			if($semester % 2 == 0){
+			$sql = "SELECT matkul.kodemk,matkul.kodeprodi,matkul.namamk,matkul.sks,
+					matkul_kurikulum.smt AS semester,
+					kurikulum_sp.id_smt AS thnkur,
+					kurikulum_sp.nm_kurikulum_sp AS nmkurikulum 
+					FROM matkul inner join matkul_kurikulum on matkul_kurikulum.id_mk = matkul.id_mk inner join kurikulum_sp on 
+					kurikulum_sp.id_kurikulum = matkul_kurikulum.id_kurikulum_sp";
+			$sql .= " WHERE matkul.kodemk <> '' and kurikulum_sp.kodeprodi =  '".$kodeprodi."' and (matkul_kurikulum.smt%2)=0 order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
 			return $this->db->query($sql);
+			}else
+			{
+			$sql = "SELECT matkul.kodemk,kurikulum_sp.kodeprodi,matkul.namamk,matkul.sks,
+					matkul_kurikulum.smt AS semester,
+					kurikulum_sp.id_smt AS thnkur,
+					kurikulum_sp.nm_kurikulum_sp AS nmkurikulum 
+					FROM matkul_kurikulum inner join matkul on matkul.id_mk = matkul_kurikulum.id_mk inner join kurikulum_sp on 
+					kurikulum_sp.id_kurikulum = matkul_kurikulum.id_kurikulum_sp";
+			$sql .= " WHERE matkul.kodemk <> '' AND kurikulum_sp.kodeprodi = '".$kodeprodi."' and (matkul_kurikulum.smt%2)>0 order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
+			return $this->db->query($sql);
+			}
 		}
 		function get_idkrs($thajaran){
 			$sql = "SELECT idkrs FROM simkrs WHERE thajaran = '".$thajaran."'";
