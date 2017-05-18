@@ -135,7 +135,7 @@
 			return $data;
 		}
 		function get_idkrs_bynim($nim, $thajaran){
-			$sql = "SELECT get_idkrs_bynim('".$nim."','".$thajaran."') AS idkrsnya";
+			$sql = "SELECT idkrs as idkrsnya from simkrs where nim = '".$nim."' and thajaran = '".$thajaran."'";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				return $hasil->row_array();
@@ -183,6 +183,13 @@
 			$this->pmb->update('nilai', $data2);
 			$this->pmb->close();
 			
+		}
+		function count_juml_kelas($id_kelas_dosen){
+			$data = array();
+			$this->db->select("*");
+			$this->db->from("simambilmk");
+			$this->db->where("id_kelas_dosen = '".$id_kelas_dosen."'");
+			return $this->db->count_all_results();
 		}
 	}
 ?>

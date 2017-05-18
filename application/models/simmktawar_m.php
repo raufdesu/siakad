@@ -30,9 +30,10 @@
 			$sql .= " LIMIT ".$limit1;
 			return $this->db->query($sql);
 		}
-		function get_namamatkul_one($kodemk = ''){
+		function get_namamatkul_one($kodemk = '', $kodeprodi = ''){
 			$sql = "SELECT sks, kodemk, namamk, kodeprodi FROM matkul kur WHERE
-					kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE twr.kodemk LIKE '%".$kodemk."%')";
+					kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE twr.kodemk LIKE '%".$kodemk."%')
+					and kodeprodi = '".$kodeprodi."'";
 			$sql .= " LIMIT 1 ";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
@@ -80,8 +81,19 @@
 				$this->db->update('simmktawar', $data);
 			}
 		}
-		function get_byprodi($kodeprodi='',$semester=''){
+		function cekangkatan($nim){
+			$sql = "select id_smt from kurikulum_sp INNER JOIN masmahasiswa on kurikulum_sp.kodeprodi = masmahasiswa.kodeprodi 
+					INNER JOIN matkul_kurikulum on matkul_kurikulum.id_kurikulum_sp = kurikulum_sp.id_kurikulum
+					where angkatan >= SUBSTR(id_smt,1,4) and nim = '".$nim."' ORDER BY id_smt desc limit 1";
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows() > 0){
+				return $hasil->row_array();
+			}
+		}
+		function get_byprodi($kodeprodi='',$semester='',$nim=''){
 			$data = array();
+			$cek_angkatan = $this->cekangkatan($nim);
+			$angkatan = $cek_angkatan['id_smt'];
 			if($semester % 2 == 0){
 			$sql = "SELECT matkul.kodemk,matkul.kodeprodi,matkul.namamk,matkul.sks,
 					matkul_kurikulum.smt AS semester,
@@ -89,7 +101,8 @@
 					kurikulum_sp.nm_kurikulum_sp AS nmkurikulum 
 					FROM matkul inner join matkul_kurikulum on matkul_kurikulum.id_mk = matkul.id_mk inner join kurikulum_sp on 
 					kurikulum_sp.id_kurikulum = matkul_kurikulum.id_kurikulum_sp";
-			$sql .= " WHERE matkul.kodemk <> '' and kurikulum_sp.kodeprodi =  '".$kodeprodi."' and (matkul_kurikulum.smt%2)=0 order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
+			$sql .= " WHERE matkul.kodemk <> '' and kurikulum_sp.kodeprodi =  '".$kodeprodi."' and (matkul_kurikulum.smt%2)=0 
+					and kurikulum_sp.id_smt = '".$angkatan."' order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
 			return $this->db->query($sql);
 			}else
 			{

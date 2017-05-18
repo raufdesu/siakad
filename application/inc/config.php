@@ -8,7 +8,7 @@ define( "DB_USERNAME", "root" );
 
 define( "PORT", 3306);
 //password mysql
-define( "DB_PASSWORD", "qwerty123" );
+define( "DB_PASSWORD", "" );
 //dir admin
 define( "DIR_ADMIN", "feeder-importer/admina/");
 //main directory
@@ -21,7 +21,7 @@ define("DB_CHARACSET", "utf8");
 require_once ("Database.php");
 require_once ("Datatable.php");
 require_once ("My_pagination.php");
-require_once ($_SERVER['DOCUMENT_ROOT'].'/sysakademik/helpers/url_helper.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/siakad/sysakademik/helpers/url_helper.php');
 require_once ("DTable.php");
 require_once ("Table_Clean.php");
 

@@ -66,24 +66,49 @@
 			}else{
 				$kodemk		= $this->input->post('kodemk');
 				$kelas		= $this->input->post('kelas');
+				$kodeprodi	= $this->session->userdata('sesi_prodi');
 				$id_kelas_dosen = $this->input->post('id_kelas_dosen');
 				if($thajaran == false){
 					redirect(base_url().'admin/login/','REFRESH');
 				}else{
+					
+					if ($kodeprodi == 87202 || $kodeprodi == 84202 || $kodeprodi == 84203 || $kodeprodi == 41231 || $kodeprodi == 41201 || $kodeprodi == 22201 || $kodeprodi == 31401 || $kodeprodi == 35201 || $kodeprodi == 15401 || $kodeprodi == 48401)
+					{
+						$jum = 30;
+					}
+					else
+					{
+						$jum = 45;
+					}
+					//$n = $jum-$total_m;
 					$n = $this->input->post('n');
+					$o = 0;
 					for($i=0; $i<=$n; $i++){
 						$nim = $this->input->post('nim'.$i);
 						if($nim){
+							$data['total_mhs']	= $this->simambilmk_m->count_juml_kelas($id_kelas_dosen);
+							$total_m = $data['total_mhs'];
+							if($jum == $total_m){
+								$data["kodemk_mas"] = $kodemk;
+								$data["kelas_mas"] = $kelas;
+								$data["kodeprodi_mas"] = $kodeprodi;
+								$data["thajaran_mas"] = $thajaran;
+								$this->load->view("admin/push_krs",$data);
+								redirect('admin/simmktawar/mhsambilmk/'.$id_kelas_dosen);
+							}
 							$krs = $this->simambilmk_m->get_idkrs_bynim($nim, $thajaran);
 							$idkrsnya = $krs['idkrsnya'];
 							$this->simambilmk_m->update_pilihkelas($idkrsnya, $kodemk, $id_kelas_dosen);
 							$this->simambilmk_m->update_pilihkelas_feeder($nim, $kodemk, $kelas);
-							$data["kodemk"] = $kodemk;
-							$data["nim"] = $nim;
-							$this->load->view("admin/push_krs",$data);
+							
+							
 						}
 					}
-					
+					$data["kodemk_mas"] = $kodemk;
+					$data["kelas_mas"] = $kelas;
+					$data["kodeprodi_mas"] = $kodeprodi;
+					$data["thajaran_mas"] = $thajaran;
+					$this->load->view("admin/push_krs",$data);
 					redirect('admin/simmktawar/mhsambilmk/'.$id_kelas_dosen);
 				}
 			}
@@ -128,17 +153,20 @@
 			$data['kodemk'] = $det['kodemk'];
 			$data['id_kelas_dosen'] = $det['id_kelas_dosen'];
 			$data['namamatkul'] = $det['namamatkul'];
+			$data['kodeprodi'] = $det['kodeprodi'];
 			$data['namadosen'] = $det['namadosen'];
 			$kodematkul = $det['kodemk'];
+			$kodeprodi = $this->session->userdata('sesi_prodi');
 			$ars = array(
 				'sesi_kodematkul' => $kodematkul,
 				'sesi_namamatkul' => $data['namamatkul'],
+				'sesi_kodeprodi' => $data['kodeprodi'],
 				'sesi_namadosen' => $data['namadosen'],
 				'sesi_id_kelas_dosen' => $id_kelas_dosen
 			);
 			$this->session->set_userdata($ars);
-			$data['browse_mhs_sudah'] = $this->masmahasiswa_m->get_mhs_sudahdipresensi($kodematkul, $thajaran, $id_kelas_dosen, $this->session->userdata('sesi_kelas'));
-			$data['browse_mhs'] = $this->masmahasiswa_m->get_mhs_belumdipresensi($kodematkul, $thajaran, $this->session->userdata('sesi_kelas'), $id_kelas_dosen);
+			$data['browse_mhs_sudah'] = $this->masmahasiswa_m->get_mhs_sudahdipresensi($kodeprodi, $kodematkul, $thajaran, $id_kelas_dosen, $this->session->userdata('sesi_kelas'));
+			$data['browse_mhs'] = $this->masmahasiswa_m->get_mhs_belumdipresensi($kodeprodi, $kodematkul, $thajaran, $this->session->userdata('sesi_kelas'), $id_kelas_dosen);
 			$data['ampu'] = $this->simdosenampu_m->get_one($id_kelas_dosen);
 			$this->load->view("admin/tpresensi_mhsambilmk_v", $data);
 		}

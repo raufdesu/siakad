@@ -12,6 +12,7 @@
 			$data['title'] = 'Matakuliah Tawaran';
 			$kodeprodi = $this->auth->get_prodibynim($this->session->userdata('sesi_user_mhs'))->kodeprodi;
 			$thajaran = $this->session->userdata('sesi_thajaran');
+			$nim = $this->session->userdata('sesi_user_mhs');
 			$semester = substr($thajaran,4,2);
 			if($semester % 2 == 0){
 				$data['semester'] = 'Genap';
@@ -19,7 +20,7 @@
 				$data['semester'] = 'Gasal';
 			}
 			$data['tahunajaran'] = substr($thajaran,0,4);
-			$data['browse_mktawar'] = $this->simmktawar_m->get_byprodi($kodeprodi, $semester);
+			$data['browse_mktawar'] = $this->simmktawar_m->get_byprodi($kodeprodi, $semester, $nim);
 			$this->load->view('mhs/tdownload_v', $data);
 		}
 	}

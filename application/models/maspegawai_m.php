@@ -39,6 +39,7 @@
 			$data = array();
 			$this->db->select("*");
 			$this->db->from("maspegawai");
+			$this->db->where("CHAR_LENGTH(nidn) = '10'");
 			if($this->session->userdata('cari_maspegawai'))
 				$this->db->like('nama',$this->session->userdata('cari_maspegawai'));
 			$this->db->limit($limit1,$limit2);
@@ -53,6 +54,7 @@
 			$data = array();
 			$this->db->select("*");
 			$this->db->from("maspegawai");
+			$this->db->where("CHAR_LENGTH(nidn) = '10'");
 			if($this->session->userdata('cari_maspegawai'))
 				$this->db->like('nama',$this->session->userdata('cari_maspegawai'));
 			return $this->db->count_all_results();

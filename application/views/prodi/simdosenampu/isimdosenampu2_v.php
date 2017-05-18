@@ -68,6 +68,10 @@ $nama = $_SESSION['nama'];
 	<tr>
 		<td align="left"><strong>Tatap Muka Real</strong></td><td><input type="text" name="tatap_muka_real"  size="3" />
 		</td>
+	</tr>
+	<tr>
+		<td align="left"><strong>Bahasan</strong></td><td><input type="fieldtext" name="bahasan_case"  size="40" />
+		</td>
 		<td><input type='submit' value='Tambah' name='tambah' OnClick='setujui()'/></td>
 	</tr>
 </table>

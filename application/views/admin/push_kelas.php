@@ -103,6 +103,7 @@ $token = $result;
 		$semester = $value->semester;
 		$kelas = $value->nama_kelas;
 		$nama_mk = $value->nama_mk;
+		$bahasan_case = $value->bahasan_case;
 		$kode_prodi = trim($value->kode_jurusan);
 
 		$filter_sms = "id_sp='".$id_sp."' and kode_prodi ilike '%".$kode_prodi."%'";
@@ -156,7 +157,8 @@ $token = $result;
 				'sks_tm' => $sks_tm,
 			    'sks_prak' => $sks_prak,
 		   		'sks_prak_lap' => $sks_prak_lap,
-				'sks_sim' => $sks_sim
+				'sks_sim' => $sks_sim,
+				'bahasan_case' => $bahasan_case
 				);
 
 	$temp_result = $proxy->InsertRecord($token, $table1, json_encode($temp_data));

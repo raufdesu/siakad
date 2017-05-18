@@ -4,7 +4,7 @@
 			parent::model();
 		}
 		function cek_likemkprodi($likekode){
-			$sql = 'SELECT kodemk FROM simkurikulum WHERE kodemk LIKE "'.$likekode.'%"';
+			$sql = 'SELECT kodemk FROM matkul WHERE kodemk LIKE "'.$likekode.'%"';
 			$hasil = $this->db->query($sql);
 			return $hasil->num_rows();
 		}

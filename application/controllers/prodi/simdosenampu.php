@@ -85,7 +85,7 @@
 			$cekada = $this->simkurikulum_m->cek_likemkprodi($this->uri->segment(4,0));
 			if($cekada){
 				if($this->session->userdata('sesi_kodemk')){
-					$nm = $this->simmktawar_m->get_namamatkul_one($this->session->userdata('sesi_kodemk'));
+					$nm = $this->simmktawar_m->get_namamatkul_one($this->session->userdata('sesi_kodemk'), $this->session->userdata('sesi_prodi'));
 					$data['nama_matkul'] = $nm['namamk'];
 					$data['kode_matkul'] = $nm['kodemk'];
 					$data['kode_prodi'] = $nm['kodeprodi'];

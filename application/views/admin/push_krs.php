@@ -49,6 +49,17 @@ $token = $result;
 	$error_nim="";
 	$error_mk="";
 	$error_kelas = "";
+	
+	$query_matkul = '';
+	$query_kelas = '';
+
+	if ($_GET['matkul']!='all') {
+		$query_matkul = "and kode_mk='".$kodemk_mas."'";
+	}
+	if ($_GET['kelas']!='all') {
+		$query_kelas  = "and nama_kelas='".$kelas_mas."'";
+	}
+	
 
 	//get id npsn
 	$filter_sp = "npsn='".$config->id_sp."'";
@@ -57,7 +68,7 @@ $token = $result;
 	$id_sp = $get_id_sp['result']['id_sp'];
 
 
-	$count = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where krs.nim='".$nim."' and krs.kode_mk='".$kodemk."' and status_error!=1");
+	$count = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where jurusan.kode_jurusan='".$kodeprodi_mas."' and krs.semester='".$thajaran_mas."' and status_error!=1 $query_matkul $query_kelas");
 	$jumlah = $count->rowCount();
 
 
@@ -81,7 +92,7 @@ $token = $result;
 
 
 		$options = array(
-		    'filename' => $kodemk.'_progress.json',
+		    'filename' => $kodeprodi_mas.'_progress.json',
 		    'autoCalc' => true,
 		    'totalStages' => $total
 		);
@@ -90,7 +101,7 @@ $token = $result;
 		for ($i=0; $i <$total ; $i++) { 
 		if ($i==0) {
 
-			$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where krs.nim='".$nim."' and krs.kode_mk='".$kodemk."' and status_error!=1");
+			$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where jurusan.kode_jurusan='".$kodeprodi_mas."' and krs.semester='".$thajaran_mas."' and status_error!=1 $query_matkul $query_kelas limit $i,500");
 
 			//let's push first page
 			$stageOptions = array(
@@ -105,7 +116,7 @@ $token = $result;
 
 				$nim = $value->nim;
 				$kode_mk = $value->kode_mk;
-				$nim = $value->nama_kelas;
+				$kelas = $value->nama_kelas;
 				$semester = $value->semester;
 				$kode_prodi = $value->kode_jurusan;
 
@@ -127,7 +138,7 @@ $token = $result;
 					if ($temp_mk['result']) {
 					$id_mk = $temp_mk['result']['id_mk'];
 
-					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$nim."' AND p.id_smt='".$semester."'";
+					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$kelas."' AND p.id_smt='".$semester."'";
 					$temp_kls = $proxy->GetRecord($token,'kelas_kuliah',$filter_kls);
 
 					if ($temp_kls['result']) {
@@ -183,7 +194,7 @@ $token = $result;
 		} else if ($i == $total - 1) {
 		
       
-	 		$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where krs.nim='".$nim."' and krs.kode_mk='".$kodemk."' and status_error!=1");
+	 		$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where jurusan.kode_jurusan='".$kodeprodi_mas."' and krs.semester='".$thajaran_mas."' and status_error!=1 $query_matkul $query_kelas limit ".($i*500).",$bagi");
 			//let's push first page
 			$stageOptions = array(
 			    'name' => 'Page $i',
@@ -196,7 +207,7 @@ $token = $result;
 			foreach ($data as $value) {
 				$nim = $value->nim;
 		$kode_mk = $value->kode_mk;
-		$nim = $value->nama_kelas;
+		$kelas = $value->nama_kelas;
 		$semester = $value->semester;
 
 				$kode_prodi = $value->kode_jurusan;
@@ -218,7 +229,7 @@ $token = $result;
 					if ($temp_mk['result']) {
 					$id_mk = $temp_mk['result']['id_mk'];
 
-					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$nim."' AND p.id_smt='".$semester."'";
+					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$kelas."' AND p.id_smt='".$semester."'";
 					$temp_kls = $proxy->GetRecord($token,'kelas_kuliah',$filter_kls);
 
 					if ($temp_kls['result']) {
@@ -281,7 +292,7 @@ $token = $result;
   	  else if($i != $total - 1 && $i!=0) {
 			
 		
-	 		$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where krs.nim='".$nim."' and krs.kode_mk='".$kodemk."' and status_error!=1");
+	 		$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where jurusan.kode_jurusan='".$kodeprodi_mas."' and krs.semester='".$thajaran_mas."' and status_error!=1 $query_matkul $query_kelas limit ".($i*500).",500");
 			//let's push first page
 			$stageOptions = array(
 			    'name' => 'Page $i',
@@ -295,7 +306,7 @@ $token = $result;
 
 			$nim = $value->nim;
 		$kode_mk = $value->kode_mk;
-		$nim = $value->nama_kelas;
+		$kelas = $value->nama_kelas;
 		$semester = $value->semester;
 
 				$kode_prodi = $value->kode_jurusan;
@@ -318,7 +329,7 @@ $token = $result;
 					if ($temp_mk['result']) {
 					$id_mk = $temp_mk['result']['id_mk'];
 
-					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$nim."' AND p.id_smt='".$semester."'";
+					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$kelas."' AND p.id_smt='".$semester."'";
 					$temp_kls = $proxy->GetRecord($token,'kelas_kuliah',$filter_kls);
 
 					if ($temp_kls['result']) {
@@ -403,14 +414,14 @@ $token = $result;
 	} else {
 
 		$options = array(
-		    'filename' => $kodemk.'_progress.json',
+		    'filename' => $kodeprodi_mas.'_progress.json',
 		    'autoCalc' => true,
 		    'totalStages' => 1
 		);
 		$new_pu = new Manticorp\ProgressUpdater($options);
 
 	
-	 	$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where krs.nim='".$nim."' and krs.kode_mk='".$kodemk."' and status_error!=1");
+	 	$data = $db->fetch_custom("select *,krs.id as id_krs from krs inner join jurusan on krs.kode_jurusan=jurusan.kode_jurusan where jurusan.kode_jurusan='".$kodeprodi_mas."' and krs.semester='".$thajaran_mas."' and status_error!=1 $query_matkul $query_kelas limit 0,$jumlah");
 			//let's push first page
 
 			$stageOptions = array(
@@ -425,7 +436,7 @@ $token = $result;
 
 	$nim = $value->nim;
 		$kode_mk = $value->kode_mk;
-		$nim = $value->nama_kelas;
+		$kelas = $value->nama_kelas;
 		$semester = $value->semester;
 
 				$kode_prodi = $value->kode_jurusan;
@@ -447,7 +458,7 @@ $token = $result;
 					if ($temp_mk['result']) {
 					$id_mk = $temp_mk['result']['id_mk'];
 
-					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$nim."' AND p.id_smt='".$semester."'";
+					$filter_kls = "p.id_mk='".$id_mk."' AND nm_kls='".$kelas."' AND p.id_smt='".$semester."'";
 					$temp_kls = $proxy->GetRecord($token,'kelas_kuliah',$filter_kls);
 
 					if ($temp_kls['result']) {

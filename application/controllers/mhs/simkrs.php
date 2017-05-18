@@ -19,7 +19,6 @@
 				echo '<select name="txt_nama_mk" id="txt_nama_mk">';
 				foreach($nm as $each){
 				$nama_matkul = $each['namamk'];
-				$kode_matkul = $each['kodemk'];
 				$sks = $each['sks'];
 				
 				echo '<option value="'.$nama_matkul.'">'.$nama_matkul.'</option>';
@@ -32,7 +31,7 @@
 				$kode_matkul = '';
 				$sks = '';
 			}
-			echo "<input type='hidden' readonly name='txt_kode_mk' value='".$kode_matkul."' size='8' style='float:left'>";
+			echo "<input type='hidden' readonly name='txt_kode_mk' value='".$this->session->userdata('sesi_kodemk')."' size='8' style='float:left'>";
 			echo "<input type='hidden' name='txt_sks' value='".$sks."'>";
 		}
 		function awal_input(){

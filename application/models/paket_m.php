@@ -50,7 +50,7 @@
 		function count_all($cari = '', $prodi = '', $angkatan = '', $kelas = '', $thajaran = ''){
 			$data = array();
 			$sql = 'SELECT * FROM paket p INNER JOIN detpaket d ON p.idpaket = d.idpaket
-					INNER JOIN simkurikulum k ON d.kodemk = k.kodemk WHERE 1 ';
+					INNER JOIN matkul k ON d.kodemk = k.kodemk WHERE 1 ';
 			if($cari){
 				$sql .= ' AND (k.namamk LIKE "%'.$cari.'%" OR k.kodemk LIKE "%'.$cari.'%")';
 			}

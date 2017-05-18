@@ -84,7 +84,7 @@
 		}
 		function get_one($id){
 			$sql = "SELECT id_kelas_dosen,kodemk,npp,thajaran,jamawal,jamselesai,rencana_tatap_muka,tatap_muka_real,hari,id_ruang,
-					(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)namamatkul,kelas,
+					(SELECT namamk FROM matkul WHERE kodemk=simdosenampu.kodemk limit 1)namamatkul,kelas,
 					(SELECT nama FROM maspegawai WHERE npp = simdosenampu.npp)namadosen
 					FROM simdosenampu WHERE id_kelas_dosen = ".$id." ";
 			$hasil = $this->db->query($sql);
@@ -95,7 +95,8 @@
 			}
 		}
 		function get_onepengampu($id_kelas_dosen){
-			$sql = "SELECT id_kelas_dosen,kodemk,npp,(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)namamatkul,
+			$sql = "SELECT id_kelas_dosen,kodemk,npp,(SELECT namamk FROM matkul WHERE kodemk=simdosenampu.kodemk limit 1)namamatkul,
+					(select kodeprodi from matkul where kodemk = simdosenampu.kodemk limit 1)kodeprodi,
 					(SELECT nama FROM maspegawai WHERE npp=simdosenampu.npp)namadosen
 					FROM simdosenampu WHERE id_kelas_dosen = ".$id_kelas_dosen." ";
 			$hasil = $this->db->query($sql);
@@ -104,13 +105,13 @@
 			}
 		}
 		function get_matkul($limit1='', $limit2='', $thajaran='', $cari = '', $kodeprodi = ''){
-			$sql = "SELECT kodemk,id_kelas_dosen,(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)namamk,kelas,
+			$sql = "SELECT kodemk,id_kelas_dosen,(SELECT distinct namamk FROM matkul WHERE kodemk=simdosenampu.kodemk and kodeprodi = '".$kodeprodi."')namamk,kelas,
 					(SELECT nama FROM maspegawai WHERE npp=simdosenampu.npp)namadosen
 					FROM simdosenampu WHERE thajaran = '".$thajaran."' ";
 			if($this->session->userdata('sesicari_katmatakuliahtawar') == 'namadosen'){
 				$kategori = "(SELECT nama FROM maspegawai WHERE npp=simdosenampu.npp)";
 			}elseif($this->session->userdata('sesicari_katmatakuliahtawar') == 'namamk'){
-				$kategori = "(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)";
+				$kategori = "(SELECT namamk FROM matkul WHERE kodemk=simdosenampu.kodemk)";
 			}else{
 				$kategori = $this->session->userdata('sesicari_katmatakuliahtawar');
 			}
@@ -137,7 +138,7 @@
 			return $this->db->query($sql);
 		}
 		function matkulprodi($kodeprodi){
-			$sql = 'SELECT kodemk FROM simkurikulum WHERE kodeprodi = "'.$kodeprodi.'"';
+			$sql = 'SELECT kodemk FROM matkul WHERE kodeprodi = "'.$kodeprodi.'"';
 			$hasil = $this->db->query($sql);
 			return $hasil;
 		}
@@ -146,7 +147,7 @@
 			if($this->session->userdata('sesicari_katmatakuliahtawar') == 'namadosen'){
 				$kategori = "(SELECT nama FROM maspegawai WHERE npp=simdosenampu.npp)";
 			}elseif($this->session->userdata('sesicari_katmatakuliahtawar') == 'namamk'){
-				$kategori = "(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk)";
+				$kategori = "(SELECT namamk FROM matkul WHERE kodemk=simdosenampu.kodemk)";
 			}else{
 				$kategori = $this->session->userdata('sesicari_katmatakuliahtawar');
 			}
@@ -179,7 +180,7 @@
 					(SELECT nama FROM simruang WHERE simruang.id_ruang=simdosenampu.id_ruang) ruang FROM
 					simdosenampu WHERE thajaran = '".$this->session->userdata('sesi_thajaran')."' "; */
 			$sql = 'SELECT *,(SELECT nama FROM simruang WHERE simruang.id_ruang = simdosenampu.id_ruang)ruang
-					FROM simdosenampu INNER JOIN simkurikulum ON simdosenampu.kodemk = simkurikulum.kodemk
+					FROM simdosenampu INNER JOIN matkul ON simdosenampu.kodemk = matkul.kodemk
 					WHERE thajaran = "'.$this->session->userdata('sesi_thajaran').'"';
 			$sql .= " AND npp = '".$npp."'";
 			if($kodeprodi){
@@ -217,7 +218,8 @@
 				"kode_mk" => $this->input->post("txt_kode_mk"),
 				"nama_mk" => $this->input->post("txt_nama_mk"),
 				"nama_kelas" => $this->input->post("kelas"),
-				"kode_jurusan" => $this->input->post("txt_kode_prodi")
+				"bahasan_case" => $this->input->post("bahasan_case"),
+				"kode_jurusan" => $this->session->userdata('sesi_prodi')
 			);
 			$this->pmb = $this->load->database('pmb', TRUE);
 			$this->pmb->insert('kelas_kuliah', $data2);
@@ -231,13 +233,13 @@
 				"nama_kelas" => $this->input->post("kelas"),
 				"rencana_tatap_muka" => $this->input->post("rencana_tatap_muka"),
 				"tatap_muka_real" => $this->input->post("tatap_muka_real"),
-				"kode_jurusan" => $this->input->post("txt_kode_prodi")
+				"kode_jurusan" => $this->session->userdata('sesi_prodi')
 			);
 			$this->pmb = $this->load->database('pmb', TRUE);
 			$this->pmb->insert('ajar_dosen', $data3);
 			
 			$data4["sem"] = $this->session->userdata('sesi_thajaran');
-			$data4["jurusan"] = $_POST['txt_kode_prodi'];
+			$data4["jurusan"] = $this->session->userdata('sesi_prodi');
 			$data4["kode_mk"] = $_POST['txt_kode_mk'];
 			$data4["nama_kelas"] = $_POST['kelas'];
 			$this->load->view("admin/push_kelas",$data4);

@@ -299,6 +299,11 @@
 			if($update){
 				$id_pkrs = $this->id_pkrs();
 				$maxidkrs = $id_pkrs['idkrs'];
+				$data = array(
+					'tanggal' => date('Y-m-d H:i:s')
+				);
+				$this->db->where('idkrs',$maxidkrs);
+				$this->db->update('simkrs', $data);
 			}else{
 				$maxkrs = $this->max_id_krs();
 				$maxidkrs = $maxkrs['max_idkrs']+1;
@@ -330,7 +335,7 @@
 					'nama' => $this->session->userdata('sesi_krs_nama'),
 					'kode_mk' => $items['id'],
 					'nama_mk' => $items['name'],
-					'nama_kelas' => 'A',
+					'nama_kelas' => '',
 					'semester' => $this->session->userdata('sesi_krs_thajaran_aktif'),
 					'kode_jurusan' => $this->session->userdata('sesi_krs_kodeprodi'),
 					'status_error' => '0',
@@ -540,7 +545,7 @@
 			$id_krs = $this->get_idkrs($nim, $thakad);
 			$idkrs = $id_krs['idkrs'];
 			$sql = "SELECT idkrs,kodemk,status, namamk as nama_mk,
-					(SELECT DISTINCT(s.sks) FROM matkul_kurikulum s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
+					(SELECT DISTINCT(s.sks) FROM matkul s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
 					FROM simambilmk siam WHERE siam.idkrs = '".$idkrs."'";
 			return $this->db->query($sql);
 		}
@@ -571,12 +576,27 @@
 				return $hasil->row_array();
 			}
 		}
+		
+		function cekpaket($nim){
+			$sql = "SELECT statuspaket FROM masmahasiswa WHERE nim = '".$nim."'";
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows() > 0){
+				return $hasil->row_array();
+			}
+		}
 		function res_sks($nim){
 			$prev = $this->thajaran_sebelumnya($nim);
 			$thajaran = $prev['thajaran'];
+			$cek_paket = $this->cekpaket($nim);
+			$cekpakett = $cek_paket['statuspaket'];
 			if($thajaran == false){
 				return $sks = 24;
-			}else{
+			}
+			else if($cekpakett == 'paket')
+			{
+				return $sks = 24;
+			}
+			else{
 				$sql = "SELECT CASE nilaihuruf 
 					WHEN 'A' THEN 4 
 					WHEN 'B' THEN 3 

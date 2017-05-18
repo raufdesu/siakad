@@ -24,6 +24,9 @@
 	<h1><?php echo $title;?></h1>
 	<div class="breadcrumbs"><a href="#">&nbsp;</a></div>
 </div><br />
+<h2>Batas jumlah mahasiswa per kelas</h2>
+<h2>Eksak		: 30</h2>
+<h2>Non Eksak	: 45</h2>
 <div class="select-bar">
 	<select name='thajaran' class='obj-right' id='thajaran' OnChange='submitChangeThajaran2()'>
 		<option value=''>Pilih</option>
@@ -49,6 +52,7 @@
 <div class="left-box2">
 <div class="head-box">
 	<b>Daftar Matakuliah</b>
+
 </div>
 <table cellpadding='0' cellspacing='0' width='100%'>
 	<tr>

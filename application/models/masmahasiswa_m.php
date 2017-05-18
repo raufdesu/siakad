@@ -327,7 +327,7 @@
 			return $this->db->query($sql);
 		}
 		/* MAHASISWA YANG SUDAH MASUK DI PRESENSI (SUDAH DI TENTUKAN KELASNYA) */
-		function get_mhs_sudahdipresensi($kodemk, $thajaran, $id_kelas_dosen = '', $kelas = ''){
+		function get_mhs_sudahdipresensi($kodeprodi, $kodemk, $thajaran, $id_kelas_dosen = '', $kelas = ''){
 			if($kelas == false){
 				$kdkelas = 1;
 			}else{
@@ -347,12 +347,16 @@
 			$sql .= " FROM simkrs WHERE thajaran = '".$thajaran."' ";
 			$sql .= " AND idkrs IN";
 			$sql .= "(".$res.")";
+			
+			$sql .= " AND kodeprodi = ";
+			$sql .= "'".$kodeprodi."'";
+			
 			$sql .= "AND (SELECT nama FROM masmahasiswa WHERE nim=simkrs.nim) <> 'NULL' ";
 			$sql .= " ORDER BY nim ASC ";
 			return $this->db->query($sql);
 		}
 		/* function get_mhs_belumdipresensi($kodematkul, $thajaran, $this->session->userdata('sesi_kelas'), $id_kelas_dosen) */
-		function get_mhs_belumdipresensi($kodemk, $thajaran, $kelas = '', $id_kelas_dosen = ''){
+		function get_mhs_belumdipresensi($kodeprodi, $kodemk, $thajaran, $kelas = '', $id_kelas_dosen = ''){
 			if($kelas == false){
 				$kdkelas = 1;
 			}else{
@@ -389,6 +393,9 @@
 
 			$sql .= " AND idkrs NOT IN";
 			$sql .= "(".$res_not.")";
+			
+			$sql .= " AND kodeprodi = ";
+			$sql .= "'".$kodeprodi."'";
 
 			$sql .= " ORDER BY nim ASC ";
 			return $this->db->query($sql);

@@ -7,6 +7,7 @@
 </head>
 <div class="top-bar-adm">
 	<h1>Daftar Dosen dan Asisten Dosen</h1>
+	<h2>Dosen yang di list adalah Dosen yang memiliki NIDN. Apabila ada nama Dosen yang belum tercantum, silahkan hubungi BPTIK</h2>
 	<div class="breadcrumbs"><a href="#">&nbsp;</a></div>
 </div><br />
 <div class="select-bar">
