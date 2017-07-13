@@ -72,6 +72,18 @@ $nama = $_SESSION['nama'];
 	<tr>
 		<td align="left"><strong>Bahasan</strong></td><td><input type="fieldtext" name="bahasan_case"  size="40" />
 		</td>
-		<td><input type='submit' value='Tambah' name='tambah' OnClick='setujui()'/></td>
 	</tr>
+	<tr>
+		<td align="left"><strong>Tanggal Mulai Tatap Muka</strong></td><td class="last"><input type='text' name='tgl_mulai_koas'  size="9" />
+		<input type='button' value='..' class='date' OnClick="displayDatePicker('tgl_mulai_koas', false, 'dmy', '-')"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left"><strong>Tanggal selesai Tatap Muka</strong></td><td class="last"><input type="text" name="tgl_selesai_koas"  size="9" />
+		<input type='button' value='..' class='date' OnClick="displayDatePicker('tgl_selesai_koas', false, 'dmy', '-')"/>
+		</td>
+			<td><input type='submit' value='Tambah' name='tambah' OnClick='setujui()'/></td>
+	
+	</tr>
+	
 </table>

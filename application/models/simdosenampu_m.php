@@ -219,6 +219,8 @@
 				"nama_mk" => $this->input->post("txt_nama_mk"),
 				"nama_kelas" => $this->input->post("kelas"),
 				"bahasan_case" => $this->input->post("bahasan_case"),
+				"tgl_mulai_koas"	=> tgl_ingg($this->input->post("tgl_mulai_koas")),
+				"tgl_selesai_koas"	=> tgl_ingg($this->input->post("tgl_selesai_koas")),
 				"kode_jurusan" => $this->session->userdata('sesi_prodi')
 			);
 			$this->pmb = $this->load->database('pmb', TRUE);

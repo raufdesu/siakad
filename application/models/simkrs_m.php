@@ -541,11 +541,22 @@
 			return $num = $hasil->num_rows();
 			// return $this->db->count_all_results();
 		}
+		function cek_kurikulum($nim){
+			$sql = "select id_kurikulum from kurikulum_sp INNER JOIN masmahasiswa on kurikulum_sp.kodeprodi = masmahasiswa.kodeprodi 
+					INNER JOIN matkul_kurikulum on matkul_kurikulum.id_kurikulum_sp = kurikulum_sp.id_kurikulum
+					where angkatan >= SUBSTR(id_smt,1,4) and nim = '".$nim."' ORDER BY id_smt desc limit 1";
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows() > 0){
+				return $hasil->row_array();
+			}
+		}
 		function get_one_krs($nim,$thakad){
+			$cek_angkatan = $this->cek_kurikulum($nim);
+			$kurikulum = $cek_angkatan['id_kurikulum'];
 			$id_krs = $this->get_idkrs($nim, $thakad);
 			$idkrs = $id_krs['idkrs'];
 			$sql = "SELECT idkrs,kodemk,status, namamk as nama_mk,
-					(SELECT DISTINCT(s.sks) FROM matkul s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
+					(SELECT DISTINCT(s.sks) FROM matkul_kurikulum s WHERE kodemk = siam.kodemk and id_kurikulum_sp = '".$kurikulum."' GROUP BY s.kodemk) sks
 					FROM simambilmk siam WHERE siam.idkrs = '".$idkrs."'";
 			return $this->db->query($sql);
 		}
@@ -565,9 +576,6 @@
 			$hasil->free_result();
 			return $data;
 		}
-		/* NTAR HABIS SHOLAT DILANJUTKAN 
-			MASIH SANGAT KACAU
-		*/
 		function thajaran_sebelumnya($nim){
 			$thajaran_now = $this->session->userdata('sesi_thajaran');
 			$sql = "SELECT thajaran FROM simkrs WHERE nim = '".$nim."' AND thajaran <> '".$thajaran_now."' ORDER BY thajaran DESC LIMIT 1";

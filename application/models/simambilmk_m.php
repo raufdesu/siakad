@@ -124,10 +124,10 @@
 				$res=substr($res,0,strlen($res)-1);
 			else
 				$res = "''";
-			$sql = "SELECT idkrs,kodemk,id_kelas_dosen,status,nilaihuruf,namamk,
+			$sql = "select * from (SELECT idkrs,kodemk,id_kelas_dosen,status,nilaihuruf,namamk,
 					(SELECT DISTINCT sks FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk)jumlahsks
 					FROM simambilmk WHERE nilaihuruf <> '' AND idkrs IN(".$res.")";
-			$sql .= " ORDER BY (SELECT DISTINCT namamk FROM matkul INNER JOIN masmahasiswa on masmahasiswa.nim = '".$nim."' WHERE matkul.kodemk = simambilmk.kodemk AND matkul.namamk = simambilmk.namamk AND matkul.kodeprodi = '".$kodeprodi."'  GROUP BY matkul.kodemk) ASC";
+			$sql .= "ORDER BY nilaihuruf ASC) as t1 group by kodemk";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				$data = $hasil->result();

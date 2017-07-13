@@ -95,7 +95,7 @@
 				$data['thakad'] = $this->session->userdata('sesi_khsthajaran');
 			}
 			$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $data['thakad']);
-			$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
+			//$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
 			$data['nama_dpa'] = $dpa['nama'];
 			$this->load->view('prodi/laporan/ctranskrip_s', $data);
