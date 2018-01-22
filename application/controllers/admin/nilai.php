@@ -125,6 +125,7 @@
 				$data['thakad'] = $this->session->userdata('sesi_khsthajaran');
 			}
 			$data['nim'] = $this->session->userdata('sesi_nimmhs');
+			$data['kodeprodi'] = $this->simambilmk_m->get_kdprodibynim($data['nim']);
 			$data['browse_khs'] = $this->simambilmk_m->get_khs($data['nim'], $data['thakad']);
 			$this->load->view('admin/nilai/tkhs_v', $data);
 		}
@@ -155,6 +156,8 @@
 			$data['dm'] = $this->simkrs_m->get_one($nim, $data['thakad']);
 			$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
+			$data['nim'] = $this->session->userdata('sesi_nimmhs');
+			$data['kodeprodi'] = $this->simambilmk_m->get_kdprodibynim($data['nim']);
 			$data['nama_dpa'] = $dpa['nama'];
 			$this->load->view('admin/laporan/ckhs_v', $data);
 		}

@@ -44,6 +44,8 @@ Class Simambilmk extends Controller{
 		$data['browse_thajar'] = $this->simkrs_m->get_thbynim($nim);
 		$cek = $this->simambilmk_m->get_idkrs_bynim($nim, $data['thakad']);
 		$data['cek_khs'] = $cek['idkrsnya'];
+		$cek_kodeprodi = $this->simambilmk_m->get_kdprodibynim($nim);
+		$data['kodeprodi'] = $cek_kodeprodi;
 		$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 		$this->load->view('mhs/simambilmk/tkhs_v', $data);
 	}
@@ -93,6 +95,7 @@ Class Simambilmk extends Controller{
 		}
 
 		$data['nim'] = $this->session->userdata('sesi_user_mhs');
+		$data['kodeprodi'] = $this->simambilmk_m->get_kdprodibynim($data['nim']);
 		$data['browse_thajar'] = $this->simsetting_m->select();
 		$data['browse_transkrip'] = $this->simambilmk_m->get_transkrip_bythajaran($data['nim'], $data['thakad']);
 		$data['browse_matrikulasi'] = $this->simtranskrip_m->get_onetranskrip($data['nim']);

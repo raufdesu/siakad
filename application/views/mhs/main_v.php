@@ -111,11 +111,16 @@
 			<li><span><span>
 				<a href="javascript:void(0)" class="tab" onclick='show("mhs/simambilmk/transkrip","#center-column");switch_tab(this)'>Transkrip</a>
 			</span></span></li>
+			<li><span><span>
+				<!--<a href="javascript:void(0)" onclick='show("mhs/simkrs/khs","#center-column")'>KHS</a>-->
+				<a href="javascript:void(0)" class="tab" onclick='show("mhs/pembayaran/bayar","#center-column");switch_tab(this)'>History Pembayaran</a>
+			</span></span></li>
 			<li><span><span><a href="javascript:void(0)" onclick='show("mhs/simambilmk/jadwal_bynim","#center-column")'>Jadwal Kuliah</a></span></span></li>
 			<li><span><span><a href="javascript:void(0)" onclick='show("mhs/masmahasiswa/detail","#center-column")'>Profil</a></span></span></li>
 			<li><span><span><a href="javascript:void(0)" onclick='show("mhs/utility/about","#center-column")'>About</a></span></span></li>
 			<li><span><span><a href="javascript:void(0)" onclick='show("mhs/utility/help","#center-column")'>? Help</a></span></span></li>
-		</ul><div id="loading"></div>
+			<div id="loading"></div>
+		</ul>
 	</div>
 	<div id="middle">
 		<div id="left-column">
@@ -129,6 +134,7 @@
 			<?php } ?>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simambilmk/khs","#center-column");switch_tab(this)'>KHS</a></li>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simambilmk/transkrip","#center-column");switch_tab(this)'>Transkrip</a></li>
+				<li><a href="javascript:void(0)" onclick='show("mhs/pembayaran/bayar","#center-column");switch_tab(this)'>History Pembayaran</a></li>
 				<li><a href="javascript:void(0)" onclick='show("mhs/simambilmk/jadwal_bynim","#center-column")'>Jadwal Kuliah</a></li>
 				<li><a href="javascript:void(0)" onclick='show("mhs/masmahasiswa/detail","#center-column")'>Profil</a></li>
 				<li><a href="javascript:void(0)" onclick='show("mhs/utility/about","#center-column")'>About</a></li>

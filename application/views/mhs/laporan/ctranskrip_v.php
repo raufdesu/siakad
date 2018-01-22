@@ -71,7 +71,33 @@
 	$tot = 0;
 	$skor = 0;
 	foreach($browse_transkrip as $bk):
-			if($bk->nilaihuruf == "A"){
+	if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
+			if($bk->nilaihuruf == "A+"){
+				$bobot = 4;
+			}elseif($bk->nilaihuruf == "A"){
+				$bobot = 3.75;
+			}elseif($bk->nilaihuruf == "A-"){
+				$bobot = 3.5;
+			}elseif($bk->nilaihuruf == "B+"){
+				$bobot = 3.25;
+			}elseif($bk->nilaihuruf == "B"){
+				$bobot = 3;
+			}elseif($bk->nilaihuruf == "B-"){
+				$bobot = 2.75;
+			}elseif($bk->nilaihuruf == "C+"){
+				$bobot = 2.5;
+			}elseif($bk->nilaihuruf == "C"){
+				$bobot = 2.25;
+			}elseif($bk->nilaihuruf == "C-"){
+				$bobot = 2;
+			}elseif($bk->nilaihuruf == "D"){
+				$bobot = 1.75;
+			}else{
+				$bobot = 0;
+			}
+	}
+	else{
+		if($bk->nilaihuruf == "A"){
 				$bobot = 4;
 			}elseif($bk->nilaihuruf == "B"){
 				$bobot = 3;
@@ -82,6 +108,7 @@
 			}else{
 				$bobot = 0;
 			}
+	}
 			$js = $bk->jumlahsks * $bobot;
 			$jums = $jums+$js;
 ?>

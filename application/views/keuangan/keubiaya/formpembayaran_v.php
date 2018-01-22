@@ -106,6 +106,19 @@
 				?>
 			</td>
 		</tr>
+		<tr class="bg">
+			<td class="first" width="190"><strong>Minimum Pengaktifan</strong></td>
+			<td class="last">
+				Rp. <input type="text" class="number" style="background-color:#efefef;" readonly value="<?php echo rupiah($biaya['minaktif'], 1)?>" name="tagihan" size="10" />,00
+				<?php echo form_error('tagihan');?>
+				<?php if($biaya['kategori'] == 'Persemester'){ ?>
+				<?php
+					}else{
+						echo form_hidden('thajaran', $this->session->userdata('sesi_thajaranbiaya'));
+					}
+				?>
+			</td>
+		</tr>
 		<tr>
 			<td id="label" class="first" width="190"><strong>Sudah Dibayar</strong></td>
 			<td class="last">

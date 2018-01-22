@@ -79,22 +79,19 @@
 		}
 		function get_one($nim){
 			$kodeprodi = $this->auth->get_prodibynim($nim)->kodeprodi;
-			$sql = "SELECT kodemk,(SELECT namamk FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."') nama,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."')sks,nilai FROM simtranskrip WHERE nim = '".$nim."' ORDER BY thajaran";
+			$sql = "SELECT kodemk,namamk as nama, sks, nilai FROM simtranskrip WHERE nim = '".$nim."' ORDER BY thajaran";
 			return $this->db->query($sql);
 		}
 		function get_onebythajaran($nim, $thajaran){
 			$kodeprodi = $this->auth->get_prodibynim($nim)->kodeprodi;
-			$sql = "SELECT kodemk,(SELECT namamk FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."') nama,status,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."')sks,nilai
+			$sql = "SELECT kodemk, namamk as nama,status,sks,nilai
 					FROM simtranskrip WHERE nim = '".$nim."' AND thajaran = '".$thajaran."' AND status <> 'matrikulasi' ORDER BY nama";
 			return $this->db->query($sql);
 		}
 		function get_onetranskrip($nim){
 			$kodeprodi = $this->auth->get_prodibynim($nim)->kodeprodi;
-			$sql = "SELECT kodemk,(SELECT namamk FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."') nama,status,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simtranskrip.kodemk AND kodeprodi = '".$kodeprodi."')sks,nilai
-					FROM simtranskrip WHERE nim = '".$nim."' AND status = 'matrikulasi' ORDER BY nama";
+			$sql = "SELECT kodemk,namamk as nama,status,sks,nilai
+					FROM simtranskrip WHERE nim = '".$nim."' AND status = 'matrikulasi' ORDER BY namamk";
 			return $this->db->query($sql);
 		}
 		function count_one_paralel($nim){

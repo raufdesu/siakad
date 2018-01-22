@@ -53,6 +53,18 @@ Class Keubiaya extends Controller{
 		$this->session->set_userdata($data_sesi);
 		$this->daftar_pembayaran();
 	}
+	function index_daftar_pembayaran_prodi(){
+		$thajaran_bayar = $this->simsetting_m->get_active();
+		$data_sesi = array(
+			'cari_pembayaran' => '',
+			'sesi_thajaranpembayaran' => $thajaran_bayar,
+			'sesi_prodipembayaran' => $this->session->userdata('sesi_prodi'),
+			'sesi_statuspembayaran' => '',
+			'sesi_angkatanpembayaran' => ''
+		);
+		$this->session->set_userdata($data_sesi);
+		$this->daftar_pembayaran();
+	}
 	function daftar_pembayaran(){
 		/* $data['thajaran'] = $this->session->userdata('sesi_thajaranbiaya');
 		$data['browse_jenis'] = $this->keuaturbiaya_m->get_jenis(); */
@@ -163,7 +175,7 @@ Class Keubiaya extends Controller{
 			$data['petugas'] = 'keuangan';
 		}
 		
-		$data['biaya'] = $this->keubiaya_m->get_onebiaya($data['nim'], $data['namabiaya']);
+		$data['biaya'] = $this->keubiaya_m->get_onebiaya($data['nim'], $data['namabiaya'], $data['jenis']);
 		/* $data['biaya'] = $this->keubiaya_m->get_onebiaya($data['nim'], $data['namabiaya'], $data['thajaran']); */
 		
 		$data['browse_thajaran'] = $this->simsetting_m->select();
@@ -298,6 +310,7 @@ Class Keubiaya extends Controller{
 					$nim = $this->input->post('nim');
 					$thajaran = $this->input->post('thajaran');
 					$this->keusetoran_m->tentukan_status($this->input->post('idbiaya'), $nim, $thajaran);
+					$this->keusetoran_m->aktif_setengah($this->input->post('idbiaya'), $nim, $thajaran);
 					redirect('keuangan/keubiaya/add');
 				/* } */
 			}else{

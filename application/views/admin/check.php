@@ -10,7 +10,7 @@ $connection= mysql_connect($hostname, $user, $password);
 
 mysql_select_db ($database, $connection);
 
-$list_1st = "SELECT nim FROM siakadmataram.masmahasiswa where nim not in (SELECT nipd FROM importer.mhs_pt)";
+$list_1st = "SELECT nim FROM siakadmataram2.masmahasiswa where nim not in (SELECT nipd FROM importer.mhs_pt)";
 		$result_1st = mysql_query($list_1st);
 					$ij = 0;
 					while ($row1 = mysql_fetch_array($result_1st)) 
@@ -42,10 +42,10 @@ $list_1st = "SELECT nim FROM siakadmataram.masmahasiswa where nim not in (SELECT
 										id_kebutuhan_khusus_ayah, nm_ibu_kandung, tgl_lahir_ibu, id_jenjang_pendidikan_ibu, id_pekerjaan_ibu, id_penghasilan_ibu, id_kebutuhan_khusus_ibu, nm_wali, tgl_lahir_wali, id_jenjang_pendidikan_wali, id_pekerjaan_wali, id_penghasilan_wali, kewarganegaraan)
 										SELECT nama, jeniskelamin, nisn, nik, tempatlahir, tgllahir, id_agama, '0', alamatsekarang, rt, rw, 
 										nm_dsn, ds_kel, '999999', kodepos, id_jns_tinggal, id_alat_transport, notelportu, notelpmhs, email, a_terima_kps, no_kps, statusakademik, nm_ayah,
-										tgl_lahir_ayah, id_jenjang_pendidikan_ayah, id_pekerjaan_ayah, id_penghasilan_ayah, '0', nm_ibu_kandung, tgl_lahir_ibu, id_jenjang_pendidikan_ibu, id_pekerjaan_ibu, id_penghasilan_ibu, '0', nm_wali, tgl_lahir_wali, id_jenjang_pendidikan_wali, id_pekerjaan_wali, id_penghasilan_wali, kewarganegaraan from siakadmataram.masmahasiswa
+										tgl_lahir_ayah, id_jenjang_pendidikan_ayah, id_pekerjaan_ayah, id_penghasilan_ayah, '0', nm_ibu_kandung, tgl_lahir_ibu, id_jenjang_pendidikan_ibu, id_pekerjaan_ibu, id_penghasilan_ibu, '0', nm_wali, tgl_lahir_wali, id_jenjang_pendidikan_wali, id_pekerjaan_wali, id_penghasilan_wali, kewarganegaraan from siakadmataram2.masmahasiswa
 										WHERE masmahasiswa.nim = '".$motherid."';";
 							$insert_2nd = "insert into importer.mhs_pt (id_mhs, kode_jurusan, id_jns_daftar, nipd, tgl_masuk_sp, mulai_smt)
-										SELECT LAST_INSERT_ID(), kodeprodi, '1', nim, tglmasuk, RPAD(`angkatan`, 5, '1') from siakadmataram.masmahasiswa
+										SELECT LAST_INSERT_ID(), kodeprodi, '1', nim, tglmasuk, RPAD(`angkatan`, 5, '1') from siakadmataram2.masmahasiswa
 										WHERE masmahasiswa.nim = '".$motherid."';";
 							$mysql_insert_1st = mysql_query($insert_1st);
 							$mysql_insert_2nd = mysql_query($insert_2nd);

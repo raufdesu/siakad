@@ -47,7 +47,8 @@
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simmatrikulasi","#center-column")'>Matrikulasi</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simdosenampu","#center-column")'>Dosen Ampu</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simmktawar/presensi","#center-column")'>Kelas Mahasiswa</a></li>
-    <li class=""><a href="javascript:void(0)" onclick='show("dosen/login/gantipassword/","#center-column")'>Ganti Password</a></li>
+    <li class=""><a href="javascript:void(0)" onclick='show("keuangan/keubiaya/index_daftar_pembayaran_prodi","#center-column")'>Daftar Pembayaran</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("dosen/login/gantipassword/","#center-column")'>Ganti Password</a></li>
 	<!--<li class=""><a href="javascript:void(0)" onclick='show("prodi/simdaftarskripsi","#center-column")'>Pendaftar KP/TA/Skripsi</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simdaftarskripsi/browse_sk","#center-column")'>Surat Keputusan</a></li>-->
 	<?php } ?>

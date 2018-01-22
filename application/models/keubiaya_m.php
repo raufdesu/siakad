@@ -3,16 +3,13 @@
 		function __construct(){
 			parent::model();
 		}
-		function import($kodeprodi = '', $angkatan = '', $gelombang = '', $namabiaya = '', $thajaran = '', $jumbiaya = '', $jenis, $kategori=''){
+		function import($kodeprodi = '', $angkatan = '', $gelombang = '', $namabiaya = '', $thajaran = '', $jumbiaya = '', $minaktif = '', $jenis, $kategori=''){
 			$sql = 'SELECT nim FROM masmahasiswa WHERE statusakademik = "Belum Lulus" ';
 			if($kodeprodi){
 				$sql .= ' AND kodeprodi = "'.$kodeprodi.'" ';
 			}
 			if($angkatan){
 				$sql .= ' AND angkatan = "'.$angkatan.'" ';
-			}
-			if($gelombang){
-				$sql .= ' AND gelombang = "'.$gelombang.'" ';
 			}
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows()){
@@ -25,6 +22,7 @@
 						'nim'		=> $mhs->nim,
 						'jumbiaya'	=> $jumbiaya,
 						'jumbiaya_awal'	=> $jumbiaya,
+						'minaktif'	=> $minaktif,
 						'dispensasi'=> 'Tidak',
 						'status'	=> 'Belum Lunas',
 						
@@ -281,11 +279,11 @@
 			}
 		}
 		/* function get_onebiaya($nim, $namabiaya, $thajaran){ */
-		function get_onebiaya($nim, $namabiaya){
+		function get_onebiaya($nim, $namabiaya, $jenisbiaya){
 			$sql = 'SELECT *,
 						(SELECT SUM(jumsetoran) FROM keusetoran WHERE keusetoran.idbiaya = keubiaya.idbiaya) totalsetoran
 						FROM keubiaya ';
-			$sql .= ' WHERE nim ="'.$nim.'" AND namabiaya = "'.$namabiaya.'"';
+			$sql .= ' WHERE nim ="'.$nim.'" AND namabiaya = "'.$namabiaya.'"  AND jenis = "'.$jenisbiaya.'"';
 			/* $sql .= ' WHERE nim ="'.$nim.'" AND namabiaya = "'.$namabiaya.'" AND thajaran = "'.$thajaran.'"'; */
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){

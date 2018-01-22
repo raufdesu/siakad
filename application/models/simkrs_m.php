@@ -19,6 +19,11 @@
 				return false;
 			}
 		}
+		function get_kdprodibynim($nim){
+			$sql = "SELECT kodeprodi FROM masmahasiswa WHERE nim = '".$nim."'";
+			$hasil = $this->db->query($sql);
+			return $hasil->row()->kodeprodi;
+		}
 		function insert_paket($nim, $kodeprodi, $angkatan, $kelas, $thajaran){
 			/* $kodeprodi = $this->auth->get_kodeprodibynim($nim); */
 			$belumkrsan = $this->cek_sudah_krs($nim, $thajaran);
@@ -239,7 +244,7 @@
 			}
 			else if ($nilai == 'A')
 			{
-				$nilaiindex = '3.75';
+				$nilaiindex = '4';
 			}
 			else if ($nilai == 'A-')
 			{
@@ -263,7 +268,7 @@
 			}
 			else if ($nilai == 'C')
 			{
-				$nilaiindex = '2.25';
+				$nilaiindex = '2';
 			}
 			else if ($nilai == 'C-')
 			{
@@ -271,7 +276,7 @@
 			}
 			else if ($nilai == 'D')
 			{
-				$nilaiindex = '1.75';
+				$nilaiindex = '1';
 			}
 			else if ($nilai == 'E')
 			{
@@ -503,6 +508,8 @@
 			}
 		}
 		function get_namamatkul_one($kodemk = '', $thajaran = '', $nim = ''){
+			$cek_angkatan = $this->cek_kurikulum($nim);
+			$kurikulum = $cek_angkatan['id_kurikulum'];
 			if(!$thajaran){
 				$act = $this->thajaran_active();
 				$thajaran = $act['thajaran'];
@@ -510,7 +517,7 @@
 			$kodeprodi = $this->auth->get_kodeprodibynim($nim);
 			$sql = "SELECT kur.sks, kur.kodemk, kur.namamk FROM matkul kur INNER JOIN matkul_kurikulum on kur.id_mk = matkul_kurikulum.id_mk INNER JOIN
 			kurikulum_sp on matkul_kurikulum.id_kurikulum_sp = kurikulum_sp.id_kurikulum
-			WHERE kur.kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE kur.id_mk = twr.id_mk and twr.kodemk LIKE '%".$kodemk."%')";
+			WHERE kur.kodemk IN(SELECT twr.kodemk FROM matkul_kurikulum twr WHERE kur.id_mk = twr.id_mk and twr.kodemk LIKE '%".$kodemk."%') and id_kurikulum_sp = '".$kurikulum."'";
 			if($kodeprodi){
 				$sql .= " AND kurikulum_sp.kodeprodi = '".$kodeprodi."'";
 			}
@@ -534,8 +541,8 @@
 			$id_krs = $this->get_idkrs($nim, $thakad);
 			$idkrs = $id_krs['idkrs'];
 			// $idkrs = '8440';
-			$sql = "SELECT kodemk, (SELECT DISTINCT(sim.namamk) FROM simkurikulum sim WHERE kodemk = siam.kodemk GROUP BY sim.kodemk) nama_mk,
-					(SELECT DISTINCT(s.sks) FROM simkurikulum s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
+			$sql = "SELECT kodemk, (SELECT DISTINCT(sim.namamk) FROM matkul sim WHERE kodemk = siam.kodemk GROUP BY sim.kodemk) nama_mk,
+					(SELECT DISTINCT(s.sks) FROM matkul_kurikulum s WHERE kodemk = siam.kodemk GROUP BY s.kodemk) sks
 					FROM simambilmk siam WHERE siam.idkrs = '".$idkrs."'";
 			$hasil = $this->db->query($sql);
 			return $num = $hasil->num_rows();
@@ -605,15 +612,35 @@
 				return $sks = 24;
 			}
 			else{
+				$kodeprodi = $this->get_kdprodibynim($nim);
+				if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
 				$sql = "SELECT CASE nilaihuruf 
+					WHEN 'A+' THEN 4 
+					WHEN 'A' THEN 3.75 
+					WHEN 'A-' THEN 3.5 
+					WHEN 'B+' THEN 3.25 
+					WHEN 'B' THEN 3 
+					WHEN 'B-' THEN 2.75 
+					WHEN 'C+' THEN 2.5
+					WHEN 'C' THEN 2.25
+					WHEN 'C-' THEN 2
+					WHEN 'D' THEN 1.75
+					WHEN '' THEN 0 
+					END AS nilai,
+					(SELECT DISTINCT(sks) FROM matkul WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
+						(SELECT idkrs FROM simkrs WHERE nim = '".$nim."' AND thajaran = '".$thajaran."')";
+				}
+				else{
+					$sql = "SELECT CASE nilaihuruf 
 					WHEN 'A' THEN 4 
 					WHEN 'B' THEN 3 
 					WHEN 'C' THEN 2
 					WHEN 'D' THEN 1
 					WHEN '' THEN 0 
 					END AS nilai,
-					(SELECT DISTINCT(sks) FROM simkurikulum WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
+					(SELECT DISTINCT(sks) FROM matkul WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
 						(SELECT idkrs FROM simkrs WHERE nim = '".$nim."' AND thajaran = '".$thajaran."')";
+				}
 				$hasil = $this->db->query($sql);
 				$js = 0; $jn = 0;
 				$ip = 0;
@@ -633,13 +660,13 @@
 					if($ip >= 3)
 						$sks = 24;
 					elseif(($ip >= 2.5) AND ($ip <= 2.99))
-						$sks = 21;
+						$sks = 22;
 					elseif(($ip >= 2) AND ($ip <= 2.49))
-						$sks = 18;
+						$sks = 20;
 					elseif(($ip >= 1.5) AND ($ip <= 1.99))
-						$sks = 15;
+						$sks = 18;
 					else
-						$sks = 12;
+						$sks = 16;
 					return $sks;
 				}
 				// if($hasil->num_rows() > 0){
@@ -691,15 +718,35 @@
 			return $hasil->row();
 		}
 		function get_ipk($nim){
+			$kodeprodi = $this->simambilmk_m->get_kdprodibynim($nim);
+			if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
 			$sql = "SELECT CASE nilaihuruf 
-					WHEN 'A' THEN 4 
+					WHEN 'A+' THEN 4 
+					WHEN 'A' THEN 3.75 
+					WHEN 'A-' THEN 3.5 
+					WHEN 'B+' THEN 3.25 
 					WHEN 'B' THEN 3 
-					WHEN 'C' THEN 2
-					WHEN 'D' THEN 1
-					WHEN 'E' THEN 0 
+					WHEN 'B-' THEN 2.75 
+					WHEN 'C+' THEN 2.5
+					WHEN 'C' THEN 2.25
+					WHEN 'C-' THEN 2
+					WHEN 'D' THEN 1.75
+					WHEN '' THEN 0 
 					END AS nilai,
-					(SELECT DISTINCT(sks) FROM simkurikulum WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
+					(SELECT DISTINCT(sks) FROM matkul WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
 						(SELECT idkrs FROM simkrs WHERE nim = '".$nim."')";
+				}
+				else {
+					$sql = "SELECT CASE nilaihuruf 
+					WHEN 'A' THEN 3.75 
+					WHEN 'B' THEN 3 
+					WHEN 'C' THEN 2.25
+					WHEN 'D' THEN 1.75
+					WHEN '' THEN 0 
+					END AS nilai,
+					(SELECT DISTINCT(sks) FROM matkul WHERE kodemk = simambilmk.kodemk LIMIT 1) sks FROM simambilmk WHERE idkrs IN
+						(SELECT idkrs FROM simkrs WHERE nim = '".$nim."')";
+				}
 			$hasil = $this->db->query($sql);
 			$js = 0; $jn = 0;
 			$ip = 0;

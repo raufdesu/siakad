@@ -6,18 +6,18 @@
 		function get_bydosen($npp){
 			$thajaran = $this->auth->get_thactive()->thajaran;
 			$sql = "SELECT id_kelas_dosen, kodemk,
-				(SELECT namamk FROM simkurikulum WHERE kodemk = simdosenampu.kodemk)namamk,
-				(SELECT sks FROM simkurikulum WHERE kodemk = simdosenampu.kodemk)sks,
-				(SELECT kodeprodi FROM simkurikulum WHERE kodemk = simdosenampu.kodemk) kodeprodi,kelas
+				(SELECT namamk FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1)namamk,
+				(SELECT sks FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1)sks,
+				(SELECT kodeprodi FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1) kodeprodi,kelas
 				FROM simdosenampu WHERE npp = '".$npp."' AND thajaran = '".$thajaran."' ";
 			return $this->db->query($sql);
 		}
 		function count_bydosen($npp){
 			$thajaran = $this->auth->get_thactive()->thajaran;
 			$sql = "SELECT id_kelas_dosen, kodemk,
-				(SELECT namamk FROM simkurikulum WHERE kodemk = simdosenampu.kodemk)namamk,
-				(SELECT sks FROM simkurikulum WHERE kodemk = simdosenampu.kodemk)sks,
-				(SELECT kodeprodi FROM simkurikulum WHERE kodemk = simdosenampu.kodemk) kodeprodi,kelas
+				(SELECT namamk FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1)namamk,
+				(SELECT sks FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1)sks,
+				(SELECT kodeprodi FROM matkul WHERE kodemk = simdosenampu.kodemk limit 1) kodeprodi,kelas
 				FROM simdosenampu WHERE npp = '".$npp."' AND thajaran = '".$thajaran."' ";
 			$hasil = $this->db->query($sql);
 			return $hasil->num_rows();
@@ -29,7 +29,7 @@
 			return $hasil->num_rows();
 		}
 		function _getprefkodeprodi($kodematkul){
-			$sql = "SELECT kodeprodi FROM simkurikulum WHERE kodemk = '".$kodematkul."' LIMIT 1";
+			$sql = "SELECT kodeprodi FROM matkul WHERE kodemk = '".$kodematkul."' LIMIT 1";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				return $hasil->row_array(); //return row sebagai associative array
@@ -53,9 +53,9 @@
 			$kodeprodi = $kdprodi['kodeprodi'];
 			$sql = "SELECT *,
 					(SELECT nama FROM simruang WHERE id_ruang = simdosenampu.id_ruang) ruang,
-					(SELECT semester FROM simkurikulum WHERE kodemk=simdosenampu.kodemk) semester,
-					(SELECT sks FROM simkurikulum WHERE kodemk=simdosenampu.kodemk) sks,
-					(SELECT namamk FROM simkurikulum WHERE kodemk=simdosenampu.kodemk) namamk,
+					(SELECT smt FROM matkul_kurikulum WHERE kodemk=simdosenampu.kodemk) semester,
+					(SELECT sks FROM matkul WHERE kodemk=simdosenampu.kodemk) sks,
+					(SELECT namamk FROM matkul WHERE kodemk=simdosenampu.kodemk) namamk,
 					(SELECT namaprodi FROM simprodi WHERE kodeprodi=".$kodeprodi.") namaprodi,
 					kelas FROM simdosenampu ";
 			$sql .= " WHERE thajaran = '".$thajaran."'
@@ -105,7 +105,7 @@
 			}
 		}
 		function get_matkul($limit1='', $limit2='', $thajaran='', $cari = '', $kodeprodi = ''){
-			$sql = "SELECT kodemk,id_kelas_dosen,(SELECT distinct namamk FROM matkul WHERE kodemk=simdosenampu.kodemk and kodeprodi = '".$kodeprodi."')namamk,kelas,
+			$sql = "SELECT kodemk,id_kelas_dosen,(SELECT distinct namamk FROM matkul WHERE kodemk=simdosenampu.kodemk and kodeprodi = '".$kodeprodi."' limit 1)namamk,kelas,
 					(SELECT nama FROM maspegawai WHERE npp=simdosenampu.npp)namadosen
 					FROM simdosenampu WHERE thajaran = '".$thajaran."' ";
 			if($this->session->userdata('sesicari_katmatakuliahtawar') == 'namadosen'){

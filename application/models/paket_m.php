@@ -11,7 +11,7 @@
 				$sql .= ' AND (k.namamk LIKE "%'.$cari.'%" OR k.kodemk LIKE "%'.$cari.'%")';
 			}
 			if($prodi){
-				$sql .= ' AND k.kodeprodi = "'.$prodi.'" ';
+				$sql .= ' AND p.kodeprodi = "'.$prodi.'" ';
 			}
 			if($angkatan){
 				$sql .= ' AND p.angkatan = "'.$angkatan.'" ';

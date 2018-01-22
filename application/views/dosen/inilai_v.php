@@ -63,6 +63,7 @@
 				<option <?php if($ds->nilaihuruf == "C-") echo "selected";?> value="C-">C-</option>
 				<option <?php if($ds->nilaihuruf == "D") echo "selected";?> value="D">D</option>
 				<option <?php if($ds->nilaihuruf == "E") echo "selected";?> value="E">E</option>
+				<option <?php if($ds->nilaihuruf == "T") echo "selected";?> value="T">T</option>
 			</select>
 		</td>
 	</tr>

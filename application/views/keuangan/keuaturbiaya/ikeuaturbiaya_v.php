@@ -18,6 +18,10 @@
 			var nilai = format_number($('#jumbiaya').val());
 			document.getElementById("jumbiaya").value = nilai;
 		}
+		function beRupiah2(){
+			var nilai = format_number($('#minaktif').val());
+			document.getElementById("minaktif").value = nilai;
+		}
 		function showThajaran(){
 			if($('select[name=kategori]').val() == 'Persemester'){
 				$("#area-thajaran").show();
@@ -26,10 +30,25 @@
 				$("#area-thajaran").hide();
 			}
 		}
+		function showminimumpengaktifan(){
+			if($('select[name=namabiaya]').val() == 'SPP SEMESTER'){
+				$("#minimum-pengaktifan").show();
+				$("#minaktif").focus();
+			}else{
+				$("#minimum-pengaktifan").hide();
+			}
+		}
 	</script>
 	<?php if($this->input->post('kategori') != 'Persemester'){ ?>
 	<style>
 		#area-thajaran{
+			display:none;
+		}
+	</style>
+	<?php } ?>
+	<?php if($this->input->post('namabiaya') != 'SPP SEMESTER'){ ?>
+	<style>
+		#minimum-pengaktifan{
 			display:none;
 		}
 	</style>
@@ -56,8 +75,13 @@
 		<tr class="bg">
 			<td class="first" width="190"><strong>Nama Biaya</strong></td>
 			<td class="last">
-				<input type="text" value="<?php echo $this->input->post('namabiaya')?>" name="namabiaya" size="50" />
-				<?php echo form_error('namabiaya');?>
+				<select name="namabiaya" onchange="showminimumpengaktifan()">
+					<option value="">Pilih Biaya</option>
+					<?php for($i=0;$i<count($namabiaya);$i++){ ?>
+					<option <?php if($this->input->post('namabiaya')==$namabiaya[$i]) echo 'selected'?> value="<?php echo $namabiaya[$i]?>"><?php echo $namabiaya[$i]?></option>
+					<?php } ?>
+				</select>
+				<?php echo form_error('minimumaktif');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -80,13 +104,6 @@
 			</td>
 		</tr>
 		<tr class="bg">
-			<td class="first" width="190"><strong>Gelombang</strong></td>
-			<td class="last">
-				<input type="text" value="<?php echo $this->input->post('gelombang')?>" name="gelombang" size="1" />
-				<?php echo form_error('gelombang');?>
-			</td>
-		</tr>
-		<tr class="bg">
 			<td class="first" width="190"><strong>Jenis</strong></td>
 			<td class="last">
 				<input type="text" value="<?php echo $this->input->post('jenis')?>" name="jenis" size="30" />
@@ -98,6 +115,13 @@
 			<td class="last">
 				Rp. <input style="text-align:right" type="text" value="<?php echo $this->input->post('jumbiaya')?>" id="jumbiaya" name="jumbiaya" size="10" onblur="beRupiah()" />,00
 				<?php echo form_error('jumbiaya');?>
+			</td>
+		</tr>
+		<tr class="bg" id="minimum-pengaktifan">
+			<td class="first" width="190"><strong>Minimum Pengaktifan</strong></td>
+			<td class="last">
+				Rp. <input style="text-align:right" type="text" value="<?php echo $this->input->post('minaktif')?>" id="minaktif" name="minaktif" size="10" onblur="beRupiah2()" />,00
+				<?php echo form_error('minaktif');?>
 			</td>
 		</tr>
 		<tr class="bg">

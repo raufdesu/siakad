@@ -7,9 +7,7 @@
 			$kodeprodi = $this->auth->get_prodibynim($nim)->kodeprodi;
 			$data = array();
 			$sql = "SELECT *,
-					nilai AS nilaihuruf,
-					(SELECT namamk FROM simkurikulum WHERE kodemk = simmatrikulasi.kodemk AND kodeprodi = '".$kodeprodi."')namamk,
-					(SELECT sks FROM simkurikulum WHERE kodemk = simmatrikulasi.kodemk AND kodeprodi = '".$kodeprodi."')jumlahsks
+					nilai AS nilaihuruf, sks as jumlahsks
 					FROM simmatrikulasi WHERE nim = '".$nim."'";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
@@ -124,9 +122,7 @@
 		function get_one($nim){
 			$data = array();
 			$kodeprodi = $this->auth->get_prodibynim($nim)->kodeprodi;
-			$sql = "SELECT kdsimmatrikulasi, nim, kodemk, nilai,
-					(SELECT namamk FROM simkurikulum WHERE kodemk=simmatrikulasi.kodemk AND kodeprodi = '".$kodeprodi."') AS namamk,
-					(SELECT sks FROM simkurikulum WHERE kodemk=simmatrikulasi.kodemk AND kodeprodi = '".$kodeprodi."') AS sks
+			$sql = "SELECT kdsimmatrikulasi, nim, kodemk, nilai, namamk, sks
 					FROM simmatrikulasi ";
 			$sql .= " WHERE nim = '".$nim."'";
 			$hasil = $this->db->query($sql);

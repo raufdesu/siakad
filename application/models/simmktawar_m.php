@@ -101,7 +101,7 @@
 					kurikulum_sp.nm_kurikulum_sp AS nmkurikulum 
 					FROM matkul inner join matkul_kurikulum on matkul_kurikulum.id_mk = matkul.id_mk inner join kurikulum_sp on 
 					kurikulum_sp.id_kurikulum = matkul_kurikulum.id_kurikulum_sp";
-			$sql .= " WHERE matkul.kodemk <> '' and kurikulum_sp.kodeprodi =  '".$kodeprodi."' and (matkul_kurikulum.smt%2)=0 
+			$sql .= " WHERE matkul.kodemk <> '' and kurikulum_sp.kodeprodi =  '".$kodeprodi."' 
 					and kurikulum_sp.id_smt = '".$angkatan."' order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
 			return $this->db->query($sql);
 			}else
@@ -112,7 +112,8 @@
 					kurikulum_sp.nm_kurikulum_sp AS nmkurikulum 
 					FROM matkul_kurikulum inner join matkul on matkul.id_mk = matkul_kurikulum.id_mk inner join kurikulum_sp on 
 					kurikulum_sp.id_kurikulum = matkul_kurikulum.id_kurikulum_sp";
-			$sql .= " WHERE matkul.kodemk <> '' AND kurikulum_sp.kodeprodi = '".$kodeprodi."' and (matkul_kurikulum.smt%2)>0 order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
+			$sql .= " WHERE matkul.kodemk <> '' AND kurikulum_sp.kodeprodi = '".$kodeprodi."' 
+			and kurikulum_sp.id_smt = '".$angkatan."' order by kurikulum_sp.id_smt DESC, matkul_kurikulum.smt";
 			return $this->db->query($sql);
 			}
 		}

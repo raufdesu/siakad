@@ -22,8 +22,9 @@ Class Keuaturbiaya extends Controller{
 			$thajaran = $this->session->userdata('sesi_thajaran');
 		}
 		$jumbiaya = angka_utuh($aturbiaya->jumbiaya);
+		$minaktif = angka_utuh($aturbiaya->minaktif);
 		if($thajaran){
-			$this->keubiaya_m->import($aturbiaya->kodeprodi, $aturbiaya->angkatan, $aturbiaya->gelombang, $namabiaya, $thajaran, $jumbiaya, $jenis, $kategori);
+			$this->keubiaya_m->import($aturbiaya->kodeprodi, $aturbiaya->angkatan, $aturbiaya->gelombang, $namabiaya, $thajaran, $jumbiaya, $minaktif, $jenis, $kategori);
 		}
 		$this->keuaturbiaya_m->update_status($aturbiaya->idaturbiaya, $aturbiaya->status);
 		redirect('keuangan/keuaturbiaya');
@@ -74,6 +75,7 @@ Class Keuaturbiaya extends Controller{
 	}
 	function add(){
 		$data['title'] = 'Tambah Daftar Penentuan Biaya';
+		$data['namabiaya'] = $this->auth->get_enum('keuaturbiaya', 'namabiaya');
 		$data['kategori'] = $this->auth->get_enum('keuaturbiaya', 'kategori');
 		$data['browse_prodi'] = $this->simprodi_m->select();
 		$this->load->view('keuangan/keuaturbiaya/ikeuaturbiaya_v', $data);

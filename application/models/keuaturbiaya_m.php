@@ -134,9 +134,9 @@
 				'namabiaya' => $this->input->post('namabiaya'),
 				'kodeprodi'	=> $this->input->post('kodeprodi'),
 				'angkatan'	=> $this->input->post('angkatan'),
-				'gelombang'	=> $this->input->post('gelombang'),
 				'jenis'	=> $this->input->post('jenis'),
 				'jumbiaya' => angka_utuh($this->input->post('jumbiaya')),
+				'minaktif' => angka_utuh($this->input->post('minaktif')),
 				'kategori' => $this->input->post('kategori'),
 				'thajaran' => $thajaran
 			);

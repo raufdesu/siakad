@@ -29,9 +29,9 @@
 	</script>
 </head>
 <div class="top-bar-adm">
-	<?php if($this->session->userdata('sesi_user') == 'keuangan'): ?>
-	<?php echo anchor('keuangan/keubiaya/cetak_pembayaran', 'Preview', array('style'=>'margin:0 -32px 0', 'class'=>'navi print-button', 'target'=>'_blank'))?>
 	<h1>Daftar Pembayaran</h1>
+	<?php echo anchor('keuangan/keubiaya/cetak_pembayaran', 'Preview', array('style'=>'margin:0 -32px 0', 'class'=>'navi print-button', 'target'=>'_blank'))?>
+	<?php if($this->session->userdata('sesi_user') == 'keuangan'): ?>
 	<div class="breadcrumbs">
 		PRODI
 		<select name='kodeprodi' style="width:290px !important;" onchange='changeProdi()'>
@@ -55,6 +55,7 @@
 		<select name='angkatan' style="width:55px !important;" onchange='changeAngkatan()'>
 			<?php foreach($browse_angkatan as $ba){ ?>
 			<option <?php if($angkatan == $ba->angkatan) echo 'selected'?> value="<?php echo $ba->angkatan?>"><?php echo $ba->angkatan?></option>
+			
 			<?php } ?>
 		</select>
 		Thn Ajaran

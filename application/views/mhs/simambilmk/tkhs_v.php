@@ -16,6 +16,33 @@
 	$jum_sks = 0;
 	$jumsks = 0;
 	foreach($browse_khs as $ip):
+	if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
+		if($ip->nilaihuruf == "A+"){
+			$bobot = 4;
+		}elseif($ip->nilaihuruf == "A"){
+			$bobot = 3.75;
+		}elseif($ip->nilaihuruf == "A-"){
+			$bobot = 3.5;
+		}elseif($ip->nilaihuruf == "B+"){
+			$bobot = 3.25;
+		}elseif($ip->nilaihuruf == "B"){
+			$bobot = 3;
+		}elseif($ip->nilaihuruf == "B-"){
+			$bobot = 2.75;
+		}elseif($ip->nilaihuruf == "C+"){
+			$bobot = 2.50;
+		}elseif($ip->nilaihuruf == "C"){
+			$bobot = 2.25;
+		}elseif($ip->nilaihuruf == "C-"){
+			$bobot = 2;
+		}elseif($ip->nilaihuruf == "D"){
+			$bobot = 1.75;
+		}else{
+			$bobot = 0;
+		}
+	}
+	else
+	{
 		if($ip->nilaihuruf == "A"){
 			$bobot = 4;
 		}elseif($ip->nilaihuruf == "B"){
@@ -27,6 +54,7 @@
 		}else{
 			$bobot = 0;
 		}
+	}
 		$js = $ip->jumlahsks * $bobot."<br />";
 		$jums = $jums+$js;
 	endforeach;

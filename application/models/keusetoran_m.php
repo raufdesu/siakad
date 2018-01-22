@@ -32,7 +32,12 @@
 				);
 				$this->db->where('idbiaya', $idbiaya);
 				$this->db->update('keubiaya', $data);
-
+			}
+		}
+		function aktif_setengah($idbiaya, $nim='', $thajaran=''){
+			$tagihan2 = $this->get_setengah($idbiaya);
+			$totalsetoran = $this->get_totalsetoran($idbiaya);
+			if($totalsetoran >= $tagihan2){
 				$namabiaya = strtoupper($this->namabiaya_byidbiaya($idbiaya));
 				if(preg_match("/\bSPP SEMESTER\b/i", $namabiaya)){
 					$this->status_semester($nim, $thajaran, 'Aktif');
@@ -53,6 +58,15 @@
 			$hasil	= $this->db->query($sql);
 			if($hasil->num_rows()){
 				return $hasil->row()->jumbiaya;
+			}else{
+				return false;
+			}
+		}
+		function get_setengah($idbiaya){
+			$sql	= 'SELECT minaktif FROM keubiaya WHERE idbiaya = '.$idbiaya;
+			$hasil	= $this->db->query($sql);
+			if($hasil->num_rows()){
+				return $hasil->row()->minaktif;
 			}else{
 				return false;
 			}

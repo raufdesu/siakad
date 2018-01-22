@@ -64,9 +64,9 @@
 			<th class="first" width="5">No.</th>
 			<th>Nama / Jenis Biaya</th>
 			<th>Angkatan</th>
-			<th>Gel</th>
 			<th>Jenis</th>
 			<th>Besar Biaya</th>
+			<th>Minimum Pengaktifan</th>
 			<th>Kategori</th>
 			<?php if($this->session->userdata('sesi_status') == 'keuangan'):?>
 			<th class="last" style="width:70px"> &nbsp; Kelola</th>
@@ -83,9 +83,9 @@
 		<td class="first"><?php echo $i++.'.';?></td>
 		<td class="first"><?php echo $bm->namabiaya;?></td>
 		<td><?php echo $bm->angkatan;?></td>
-		<td><?php echo $bm->gelombang;?></td>
 		<td class="first"><?php echo $bm->jenis;?></td>
 		<td class="right"><?php echo rupiah($bm->jumbiaya);?></td>
+		<td class="right"><?php echo rupiah($bm->minaktif);?></td>
 		<td><?php
 			echo $bm->kategori;
 			if($bm->kategori == 'Persemester'){

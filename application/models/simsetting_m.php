@@ -104,7 +104,7 @@
 			$this->db->update('simsetting', array('aktif'=>'Tidak Aktif'));
 		}
 		function nactive_one($thajaran = ''){
-			$this->nonactive_all();
+			//$this->nonactive_all();
 			$this->db->where('thajaran',$thajaran);
 			$this->db->update('simsetting', array('aktif'=>'Aktif'));
 		}

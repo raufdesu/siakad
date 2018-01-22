@@ -201,6 +201,7 @@
 			$kodematkul = $this->session->userdata('sesi_kodematkul');
 			$thajaran	= $this->session->userdata('sesi_thajaran');
 			$id_kelas_dosen = $this->session->userdata('sesi_id_kelas_dosen');
+			$kodeprodi = $this->session->userdata('sesi_prodi');
 			$head =$this->simdosenampu_m->get_kelasdosen($kodematkul,$thajaran,$id_kelas_dosen);
 			$data['sks'] = $head['sks'];
 			$data['namaprodi'] = $head['namaprodi'];
@@ -210,7 +211,7 @@
 			}else{
 				$kelas = 1;
 			}
-			$data['browse_mhs']=$this->masmahasiswa_m->get_mhs_sudahdipresensi($kodematkul,$thajaran,$id_kelas_dosen, $kelas);
+			$data['browse_mhs']=$this->masmahasiswa_m->get_mhs_sudahdipresensi($kodeprodi, $kodematkul,$thajaran,$id_kelas_dosen, $kelas);
 			$data['title'] = '';
 			$this->load->view('admin/cpresensimhs_v', $data);
 		}

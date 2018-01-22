@@ -17,6 +17,33 @@
 	$jum_sks = 0;
 	$jumsks = 0;
 	foreach($browse_transkrip as $ip):
+	if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
+		if($ip->nilaihuruf == "A+"){
+			$bobot = 4;
+		}elseif($ip->nilaihuruf == "A"){
+			$bobot = 3.75;
+		}elseif($ip->nilaihuruf == "A-"){
+			$bobot = 3.5;
+		}elseif($ip->nilaihuruf == "B+"){
+			$bobot = 3.25;
+		}elseif($ip->nilaihuruf == "B"){
+			$bobot = 3;
+		}elseif($ip->nilaihuruf == "B-"){
+			$bobot = 2.75;
+		}elseif($ip->nilaihuruf == "C+"){
+			$bobot = 2.50;
+		}elseif($ip->nilaihuruf == "C"){
+			$bobot = 2.25;
+		}elseif($ip->nilaihuruf == "C-"){
+			$bobot = 2;
+		}elseif($ip->nilaihuruf == "D"){
+			$bobot = 1.75;
+		}else{
+			$bobot = 0;
+		}
+	}
+	else
+	{
 		if($ip->nilaihuruf == "A"){
 			$bobot = 4;
 		}elseif($ip->nilaihuruf == "B"){
@@ -28,6 +55,7 @@
 		}else{
 			$bobot = 0;
 		}
+	}
 		$js = $ip->jumlahsks * $bobot."<br />";
 		$jums = $jums+$js;
 	endforeach;
@@ -97,6 +125,32 @@
 <?php $jumsks = $jumsks+$bk->jumlahsks; endforeach;?>
 <?php
 	foreach($browse_matrikulasi->result() as $bm):
+	if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
+		if($bm->nilai == "A+"){
+			$bobot = 4;
+		}elseif($bm->nilai == "A"){
+			$bobot = 3.75;
+		}elseif($bm->nilai == "A-"){
+			$bobot = 3.5;
+		}elseif($bm->nilai == "B+"){
+			$bobot = 3.25;
+		}elseif($bm->nilai == "B"){
+			$bobot = 3;
+		}elseif($bm->nilai == "B-"){
+			$bobot = 2.75;
+		}elseif($bm->nilai == "C+"){
+			$bobot = 2.5;
+		}elseif($bm->nilai == "C"){
+			$bobot = 2.25;
+		}elseif($bm->nilai == "C-"){
+			$bobot = 2;
+		}elseif($bm->nilai == "D"){
+			$bobot = 1.75;
+		}else{
+			$bobot = 0;
+		}
+	}
+	else {
 		if($bm->nilai == "A"){
 			$bobot = 4;
 		}elseif($bm->nilai == "B"){
@@ -108,6 +162,7 @@
 		}else{
 			$bobot = 0;
 		}
+	}
 		$js = $bm->sks * $bobot;
 		$jums = $jums+$js;
 ?>
