@@ -147,7 +147,8 @@
 		<tr class="bg">
 			<td id="label" class="first" width="190"><strong>Tanggal Setor</strong></td>
 			<td class="last">
-				<input type="text" id="tglsetor" style="color:#ABABAB;width:70px" name="tglsetor" value="<?php echo date('d-m-Y')?>" />
+				<input type="text" name="tglsetor" value="<?php echo $this->input->post('tglsetor')?>" size="8"/>
+				<input type="button" value=".." OnClick="displayDatePicker('tglsetor', false, 'dmy', '-')">
 			</td>
 		</tr>
 		<tr>

@@ -90,8 +90,10 @@
 		</tr>
 	</table>
 	</div>
+	
 	<?php echo "<div align='center'>".form_error('username')."</div>"; ?>
 	<?php echo "<div align='center'>".$alert."</div>"; ?>
+	<?php echo anchor('mhs/loginmhs/reset_password','Reset Password Disini',array('class'=>'download-button'));?>
 	<?php echo form_close();?>
 	<?php echo anchor(base_url().'index.php/admin/login/','.','style="float:right;color:#EFEFEF;text-decoration:none"')?>
 </body>

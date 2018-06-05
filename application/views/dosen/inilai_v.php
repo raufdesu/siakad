@@ -10,6 +10,7 @@
 		load('dosen/nilai/change_kelas/'+selected_kelas,'#center-column');
 	}
 </script>
+
 <div class="top-bar-adm">
 	<div style="float:right;margin-right:-32px;">
 		<!--<select name="cbkelas" onchange="submitGantiKelas()">
@@ -46,27 +47,39 @@
 	?>
 	<tr class="<?php echo $bg?>">
 		<td><?php echo $i?></td>
-		<td><?php echo $ds->nim?><input type='hidden' name='nim_<?php echo $i?>' value='<?php echo $ds->nim?>'/></td>
+		<td><?php echo $ds->nim?><input type='hidden' name='nim_<?php echo $i?>' value='<?php echo $ds->nim?>' id='nim_'/></td>
 		<td class="first"><?php echo $this->auth->get_namamhsbynim($ds->nim)?></td>
-		<td class="first"><input type='text' name='nilai_angka_<?php echo $i?>' value='<?php echo $ds->nilaiangka?>'/></td>
-		<td class="last">
-			<select name='nilai_<?php echo $i?>'>
-				<option <?php if($ds->nilaihuruf == "") echo "selected";?> value=""></option>
-				<option <?php if($ds->nilaihuruf == "A+") echo "selected";?> value="A+">A+</option>
-				<option <?php if($ds->nilaihuruf == "A") echo "selected";?> value="A">A</option>
-				<option <?php if($ds->nilaihuruf == "A-") echo "selected";?> value="A-">A-</option>
-				<option <?php if($ds->nilaihuruf == "B+") echo "selected";?> value="B+">B+</option>
-				<option <?php if($ds->nilaihuruf == "B") echo "selected";?> value="B">B</option>
-				<option <?php if($ds->nilaihuruf == "B-") echo "selected";?> value="B-">B-</option>
-				<option <?php if($ds->nilaihuruf == "C+") echo "selected";?> value="C+">C+</option>
-				<option <?php if($ds->nilaihuruf == "C") echo "selected";?> value="C">C</option>
-				<option <?php if($ds->nilaihuruf == "C-") echo "selected";?> value="C-">C-</option>
-				<option <?php if($ds->nilaihuruf == "D") echo "selected";?> value="D">D</option>
-				<option <?php if($ds->nilaihuruf == "E") echo "selected";?> value="E">E</option>
-				<option <?php if($ds->nilaihuruf == "T") echo "selected";?> value="T">T</option>
-			</select>
-		</td>
+		<td class="first"><input type='text' name='nilai_angka_<?php echo $i?>' value='<?php echo $ds->nilaiangka?>' id='nilai_angka_<?php echo $i?>'/></td>
+		<td id='nilai_huruf_<?php echo $i?>'><input type='text' name='nilai_huruf_<?php echo $i?>' readonly style='float:left' value='<?php echo $ds->nilaihuruf?>' size='5'/></td>
+		<input type='hidden' value='<?php echo $i ?>' name='i'/>
+	
 	</tr>
+	<script src="<?php echo base_url()?>asset/plugin/livesearch/jquery.livesearch.js" type="text/javascript" ></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		stoploading();
+		
+		$('#nilai_angka_<?php echo $i?>').livesearch({
+			searchCallback: searchFunction,
+			queryDelay: 0,
+			autoFill: true,
+			innerText: 'nilai',
+			minimumSearchLength: 1
+		});
+		
+		$("#nilai_angka_<?php echo $i?>").val('<?php echo $ds->nilaiangka?>');
+		$("#nim").val('<?php echo $this->session->userdata('sesi_nim'); ?>');
+		$("#nilai_angka_<?php echo $i?>").focus();
+		
+		
+	});
+	function searchFunction(str){
+		showloading();
+		load('dosen/nilai/cari_nilai_angka/'+str,'#nilai_huruf_<?php echo $i?>');
+		stoploading();
+
+	}
+</script>
 	<?php $n=$i; endforeach ?>
 	<tr>
 		<td style="text-align:right" class="last" colspan='5'>

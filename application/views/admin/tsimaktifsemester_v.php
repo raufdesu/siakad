@@ -52,7 +52,7 @@
 			<th width='90'>NIM</th>
 			<th>Nama Mahasiswa</th>
 			<th width='65'>Angkatan</th>
-			<?php if($this->session->userdata('sesi_user') == 'admin' || $this->session->userdata('sesi_user') == 'keuangan'){ ?>
+			<?php if($this->session->userdata('sesi_user') == 'admin' || $this->session->userdata('sesi_status') == 'keuangan'){ ?>
 			<!--<th width="85">Tugas</th>-->
 			<th width='110'>Status</th>
 			<th class="last" width='35'><center>#</center></th>
@@ -73,7 +73,7 @@
 		<td><?php echo $bm->nim;?></td>
 		<td class="first"><?php echo $bm->nama;?></td>
 		<td><?php echo $bm->angkatan;?></td>
-		<?php if($this->session->userdata('sesi_user') == 'admin' || $this->session->userdata('sesi_user') == 'keuangan'){ ?>
+		<?php if($this->session->userdata('sesi_user') == 'admin' || $this->session->userdata('sesi_status') == 'keuangan'){ ?>
 		<td>
 			<?php
 				if($bm->status == 'Aktif') $aktif = 'active'; else $aktif = '';

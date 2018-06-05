@@ -11,6 +11,10 @@ Class Simambilmk extends Controller{
 		$this->session->set_userdata('sesi_thajarankhs', $this->uri->segment(4));
 		$this->khs();
 	}
+	function change_thajarankrs(){
+		$this->session->set_userdata('sesi_thajarankhs', $this->uri->segment(4));
+		$this->krs();
+	}
 	function jadwal_bynim(){
 		$data['nim'] = $this->session->userdata('sesi_user_mhs');
 		$set = $this->simsetting_m->select_active();
@@ -49,6 +53,23 @@ Class Simambilmk extends Controller{
 		$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 		$this->load->view('mhs/simambilmk/tkhs_v', $data);
 	}
+	function krs(){
+		if($this->session->userdata('sesi_thajarankhs')){
+			$data['thakad'] = $this->session->userdata('sesi_thajarankhs');
+		}else{
+			$set = $this->simsetting_m->select_active();
+			$data['thakad'] = $set['thajaran'];
+		}
+		$data['title'] = 'Kartu Rencana Studi';
+		$nim = $this->session->userdata('sesi_user_mhs');
+		$data['browse_thajar'] = $this->simkrs_m->get_thbynim($nim);
+		$cek = $this->simambilmk_m->get_idkrs_bynim($nim, $data['thakad']);
+		$data['cek_khs'] = $cek['idkrsnya'];
+		$cek_kodeprodi = $this->simambilmk_m->get_kdprodibynim($nim);
+		$data['kodeprodi'] = $cek_kodeprodi;
+		$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
+		$this->load->view('mhs/simambilmk/tkrs_v', $data);
+	}
 	function cetak_khs(){
 		$this->load->model('simkrs_m');
 		$nim = $this->session->userdata('sesi_user_mhs');
@@ -81,6 +102,21 @@ Class Simambilmk extends Controller{
 		}else{
 			$this->load->view('mhs/laporan/ckhs_v', $data);
 		}
+	}
+	function cetak_krs(){
+		$this->load->model('simkrs_m');
+		$nim = $this->session->userdata('sesi_user_mhs');
+		$data['nim'] = $nim;
+		$set = $this->simsetting_m->select_active();
+		if(!$this->session->userdata('sesi_thajarankhs')){
+			$data['thakad'] = $set['thajaran'];
+		}else{
+			$data['thakad'] = $this->session->userdata('sesi_thajarankhs');
+		}
+			$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($this->session->userdata('sesi_user_mhs'), $data['thakad']);
+			$data['detail_krs_peserta'] = $this->simkrs_m->get_one_krs($this->session->userdata('sesi_user_mhs'), $data['thakad']);
+			$data['dpa'] = $this->simdosenwali_m->get_namadpa($this->session->userdata('sesi_user_mhs'),$data['thakad']);
+			$this->load->view('mhs/laporan/ckrs_v2', $data);
 	}
 	function change_thajarantrans(){
 		$this->session->set_userdata('sesi_thajarantrans', $this->uri->segment(4));

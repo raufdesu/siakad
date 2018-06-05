@@ -10,6 +10,31 @@
 			/* $this->_empty_sesi(); */
 			$this->daftarmatkul_bydosen();
 		}
+		function cari_nilai_angka(){
+			$i = $this->input->post('i');
+			$sesi_dosenampu = $this->session->userdata('sesi_dosenampu');
+			$ampu = $this->simdosenampu_m->get_one($sesi_dosenampu);
+			$data['kodemk'] = $ampu->kodemk;
+			$data['namamatkul'] = $ampu->namamatkul;
+			$data['kelas'] = $ampu->kelas;
+			$data['thajaran'] = $ampu->thajaran;
+			$data['id_kelas_dosen'] = $ampu->id_kelas_dosen;
+			$this->session->set_userdata('sesi_kodemk', $data['kodemk']);
+			$kelas = $this->session->userdata('sesi_kelas');
+			$query_nim = $this->masmahasiswa_m->get_mhs_nim($data['kodemk'], $data['thajaran'], $data['id_kelas_dosen'], $kelas);
+			$nim = $query_nim['nim'];
+			$this->session->set_userdata('sesi_nilai_angka', $this->uri->segment(4,0));
+			if($this->session->userdata('sesi_nilai_angka')){
+				$nm = $this->simkrs_m->get_nilai_huruf($this->session->userdata('sesi_nilai_angka'), $nim);
+				$nilai_huruf = $nm['nilaihuruf'];
+				$nilai_indeks = $nm['nilaiindeks'];
+			}else{
+				$nilai_huruf = '';
+				$nilai_indeks = '';
+			}
+			echo "<input type='hidden' readonly name='nilai_indeks' value='".$nilai_indeks."' size='8' style='float:left'>";
+			echo "<input type='text' readonly name='nilai_huruf_".$i."' value='".$nilai_huruf."' size='5' style='float:left'>";
+		}
 		function daftarmatkul_bydosen(){
 			$data['title'] = 'Daftar Matakuliah Yang Diampu';
 			$data['browse_matakuliah'] = $this->simdosenampu_m->get_bydosen($this->session->userdata('sesi_user'));
@@ -96,10 +121,10 @@
 				$thajaran = $this->session->userdata('sesi_thajaran');
 				$kodemk = $this->session->userdata('sesi_kodemk');
 				for($i=1;$i<=$n;$i++){
-					$this->simkrs_m->update_nilai($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i),$this->input->post('nilaiuts_'.$i),$this->input->post('nilaiuas_'.$i),$this->input->post('q1_'.$i),$this->input->post('q2_'.$i),$this->input->post('q3_'.$i),$this->input->post('t1_'.$i),$this->input->post('t2_'.$i),$this->input->post('t3_'.$i));
+					$this->simkrs_m->update_nilai($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_huruf_'.$i),$this->input->post('nilai_angka_'.$i),$this->input->post('nilaiuts_'.$i),$this->input->post('nilaiuas_'.$i),$this->input->post('q1_'.$i),$this->input->post('q2_'.$i),$this->input->post('q3_'.$i),$this->input->post('t1_'.$i),$this->input->post('t2_'.$i),$this->input->post('t3_'.$i));
 					/*echo $this->db->last_query();*/
 				}
-				for($i=0;$i<=$n;$i++){
+				/*for($i=0;$i<=$n;$i++){
 					// echo $this->input->post('nim_'.$i).'='.$this->input->post('nilai_'.$i).'<br />';
 					//$this->simkrs_m->update_nilai_admin($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
 					$this->simkrs_m->update_nilai_feeder($this->input->post('nim_'.$i),$thajaran,$kodemk,$this->input->post('nilai_'.$i),$this->input->post('nilai_angka_'.$i));
@@ -108,7 +133,7 @@
 					$data["nim"] = $nim;
 					$this->load->view("admin/push_nilai",$data);
 					// echo $this->db->last_query().'<br />';
-				}
+				}*/
 			}
 			$data['title'] = 'Konfirmasi Simpan';
 			$this->load->view('dosen/tsukses_simpan_v', $data);

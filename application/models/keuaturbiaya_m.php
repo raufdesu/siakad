@@ -69,6 +69,7 @@
 			$data = array();
 			$this->db->select("jenis");
 			$this->db->from("keuaturbiaya");
+			$this->db->where("Status = 'Selesai'");
 			$this->db->group_by("jenis");
 			$hasil = $this->db->get();
 			if($hasil->num_rows() > 0){
@@ -134,6 +135,7 @@
 				'namabiaya' => $this->input->post('namabiaya'),
 				'kodeprodi'	=> $this->input->post('kodeprodi'),
 				'angkatan'	=> $this->input->post('angkatan'),
+				'jenis_mahasiswa' => $this->input->post('jenis_mahasiswa'),
 				'jenis'	=> $this->input->post('jenis'),
 				'jumbiaya' => angka_utuh($this->input->post('jumbiaya')),
 				'minaktif' => angka_utuh($this->input->post('minaktif')),
@@ -153,13 +155,8 @@
 			$hapusjuga = 1;
 			
 			if($hapusjuga){
-				/*
-				$this->db->where('namabiaya', $atur['namabiaya']);
-				$this->db->where('jenis', $atur['jenis']);
-				$this->db->where('thajaran', $atur['thajaran']);
-				$this->db->where_in('angkatan', $array_angkatan);
-				$this->db->delete('keubiaya');
-				*/
+			$this->db->where('idaturbiaya', $idaturbiaya);
+			$this->db->delete('keubiaya');
 			}
 		}
 	}

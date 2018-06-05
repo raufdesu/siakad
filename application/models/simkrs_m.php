@@ -210,11 +210,11 @@
 		}
 		/* Update Nilai By Dosen*/
 				/* Solusi bug dari pak yuli itu cek kosongnya bukan nilai uts saja oke mas gatot? */
-		function update_nilai($nim, $thajaran, $kodemk, $nilai = '', $nilai_angka = ''){
+		function update_nilai($nim, $thajaran, $kodemk, $nilai_huruf = '', $nilai_angka = ''){
 			$id_krs = $this->_getIdKrs($nim, $thajaran);
 			$idkrs = $id_krs['idkrs'];
 			$data = array(
-				'nilaihuruf' => $nilai,
+				'nilaihuruf' => $nilai_huruf,
 				'nilaiangka' => $nilai_angka
 			);
 			$this->db->where('kodemk',$kodemk);
@@ -530,6 +530,17 @@
 				
 		
 		}
+		function get_nilai_huruf($nilai_angka = '', $nim = ''){
+			$kodeprodi = $this->auth->get_kodeprodibynim($nim);
+			$sql = "SELECT nilaihuruf, nilaiindeks from bobot_nilai where ".$nilai_angka." BETWEEN bobotnilaimin AND bobotnilaimaks AND bobotnilaimin != 0 AND kodeprodi = '".$kodeprodi."'";
+			$hasil = $this->db->query($sql);
+			
+			if($hasil->num_rows() > 0){
+				return $hasil->row_array();
+			}
+				
+		
+		}
 		function get_idkrs($nim, $thakad){
 			$sql = "SELECT DISTINCT(idkrs) idkrs FROM simkrs WHERE nim='".$nim."' AND thajaran='".$thakad."'";
 			$hasil = $this->db->query($sql);
@@ -716,6 +727,25 @@
 			$sql .= ")";
 			$hasil = $this->db->query($sql);
 			return $hasil->row();
+		}
+		function get_rekap_krs($thajaran, $kodeprodi){
+			$sql = "SELECT simkrs.nim, masmahasiswa.nama, simprodi.namaprodi, simambilmk.kodemk, simambilmk.namamk, simambilmk.thajaran FROM
+			simkrs INNER JOIN simambilmk on simkrs.idkrs = simambilmk.idkrs
+			INNER JOIN masmahasiswa on simkrs.nim = masmahasiswa.nim
+			INNER JOIN simprodi on masmahasiswa.kodeprodi = simprodi.kodeprodi
+			where masmahasiswa.kodeprodi = '".$kodeprodi."' AND simambilmk.thajaran = '".$thajaran."'
+			ORDER BY kodemk, namamk";
+			return $this->db->query($sql);
+		}
+		function get_rekap_khs($thajaran, $kodeprodi){
+			$sql = "SELECT simkrs.nim, masmahasiswa.nama, simprodi.namaprodi, simambilmk.idkrs, simambilmk.kodemk, simambilmk.namamk, 
+			simambilmk.nilaiangka, simambilmk.nilaihuruf, simambilmk.thajaran FROM
+			simkrs INNER JOIN simambilmk on simkrs.idkrs = simambilmk.idkrs
+			INNER JOIN masmahasiswa on simkrs.nim = masmahasiswa.nim
+			INNER JOIN simprodi on masmahasiswa.kodeprodi = simprodi.kodeprodi
+			where masmahasiswa.kodeprodi = '".$kodeprodi."' AND simambilmk.thajaran = '".$thajaran."'
+			ORDER BY kodemk, namamk";
+			return $this->db->query($sql);
 		}
 		function get_ipk($nim){
 			$kodeprodi = $this->simambilmk_m->get_kdprodibynim($nim);

@@ -16,6 +16,7 @@ Class Keuaturbiaya extends Controller{
 		$namabiaya = $aturbiaya->namabiaya;
 		$jenis = $aturbiaya->jenis;
 		$kategori = $aturbiaya->kategori;
+		$jenis_mahasiswa = $aturbiaya->jenis_mahasiswa;
 		if($kategori == 'Persemester'){
 			$thajaran = $aturbiaya->thajaran;
 		}else{
@@ -24,7 +25,12 @@ Class Keuaturbiaya extends Controller{
 		$jumbiaya = angka_utuh($aturbiaya->jumbiaya);
 		$minaktif = angka_utuh($aturbiaya->minaktif);
 		if($thajaran){
-			$this->keubiaya_m->import($aturbiaya->kodeprodi, $aturbiaya->angkatan, $aturbiaya->gelombang, $namabiaya, $thajaran, $jumbiaya, $minaktif, $jenis, $kategori);
+			if($jenis_mahasiswa == 'Reguler'){
+			$this->keubiaya_m->import_reguler($aturbiaya->idaturbiaya, $aturbiaya->kodeprodi, $aturbiaya->angkatan, $aturbiaya->gelombang, $namabiaya, $thajaran, $jumbiaya, $minaktif, $jenis, $kategori);
+			}
+			else if($jenis_mahasiswa == 'Ekstensi'){
+			$this->keubiaya_m->import_ekstensi($aturbiaya->idaturbiaya, $aturbiaya->kodeprodi, $aturbiaya->angkatan, $aturbiaya->gelombang, $namabiaya, $thajaran, $jumbiaya, $minaktif, $jenis, $kategori);
+			}
 		}
 		$this->keuaturbiaya_m->update_status($aturbiaya->idaturbiaya, $aturbiaya->status);
 		redirect('keuangan/keuaturbiaya');
@@ -77,6 +83,7 @@ Class Keuaturbiaya extends Controller{
 		$data['title'] = 'Tambah Daftar Penentuan Biaya';
 		$data['namabiaya'] = $this->auth->get_enum('keuaturbiaya', 'namabiaya');
 		$data['kategori'] = $this->auth->get_enum('keuaturbiaya', 'kategori');
+		$data['jenis_mahasiswa'] = $this->auth->get_enum('keuaturbiaya', 'jenis_mahasiswa');
 		$data['browse_prodi'] = $this->simprodi_m->select();
 		$this->load->view('keuangan/keuaturbiaya/ikeuaturbiaya_v', $data);
 	}
@@ -85,6 +92,7 @@ Class Keuaturbiaya extends Controller{
 			$id = $this->uri->segment(4);
 		}
 		$data['title'] = 'Ubah Daftar Penentuan Biaya';
+		$data['namabiaya'] = $this->auth->get_enum('keuaturbiaya', 'namabiaya');
 		$data['kategori'] = $this->auth->get_enum('keuaturbiaya', 'kategori');
 		$data['browse_prodi'] = $this->simprodi_m->select();
 		$data['biaya'] = $this->keuaturbiaya_m->get_one($id);
@@ -110,6 +118,11 @@ Class Keuaturbiaya extends Controller{
 			array(
 				'field'   => 'kategori',
 				'label'   => 'Kategori',
+				'rules'   => 'required'
+			),
+			array(
+				'field'   => 'jenis_mahasiswa',
+				'label'   => 'jenis_mahasiswa',
 				'rules'   => 'required'
 			)
 		);

@@ -326,6 +326,35 @@
 			$sql .= " ORDER BY nim ASC ";
 			return $this->db->query($sql);
 		}
+		function get_mhs_nim($kodemk, $thajaran, $id_kelas_dosen = '', $kelas = ''){
+			if($kelas == false){
+				$kdkelas = 1;
+			}else{
+				$kdkelas = $kelas;
+			}
+			$aridkrs = $this->get_idkrssudah_bykodemk($kodemk, $id_kelas_dosen);
+			$res="";
+			foreach($aridkrs as $a){
+				$res  .= $a->idkrs.",";
+			};
+			if($res)
+				$res=substr($res,0,strlen($res)-1);
+			else
+				$res = 0;
+				
+			/* KALO PADA INPUT NILAI BERMASALAH, NANTI DIPIKIR KEMBALI */
+			$sql = "SELECT nim";
+			$sql .= " FROM simkrs WHERE thajaran = '".$thajaran."' ";
+			$sql .= " AND idkrs IN";
+			$sql .= "(".$res.")";
+			/*$sql .= "AND (SELECT nama FROM masmahasiswa WHERE nim=simkrs.nim AND kdkelas = ".$kdkelas.") <> 'NULL' "; */
+			$sql .= "AND (SELECT nama FROM masmahasiswa WHERE nim=simkrs.nim) <> 'NULL' ";
+			$sql .= " limit 1";
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows() > 0){
+				return $hasil->row_array();
+			}
+		}
 		/* MAHASISWA YANG SUDAH MASUK DI PRESENSI (SUDAH DI TENTUKAN KELASNYA) */
 		function get_mhs_sudahdipresensi($kodeprodi, $kodemk, $thajaran, $id_kelas_dosen = '', $kelas = ''){
 			if($kelas == false){

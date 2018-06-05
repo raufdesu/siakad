@@ -34,7 +34,7 @@
 		function browse_dosen(){ // BROWSE UNTUK MEMILIH KETUA PRODI
 			$data['no'] = $this->uri->segment(4, 0);
 			$data['total_page']	= $this->maspegawai_m->count_all();
-			$perpage	= 200;
+			$perpage	= 10000;
 			$data3		= $this->simpliparse->getAjaxPagination($data['total_page'],
 				$perpage,'prodi/maspegawai/listview/',4,'#center-column');
 			$data['paging'] = $data3['paging'];

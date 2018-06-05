@@ -81,7 +81,7 @@
 					<option <?php if($this->input->post('namabiaya')==$namabiaya[$i]) echo 'selected'?> value="<?php echo $namabiaya[$i]?>"><?php echo $namabiaya[$i]?></option>
 					<?php } ?>
 				</select>
-				<?php echo form_error('minimumaktif');?>
+				<?php echo form_error('namabiaya');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -101,6 +101,18 @@
 			<td class="last">
 				<input type="text" maxlength="4" value="<?php echo $this->input->post('angkatan')?>" name="angkatan" size="3" />
 				<?php echo form_error('angkatan');?>
+			</td>
+		</tr>
+		<tr class="bg">
+			<td class="first" width="190"><strong>Reguler/Ekstensi</strong></td>
+			<td class="last">
+				<select name="jenis_mahasiswa" onchange="showThajaran()">
+					<option value="">Pilih Kategori</option>
+					<?php for($i=0;$i<count($jenis_mahasiswa);$i++){ ?>
+					<option <?php if($this->input->post('jenis_mahasiswa')==$jenis_mahasiswa[$i]) echo 'selected'?> value="<?php echo $jenis_mahasiswa[$i]?>"><?php echo $jenis_mahasiswa[$i]?></option>
+					<?php } ?>
+				</select>
+				<?php echo form_error('persemester');?>
 			</td>
 		</tr>
 		<tr class="bg">

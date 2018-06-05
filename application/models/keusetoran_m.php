@@ -2,6 +2,9 @@
 	Class Keusetoran_m extends Model{
 		function __construct(){
 			parent::model();
+			$this->load->model(array('simaktifsemester_m', 'simprodi_m', 'masmahasiswa_m', 'simkrs_m'));
+			$this->load->model(array('paket_m', 'simsetting_m', 'simdaftarskripsi_m', 'simdosenwali_m'));
+
 		}
 		function insert(){
 			$idbiaya = $this->input->post('idbiaya');
@@ -37,10 +40,30 @@
 		function aktif_setengah($idbiaya, $nim='', $thajaran=''){
 			$tagihan2 = $this->get_setengah($idbiaya);
 			$totalsetoran = $this->get_totalsetoran($idbiaya);
+			$mhspaket	= $this->masmahasiswa_m->get_one($nim);
 			if($totalsetoran >= $tagihan2){
 				$namabiaya = strtoupper($this->namabiaya_byidbiaya($idbiaya));
 				if(preg_match("/\bSPP SEMESTER\b/i", $namabiaya)){
+					
+					if($mhspaket['statuspaket'] == 'paket'){
+					$cek_sudahaturpaket = $this->paket_m->count_all('', $mhspaket['kodeprodi'], $mhspaket['angkatan'], $mhspaket['kdkelas'], $thajaran);
+					if($cek_sudahaturpaket){
+						$cek_punyadpa = $this->simdosenwali_m->cek_dosenwali($nim);
+						if($cek_punyadpa){
+							$this->simkrs_m->insert_paket($nim, $mhspaket['kodeprodi'], $mhspaket['angkatan'], $mhspaket['kdkelas'], $thajaran);
+							$this->status_semester($nim, $thajaran, 'Aktif');
+							echo $this->simplival->alert('KONFIRMASI\nPengaktifan status dan penginputan KRS Paket\ndengan NIM '.$nim.' berhasil');
+						}else{
+							echo $this->simplival->alert('PERINGATAN\nGagal mengaktifkan status mahasiswa, karena DPA mahasiswa terpilih belum ditentukan.\nHarap administrator menentukan DPA mahasiswa dengan NIM '.$nim.' terlebih dahulu');
+							$this->listview(1);
+						}
+					}else{
+						echo $this->simplival->alert('PERINGATAN !\nGagal diaktifkan. Matakuliah Paket belum diatur');
+						$this->listview(1);
+					}
+				}else{
 					$this->status_semester($nim, $thajaran, 'Aktif');
+				}
 				}
 			}
 		}

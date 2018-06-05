@@ -22,7 +22,6 @@
 	</script>
 </head>
 <div class="top-bar-adm">
-	<?php if($this->session->userdata('sesi_user') == 'keuangan'): ?>
 	<div style="float:right;margin-right:-32px">
 		<a href="javascript:void(0)" class='button' onclick='show("keuangan/keuaturbiaya/add","#center-column")'>
 		Tambah</a>
@@ -37,7 +36,6 @@
 			<?php endforeach; ?>
 		</select>
 	</div>
-	<?php endif ?>
 </div><br />
 <div class="select-bar" style="height:22px">
 	<!--<select name='kategori' style="width:150px !important;float:right;" onchange='ChangeKategori()'>

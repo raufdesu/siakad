@@ -71,6 +71,7 @@
 			$nim = $this->session->userdata('sesi_nimtranskrip');
 			$data['browse_transkrip'] = $this->simambilmk_m->get_transkrip($nim);
 			$data['browse_matrikulasi'] = $this->simmatrikulasi_m->get_nolimit($nim);
+			$data['kodeprodi'] = $this->simambilmk_m->get_kdprodibynim($nim);
 			$this->load->view('prodi/nilai/ttranskrip_v', $data);
 		}
 		function transkrip_excel(){
@@ -98,7 +99,56 @@
 			//$data['browse_khs'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 			$dpa = $this->simdosenwali_m->get_namadpa($nim, $data['thakad']);
 			$data['nama_dpa'] = $dpa['nama'];
+			$data['kodeprodi'] = $this->simambilmk_m->get_kdprodibynim($nim);
 			$this->load->view('prodi/laporan/ctranskrip_s', $data);
+		}
+		function change_thajarankhs2(){
+			$this->session->set_userdata('sesi_thajaranpembayaran', $this->uri->segment(4));
+			redirect('prodi/nilai/rekapitulasi/');
+		}
+		function change_thajarankhs3(){
+			$this->session->set_userdata('sesi_thajaranpembayaran', $this->uri->segment(4));
+			redirect('prodi/nilai/isi_nilai/');
+		}
+		function rekapitulasi(){
+			$thajar = $this->simsetting_m->select_active();
+			$data['browse_thajaran'] = $this->simsetting_m->select();
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$this->load->view('prodi/laporan/rkhs_v', $data);
+		}
+		function isi_nilai(){
+			$thajar = $this->simsetting_m->select_active();
+			$data['browse_thajaran'] = $this->simsetting_m->select();
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$this->load->view('prodi/laporan/inilai_v', $data);
+		}
+		function cetak_rekap_khs(){
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$kodeprodi = $this->session->userdata('sesi_prodi');
+			$data['browse_rekap_krs'] = $this->simkrs_m->get_rekap_khs($data['thajaran'], $kodeprodi);
+			if($this->uri->segment(5) == 'xls'){
+				$namafile = 'Rekap KHS '.$data['thajaran'];
+				$file = url_title($namafile).".xls";
+				header("Content-Type: application/vnd.ms-excel");
+				header("Content-Disposition: attachment;filename=".$file );
+				header('Pragma: no-cache');
+				header('Expires: 0');
+			}
+			$this->load->view('prodi/laporan/export_rekap_khs_v', $data);
+		}
+		function cetak_rekap_nilai(){
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$kodeprodi = $this->session->userdata('sesi_prodi');
+			$data['browse_rekap_krs'] = $this->simkrs_m->get_rekap_khs($data['thajaran'], $kodeprodi);
+			if($this->uri->segment(5) == 'xls'){
+				$namafile = 'Rekap KHS '.$data['thajaran'];
+				$file = url_title($namafile).".xls";
+				header("Content-Type: application/vnd.ms-excel");
+				header("Content-Disposition: attachment;filename=".$file );
+				header('Pragma: no-cache');
+				header('Expires: 0');
+			}
+			$this->load->view('prodi/laporan/export_rekap_khs_v', $data);
 		}
 		function khs(){
 			$data['title'] = 'Kartu Hasil Studi';

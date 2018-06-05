@@ -209,7 +209,6 @@
 		}
 		function cetak_krs(){
 			$nim = $this->session->userdata('sesi_krs_nim');
-			$thajaran = $this->session->userdata('sesi_krs_thajaran_aktif');
 			$cekada = $this->simkrs_m->get_idkrs($nim, $thajaran);
 			if($cekada){
 				$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $thajaran);
@@ -221,7 +220,30 @@
 				$this->awal_input();
 			}
 		}
-
+		function change_thajarankrs(){
+			$this->session->set_userdata('sesi_thajaranpembayaran', $this->uri->segment(4));
+			redirect('prodi/simkrs/rekapitulasi/');
+		}
+		function rekapitulasi(){
+			$thajar = $this->simsetting_m->select_active();
+			$data['browse_thajaran'] = $this->simsetting_m->select();
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$this->load->view('prodi/laporan/rkrs_v', $data);
+		}
+		function cetak_rekap_krs(){
+			$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
+			$kodeprodi = $this->session->userdata('sesi_prodi');
+			$data['browse_rekap_krs'] = $this->simkrs_m->get_rekap_krs($data['thajaran'], $kodeprodi);
+			if($this->uri->segment(5) == 'xls'){
+				$namafile = 'Rekap KRS '.$data['thajaran'];
+				$file = url_title($namafile).".xls";
+				header("Content-Type: application/vnd.ms-excel");
+				header("Content-Disposition: attachment;filename=".$file );
+				header('Pragma: no-cache');
+				header('Expires: 0');
+			}
+			$this->load->view('prodi/laporan/export_rekap_v', $data);
+		}
 		function delete(){
 			$data = array(
 				'rowid' => $this->uri->segment(4),

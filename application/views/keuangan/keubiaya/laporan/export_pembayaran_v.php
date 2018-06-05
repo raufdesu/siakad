@@ -51,6 +51,7 @@
 			<th>Tahun Ajaran</th>
 			<th>Jenis Pembayaran</th>
 			<th>Jumlah Biaya</th>
+			<th>Tanggal Setoran</th>
 			<th>Setoran</th>
 			<th>Kekurangan</th>
 			<th>Status</th>
@@ -59,6 +60,7 @@
 	$i = $no+1;
 	$totjumkekurangan = 0;
 	$totjumsetoran = 0;
+	$totjumbayar = 0;
 	$jl = 0;
 	$jbl = 0;
 	foreach($browse_pembayaran->result() as $bm):
@@ -70,12 +72,13 @@
 	}
 ?>
 	<tr class="<?php echo $bg?>">
-		<td class="first"><?php echo $nomor.'.';?></td>
+		<td class="first"><?php echo $nomor;?></td>
 		<td class="first"><?php echo $bm->nim;?></td>
 		<td class="first"><?php echo $bm->nama;?></td>
 		<td class="first"><?php echo $bm->thajaran;?></td>
 		<td class="first"><?php echo $bm->jenis;?></td>
 		<td style="text-align:right"><?php echo rupiah($bm->jumbiaya);?></td>
+		<td class="first"><?php echo $bm->tanggalsetor;?></td>
 		<td style="text-align:right">&nbsp;<?php
 			$setor1 = $this->keubiaya_m->get_setoran($bm->idbiaya, 1);
 				echo jika_ada(rupiah($setor1['jumsetoran']), '', '<br />');
@@ -104,10 +107,13 @@
 	$jbl = $jbl+$blns;
 	$jl = $jl+$lns;
 	endforeach;
+	$totjumbayar = $totjumsetoran-$totjumkekurangan;
 ?>
 	<tr>
-		<td colspan="6" style="text-align:right">TOTAL</td>
+		<td colspan="5" style="text-align:right">TOTAL</td>
 		<td style="text-align:right"><?php echo rupiah($totjumsetoran)?></td>
+		<td></td>
+		<td style="text-align:right"><?php echo rupiah($totjumbayar)?></td>
 		<td style="text-align:right"><?php echo rupiah($totjumkekurangan)?></td>
 		<td><?php echo 'BL = '.$jbl.', L = '.$jl?></td>
 	</tr>
@@ -151,6 +157,7 @@
 	$i = $no+1;
 	$totjumkekurangan = 0;
 	$totjumsetoran = 0;
+	$totjumbayar = 0;
 	$jl = 0;
 	$jbl = 0;
 	foreach($browse_pembayaran->result() as $bm):
@@ -162,7 +169,7 @@
 	}
 ?>
 	<tr class="<?php echo $bg?>">
-		<td class="first"><?php echo $nomor.'.';?></td>
+		<td class="first"><?php echo $nomor;?></td>
 		<td class="first"><?php echo $bm->nim;?></td>
 		<td class="first"><?php echo $bm->nama;?></td>
 		<td class="first"><?php echo $bm->thajaran;?></td>
@@ -196,10 +203,13 @@
 	$jbl = $jbl+$blns;
 	$jl = $jl+$lns;
 	endforeach;
+	$totjumbayar = $totjumsetoran-$totjumkekurangan;
 ?>
 	<tr>
-		<td colspan="6" style="text-align:right">TOTAL</td>
+		<td colspan="4" style="text-align:right">TOTAL</td>
 		<td style="text-align:right"><?php echo rupiah($totjumsetoran)?></td>
+		<td></td>
+		<td style="text-align:right"><?php echo rupiah($totjumbayar)?></td>
 		<td style="text-align:right"><?php echo rupiah($totjumkekurangan)?></td>
 		<td><?php echo 'BL = '.$jbl.', L = '.$jl?></td>
 	</tr>

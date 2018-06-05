@@ -52,15 +52,16 @@
 	</select>-->
 	<div style="float:right;">
 		Angkatan
-		<select name='angkatan' style="width:55px !important;" onchange='changeAngkatan()'>
+		<select name='angkatan' style="width:auto;" onchange='changeAngkatan()'>
+		<option <?php if($prodi == '') echo 'selected'; ?> value="">Keseluruhan</option>
 			<?php foreach($browse_angkatan as $ba){ ?>
 			<option <?php if($angkatan == $ba->angkatan) echo 'selected'?> value="<?php echo $ba->angkatan?>"><?php echo $ba->angkatan?></option>
 			
 			<?php } ?>
 		</select>
 		Thn Ajaran
-		<select name='thajaran' style="width:60px !important;" onchange='changeThajaran()'>
-			<option <?php if($prodi == '') echo 'selected'; ?> value=""></option>
+		<select name='thajaran' style="width:auto;" onchange='changeThajaran()'>
+			<option <?php if($prodi == '') echo 'selected'; ?> value="">Keseluruhan</option>
 			<?php foreach($browse_thajaran as $bt){ ?>
 			<option <?php if($thajaran == $bt->thajaran) echo 'selected'?> value="<?php echo $bt->thajaran?>"><?php echo $bt->thajaran?></option>
 			<?php } ?>
@@ -75,7 +76,7 @@
 	<?php
 		echo $this->pquery->form_remote_tag(array(
 		'url'=>site_url('keuangan/keubiaya/cari_mhspembayaran'), 'update'=>'#center-column', 'name'=>'cari', 'id'=>'masmahasiswa', 'type'=>'post'));
-		echo "<label>".form_input("txtCari", $cari,'size=30')."</label>";
+		echo "<label>".form_input("txtCari", $cari,'size=20')."</label>";
 		echo "<label>".form_submit("cmdCari", "Cari", "OnClick='setujui()' class='search'")."</label>";
 		echo form_close();
 	?>
@@ -91,6 +92,8 @@
 			<th>Tahun Ajaran</th>
 			<th>Nama Biaya</th>
 			<th>Jumlah Biaya</th>
+			<th>Jumlah Setoran</th>
+			<th >Tanggal Setoran</th>
 			<th>Status</th>
 			<!--<th>Besar Biaya</th>-->
 			<?php if($this->session->userdata('sesi_status') == 'keuangan'):?>
@@ -114,6 +117,8 @@
 		<td class="first"><?php echo $bm->thajaran;?></td>
 		<td class="first"><?php echo $bm->namabiaya;?></td>
 		<td style="text-align:right"><?php echo rupiah($bm->jumbiaya);?></td>
+		<td class="first"><?php echo $bm->jumlahsetor;?></td>
+		<td class="first"><?php echo $bm->tanggalsetor;?></td>
 		<td><?php echo inisial($bm->status);?></td>
 		<?php if($this->session->userdata('sesi_status') == 'keuangan'){?>
 		<td class="first" style="text-align:center">

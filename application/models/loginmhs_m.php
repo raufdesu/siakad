@@ -36,13 +36,27 @@
 			$this->db->where('nim', $this->input->post('username'));
 			$this->db->update('loginmhs', $data);
 		}
-		
+		function reset_password(){
+			$data = array(
+				'nim' => $this->input->post('nim'),
+				'password' => $this->input->post('nim')
+			);
+			$this->db->where('nim', $this->input->post('nim'));
+			$this->db->update('loginmhs', $data);
+		}
 		// UNTUK LOGIN MAHASISWA
 		function cekcount_loginmhs(){
 			$this->db->select('nim');
 			$this->db->from('loginmhs');
 			$this->db->where('nim', $this->input->post('username'));
 			$this->db->where('password', $this->input->post('password'));
+			return $this->db->count_all_results();
+		}
+		function cek_tgllhr_mhs(){
+			$this->db->select('nim');
+			$this->db->from('masmahasiswa');
+			$this->db->where('nim', $this->input->post('nim'));
+			$this->db->where('tgllahir', $this->input->post('tgllahir'));
 			return $this->db->count_all_results();
 		}
 		function cek_ada($nim){
@@ -74,7 +88,23 @@
 			$hasil->free_result();
 			return $data;
 		}
-		
+		function checkpass() {
+			$data = array();
+			$username = $this->input->post('username');
+			
+			$sql = "SELECT
+						nim from loginmhs
+						WHERE
+							nim = '".$username."' AND
+							password = '".$username."'
+					";
+			$hasil = $this->db->query($sql);
+			if ($hasil->num_rows() > 0)	 {
+				$data = $hasil->row_array();
+			}
+			$hasil->free_result();
+			return $data;
+		}
 		// UNTUK MAHASISWA
 		/*function loginmhs_mhs() {
 			$data = array();

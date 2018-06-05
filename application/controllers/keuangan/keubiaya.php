@@ -45,7 +45,7 @@ Class Keubiaya extends Controller{
 		$thajaran_bayar = $this->simsetting_m->get_active();
 		$data_sesi = array(
 			'cari_pembayaran' => '',
-			'sesi_thajaranpembayaran' => $thajaran_bayar,
+			'sesi_thajaranpembayaran' => '',
 			'sesi_prodipembayaran' => '',
 			'sesi_statuspembayaran' => '',
 			'sesi_angkatanpembayaran' => ''
@@ -73,10 +73,6 @@ Class Keubiaya extends Controller{
 		/* if(!$this->session->userdata('sesi_thajaranpembayaran')){
 			$this->session->set_userdata('sesi_thajaranpembayaran', $this->simsetting_m->get_active());
 		} */
-		if(!$this->session->userdata('sesi_angkatanpembayaran')){
-			$tahun = $this->keuaturbiaya_m->get_lastangkatan();
-			$this->session->set_userdata('sesi_angkatanpembayaran', $tahun);
-		}
 		$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
 		$data['angkatan'] = $this->session->userdata('sesi_angkatanpembayaran');
 		$data['status'] = $this->session->userdata('sesi_statuspembayaran');
@@ -94,12 +90,6 @@ Class Keubiaya extends Controller{
 	}
 	function cetak_pembayaran(){
 		$data['prodi'] = $this->session->userdata('sesi_prodipembayaran');
-		if(!$this->session->userdata('sesi_thajaranpembayaran')){
-			$this->session->set_userdata('sesi_thajaranpembayaran', $this->simsetting_m->get_active());
-		}
-		if(!$this->session->userdata('sesi_angkatanpembayaran')){
-			$this->session->set_userdata('sesi_angkatanpembayaran', date('Y'));
-		}
 		$data['thajaran'] = $this->session->userdata('sesi_thajaranpembayaran');
 		$data['angkatan'] = $this->session->userdata('sesi_angkatanpembayaran');
 		$data['status'] = $this->session->userdata('sesi_statuspembayaran');

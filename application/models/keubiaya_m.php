@@ -3,18 +3,48 @@
 		function __construct(){
 			parent::model();
 		}
-		function import($kodeprodi = '', $angkatan = '', $gelombang = '', $namabiaya = '', $thajaran = '', $jumbiaya = '', $minaktif = '', $jenis, $kategori=''){
+		function import_reguler($idaturbiaya = '', $kodeprodi = '', $angkatan = '', $gelombang = '', $namabiaya = '', $thajaran = '', $jumbiaya = '', $minaktif = '', $jenis, $kategori=''){
 			$sql = 'SELECT nim FROM masmahasiswa WHERE statusakademik = "Belum Lulus" ';
 			if($kodeprodi){
 				$sql .= ' AND kodeprodi = "'.$kodeprodi.'" ';
 			}
 			if($angkatan){
-				$sql .= ' AND angkatan = "'.$angkatan.'" ';
+				$sql .= ' AND angkatan = "'.$angkatan.'" and nim not like "%s%"';
 			}
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows()){
 				foreach($hasil->result() as $mhs){
 					$data = array(
+						'idaturbiaya'	=> $idaturbiaya,
+						'namabiaya'	=> $namabiaya,
+						'jenis'		=> $jenis,
+						'kategori'	=> $kategori,
+						'thajaran'	=> $thajaran,
+						'nim'		=> $mhs->nim,
+						'jumbiaya'	=> $jumbiaya,
+						'jumbiaya_awal'	=> $jumbiaya,
+						'minaktif'	=> $minaktif,
+						'dispensasi'=> 'Tidak',
+						'status'	=> 'Belum Lunas',
+						
+					);
+					$this->db->insert('keubiaya', $data);
+				}
+			}
+		}
+		function import_ekstensi($idaturbiaya = '', $kodeprodi = '', $angkatan = '', $gelombang = '', $namabiaya = '', $thajaran = '', $jumbiaya = '', $minaktif = '', $jenis, $kategori=''){
+			$sql = 'SELECT nim FROM masmahasiswa WHERE statusakademik = "Belum Lulus" ';
+			if($kodeprodi){
+				$sql .= ' AND kodeprodi = "'.$kodeprodi.'" ';
+			}
+			if($angkatan){
+				$sql .= ' AND angkatan = "'.$angkatan.'" and nim like "%s%"';
+			}
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows()){
+				foreach($hasil->result() as $mhs){
+					$data = array(
+						'idaturbiaya'	=> $idaturbiaya,
 						'namabiaya'	=> $namabiaya,
 						'jenis'		=> $jenis,
 						'kategori'	=> $kategori,
@@ -182,7 +212,8 @@
 			/* if(!$thajaran){
 				$thajaran = $this->simsetting_m->get_active();
 			} */
-			$sql = 'SELECT * FROM keubiaya INNER JOIN masmahasiswa ON keubiaya.nim = masmahasiswa.nim ';
+			$sql = 'SELECT *, GROUP_CONCAT(jumsetoran SEPARATOR "<br>") as jumlahsetor, GROUP_CONCAT((DATE(tglsetor)) SEPARATOR "<br> ") as tanggalsetor FROM keubiaya INNER JOIN masmahasiswa ON keubiaya.nim = masmahasiswa.nim
+left JOIN keusetoran ON keubiaya.idbiaya = keusetoran.idbiaya ';
 			$sql .= ' WHERE 1 ';
 			if($thajaran){
 				$sql .= ' AND thajaran = "'.$thajaran.'" ';
@@ -199,6 +230,7 @@
 			if($cari){
 				$sql .= ' AND (nama LIKE "%'.$cari.'%" OR keubiaya.nim LIKE "%'.$cari.'%") ';
 			}
+			$sql .= ' group BY keubiaya.idbiaya';
 			/* $sql .= ' GROUP BY keubiaya.nim '; */
 			if($limit1 || $limit2){
 				$sql .= " LIMIT ".$limit1;

@@ -1,7 +1,45 @@
 <head>
-	<script>
-		$(document).ready(function(){ stoploading(); });
+<script>
+		$(document).ready(function(){
+			stoploading();
+		});
+		function format_number(nStr){
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+			return x1 + x2;
+		}
+		function beRupiah(){
+			var nilai = format_number($('#jumbiaya').val());
+			document.getElementById("jumbiaya").value = nilai;
+		}
+		function beRupiah2(){
+			var nilai = format_number($('#minaktif').val());
+			document.getElementById("minaktif").value = nilai;
+		}
+		function showThajaran(){
+			if($('select[name=kategori]').val() == 'Persemester'){
+				$("#area-thajaran").show();
+				$("#thajaran").focus();
+			}else{
+				$("#area-thajaran").hide();
+			}
+		}
+		function showminimumpengaktifan(){
+			if($('select[name=namabiaya]').val() == 'SPP SEMESTER'){
+				$("#minimum-pengaktifan").show();
+				$("#minaktif").focus();
+			}else{
+				$("#minimum-pengaktifan").hide();
+			}
+		}
 	</script>
+	
 </head>
 <?php echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('keuangan/keuaturbiaya/save'),
@@ -24,8 +62,12 @@
 		<tr class="bg">
 			<td class="first" width="190"><strong>Nama Biaya</strong></td>
 			<td class="last">
-				<input type="text" value="<?php echo $biaya->namabiaya?>" name="namabiaya" size="50" />
-				<input type="hidden" value="<?php echo $biaya->idaturbiaya?>" name="idaturbiaya" />
+				<select name="namabiaya" onchange="showminimumpengaktifan()">
+					<option value="">Pilih Biaya</option>
+					<?php for($i=0;$i<count($namabiaya);$i++){ ?>
+					<option <?php if($biaya->namabiaya==$namabiaya[$i]) echo 'selected'?> value="<?php echo $namabiaya[$i]?>"><?php echo $namabiaya[$i]?></option>
+					<?php } ?>
+				</select>
 				<?php echo form_error('namabiaya');?>
 			</td>
 		</tr>
@@ -49,13 +91,6 @@
 			</td>
 		</tr>
 		<tr class="bg">
-			<td class="first" width="190"><strong>Gelombang</strong></td>
-			<td class="last">
-				<input type="text" value="<?php echo $biaya->gelombang?>" name="gelombang" size="1" />
-				<?php echo form_error('gelombang');?>
-			</td>
-		</tr>
-		<tr class="bg">
 			<td class="first" width="190"><strong>Jenis</strong></td>
 			<td class="last">
 				<input type="text" value="<?php echo $biaya->jenis?>" name="jenis" size="30" />
@@ -65,8 +100,15 @@
 		<tr class="bg">
 			<td class="first" width="190"><strong>Besar Biaya</strong></td>
 			<td class="last">
-				Rp. <input style="text-align:right" type="text" value="<?php echo rupiah($biaya->jumbiaya, 1)?>" name="jumbiaya" size="10" />,00
+				Rp. <input style="text-align:right" type="text" value="<?php echo rupiah($biaya->jumbiaya, 1)?>" id="jumbiaya" name="jumbiaya" size="10" onblur="beRupiah()"/>,00
 				<?php echo form_error('jumbiaya');?>
+			</td>
+		</tr>
+		<tr class="bg" id="minimum-pengaktifan">
+			<td class="first" width="190"><strong>Minimum Pengaktifan</strong></td>
+			<td class="last">
+				Rp. <input style="text-align:right" type="text" value="<?php echo rupiah($biaya->minaktif, 1)?>" id="minaktif" name="minaktif" size="10" onblur="beRupiah2()" />,00
+				<?php echo form_error('minaktif');?>
 			</td>
 		</tr>
 		<tr class="bg">
@@ -81,6 +123,15 @@
 				<?php echo form_error('persemester');?>
 			</td>
 		</tr>		
+		<tr class="bg" id="area-thajaran">
+			<td class="first" width="190"><strong>Tahun Ajaran</strong></td>
+			<td class="last">
+				<input type="text" value="<?php echo ($biaya->thajaran)?>" id="thajaran" name="thajaran" maxlength="5" size="4" />
+				<input type="hidden" value="<?php echo $biaya->idaturbiaya?>" name="idaturbiaya" />
+				<span style="color:#ababab">contoh : 20132</span>
+				<?php echo form_error('thajaran');?>
+			</td>
+		</tr>
 		<tr>
 			<td class="first"></td>
 			<td class="last">
