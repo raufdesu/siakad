@@ -70,6 +70,7 @@
 			<th>Nama Mahasiswa</th>
 			<th>PRODI</th>
 			<th>Angkatan</th>
+			<th>Status</th>
 			<th style="width:50px;" class="last">Kelola</th>
 		</tr>
 <?php
@@ -89,6 +90,7 @@
 		</td>
 		<td class="first"><?php echo $bm->nama_prodi;?></td>
 		<td class="first"><?php echo $bm->angkatan;?></td>
+		<td class="first"><?php echo $bm->status;?></td>
 		<td class="first">
 			<a href="javascript:void(0)" onclick='show("prodi/masmahasiswa/edit/<?php echo $bm->nim?>","#center-column")'>
 				<?php echo img('asset/images/design/edit-icon.gif')?>

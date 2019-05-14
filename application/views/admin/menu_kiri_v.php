@@ -4,6 +4,13 @@
 <?php if($this->session->userdata('sesi_status') == 'operator'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simdosenampu","#center-column")'>Dosen Ampu</a></li>
 	<?php } ?>
+<?php if($this->session->userdata('sesi_status') == 'pimpinan'){ ?>
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifsemester","#center-column")'>Aktif Semester</a></li>
+<h3>Pengaturan</h3>
+<ul class="nav">
+	<li class=""><a href="javascript:void(0)" onclick='show("dosen/login/gantipassword/","#center-column")'>Ganti Password</a></li>	
+<?php } ?>
 <?php if($this->session->userdata('sesi_status') == 'admin'){ ?>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simaktifsemester","#center-column")'>Aktif Semester</a></li>
@@ -42,6 +49,7 @@
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simaktifsemester/","#center-column")'>Aktif Semester</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simmktawar","#center-column")'>Matakuliah Tawar</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simkrs/awal_input","#center-column")'>KRS Mahasiswa</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simkrs/awal_input_ujian","#center-column")'>Kartu Ujian</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/nilai/khs","#center-column")'>K H S</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/nilai/transkrip","#center-column")'>Transkrip Nilai</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("prodi/simmatrikulasi","#center-column")'>Matrikulasi</a></li>
@@ -72,6 +80,13 @@
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/simtranskrip/header","#center-column")'>Transkrip Nilai</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/nilai/khs","#center-column")'>K H S</a></li>
 	<li class=""><a href="javascript:void(0)" onclick='show("admin/nilai/transkrip","#center-column")'>Nilai Keseluruhan</a></li>
+</ul>
+<?php } ?>
+<?php if($this->session->userdata('sesi_status') == 'pimpinan'){ ?>
+<h3>Laporan</h3>
+<ul class="nav">
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/nilai/khs","#center-column")'>K H S</a></li>
+	<li class=""><a href="javascript:void(0)" onclick='show("admin/nilai/transkrip","#center-column")'>TRANSKRIP</a></li>
 </ul>
 <?php } ?>
 <?php } ?>

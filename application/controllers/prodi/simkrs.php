@@ -106,6 +106,13 @@
 			$data['sks'] = '';
 			$this->input($data);
 		}
+		function awal_input_ujian(){
+			$this->_empty_sesi();
+			$this->cart->destroy();
+			$data['nama_matkul'] = '';
+			$data['sks'] = '';
+			$this->input_ujian($data);
+		}
 		function input($data=''){
 			$thajar = $this->simsetting_m->select_active();
 			// $data['thajaran_aktif'] = $thajar['thajaran'];
@@ -126,6 +133,27 @@
 			$data['nama'] = '';
 			$data[''] = '';
 			$this->load->view('prodi/simkrs/isimkrs_v', $data);
+		}
+		function input_ujian($data=''){
+			$thajar = $this->simsetting_m->select_active();
+			// $data['thajaran_aktif'] = $thajar['thajaran'];
+			$this->session->set_userdata('sesi_krs_thajaran_aktif', $thajar['thajaran']);
+			$dpa = $this->simdosenwali_m->get_namadpa($this->session->userdata('sesi_krs_nim'),$this->session->userdata('sesi_krs_thajaran_aktif'));
+			// $this->db->last_query();
+			$data['nama_dpa'] = $dpa['nama'];
+			$this->session->userdata('sesi_krs_nim');
+			if($this->session->userdata('sesi_krs_nim')){
+				$data['browse_krs'] = $this->simkrs_m->get_one_krs($this->session->userdata('sesi_krs_nim'),$this->session->userdata('sesi_krs_thajaran_aktif'));
+				$data['sudah_krs'] = $this->simkrs_m->cek_sudah_krs($this->session->userdata('sesi_krs_nim'),$this->session->userdata('sesi_krs_thajaran_aktif'));
+			}else{
+				$data['sudah_krs'] = '';
+			}
+			// echo $this->db->last_query();
+			// sesi_krs_thajaran']
+			// $data['browse_thajaran'] = $this->simsetting_m->select();
+			$data['nama'] = '';
+			$data[''] = '';
+			$this->load->view('prodi/simkrs/ikartuujian_v', $data);
 		}
 		function _empty_sesi(){
 			$arsesi = array(
@@ -153,6 +181,28 @@
 				$this->session->set_userdata($arsesi);
 				$data['nama_matkul'] = '';
 				$this->input($data);
+			}else{
+				echo $this->simplival->alert('KONFIRMASI\nNIM tidak ditemukan!');
+				$data['nama_matkul'] = '';
+				$this->input($data);
+			}
+		}
+		function detail_mahasiswa_ujian(){
+			$kodeprodi = $this->session->userdata('sesi_prodi');
+			$cek_nimprodi = $this->simprodi_m->cek_nimprodi($kodeprodi, $this->input->post('nim'));
+			if($cek_nimprodi){
+				$this->session->set_userdata('sesi_jumgab','');
+				$dm = $this->simkrs_m->detail_mahasiswa($this->input->post('nim'));
+				$this->session->set_userdata('sesi_jumgab', $this->simkrs_m->res_sks($this->input->post('nim')));
+				$arsesi = array(
+					'sesi_krs_nim' => $dm['nim'],
+					'sesi_krs_nama' => $dm['nama'],
+					'sesi_krs_prodi' => $dm['nama_prodi'],
+					'sesi_krs_kelas' => $dm['kdkelas']
+				);
+				$this->session->set_userdata($arsesi);
+				$data['nama_matkul'] = '';
+				$this->input_ujian($data);
 			}else{
 				echo $this->simplival->alert('KONFIRMASI\nNIM tidak ditemukan!');
 				$data['nama_matkul'] = '';
@@ -209,12 +259,27 @@
 		}
 		function cetak_krs(){
 			$nim = $this->session->userdata('sesi_krs_nim');
+			$thajaran = $this->session->userdata('sesi_krs_thajaran_aktif');
 			$cekada = $this->simkrs_m->get_idkrs($nim, $thajaran);
 			if($cekada){
 				$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $thajaran);
 				$data['detail_krs_peserta'] = $this->simkrs_m->get_one_krs($nim, $thajaran);
 				$data['dpa'] = $this->simdosenwali_m->get_namadpa($nim, $thajaran);
 				$this->load->view('prodi/laporan/ckrs_v', $data);
+			}else{
+				echo $this->simplival->alert('KONFIRMASI\nMahasiswa dengan NIM '.$nim.' belum melakukan KRS');
+				$this->awal_input();
+			}
+		}
+		function cetak_kartu_ujian(){
+			$nim = $this->session->userdata('sesi_krs_nim');
+			$thajaran = $this->session->userdata('sesi_krs_thajaran_aktif');
+			$cekada = $this->simkrs_m->get_idkrs($nim, $thajaran);
+			if($cekada){
+				$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $thajaran);
+				$data['detail_krs_peserta'] = $this->simkrs_m->get_one_krs($nim, $thajaran);
+				$data['dpa'] = $this->simdosenwali_m->get_namadpa($nim, $thajaran);
+				$this->load->view('prodi/laporan/cujian_v', $data);
 			}else{
 				echo $this->simplival->alert('KONFIRMASI\nMahasiswa dengan NIM '.$nim.' belum melakukan KRS');
 				$this->awal_input();

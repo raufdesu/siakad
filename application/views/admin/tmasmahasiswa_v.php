@@ -84,6 +84,7 @@
 			<th>Nama Mahasiswa</th>
 			<th>PRODI</th>
 			<th>Angkatan</th>
+			<th>Status</th>
 			<?php if($this->session->userdata('sesi_status') == 'admin'):?>
 			<th class="last">Kelola</th>
 			<?php endif ?>
@@ -105,6 +106,7 @@
 		</td>
 		<td class="first"><?php echo $bm->nama_prodi;?></td>
 		<td class="first"><?php echo $bm->angkatan;?></td>
+		<td class="first"><?php echo $bm->status;?></td>
 		<?php if($this->session->userdata('sesi_status') == 'admin'):?>
 		<td class="first">
 			<a href="javascript:void(0)" onclick='show("admin/masmahasiswa/edit/<?php echo $bm->nim?>","#center-column")'>

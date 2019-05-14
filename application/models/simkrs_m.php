@@ -59,7 +59,7 @@
 		}
 		function get_thbynim($nim){
 			$data = array();
-			$sql = "SELECT thajaran FROM simkrs WHERE nim = '".$nim."' ORDER BY thajaran DESC";
+			$sql = "SELECT thajaran FROM simaktifsemester WHERE nim = '".$nim."' ORDER BY thajaran DESC";
 			$hasil = $this->db->query($sql);
 			if($hasil->num_rows() > 0){
 				$data = $hasil->result();

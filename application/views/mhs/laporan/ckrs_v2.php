@@ -72,16 +72,16 @@
 <?php
 	$no = 1;
 	$tot = 0;
-	foreach($detail_krs_peserta->result() as $dkp):
+	foreach($detail_krs_peserta as $dkp):
 ?>
 	<tr>
 		<td class="numeric"><?php echo $no++.".";?></td>
 		<td class="record"><?php echo $dkp->kodemk;?></td>
-		<td class="record"><?php echo $dkp->nama_mk; //.$dkp->status?></td>
-		<td class="numeric"><?php echo $dkp->sks?></td>
+		<td class="record"><?php echo $dkp->namamk; //.$dkp->status?></td>
+		<td class="numeric"><?php echo $dkp->jumlahsks?></td>
 		<td class="record">&nbsp;</td><td class="record">&nbsp;</td>
 	</tr>
-<?php $tot = $tot+$dkp->sks; endforeach;?>
+<?php $tot = $tot+$dkp->jumlahsks; endforeach;?>
 	<tr>
 		<td>&nbsp;</td><td align="right" colspan="2">Total SKS</td>
 		<td class="numeric"><?php echo $tot;?></td><td colspan="2">&nbsp;</td>

@@ -31,11 +31,12 @@
 <div class="top-bar-adm">
 	<h1>Daftar Pembayaran</h1>
 	<?php echo anchor('keuangan/keubiaya/cetak_pembayaran', 'Preview', array('style'=>'margin:0 -32px 0', 'class'=>'navi print-button', 'target'=>'_blank'))?>
-	<?php if($this->session->userdata('sesi_user') == 'keuangan'): ?>
+	<?php if($this->session->userdata('sesi_status') == 'keuangan'): ?>
 	<div class="breadcrumbs">
 		PRODI
 		<select name='kodeprodi' style="width:290px !important;" onchange='changeProdi()'>
-			<option <?php if($prodi == '') echo 'selected'; ?> value="">Keseluruhan</option>
+			<option <?php if($prodi == '1') echo 'selected'; ?> value="1">-</option>
+			<option <?php if($prodi == 'Keseluruhan') echo 'selected'; ?> value="">Keseluruhan</option>
 			<?php foreach($browse_prodi as $bp):?>
 			<option <?php if($prodi == $bp->kodeprodi) echo 'selected'; ?> value="<?php echo $bp->kodeprodi?>"><?php echo $bp->namaprodi?></option>
 			<?php endforeach; ?>

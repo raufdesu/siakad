@@ -114,7 +114,7 @@ Class Simambilmk extends Controller{
 			$data['thakad'] = $this->session->userdata('sesi_thajarankhs');
 		}
 			$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($this->session->userdata('sesi_user_mhs'), $data['thakad']);
-			$data['detail_krs_peserta'] = $this->simkrs_m->get_one_krs($this->session->userdata('sesi_user_mhs'), $data['thakad']);
+			$data['detail_krs_peserta'] = $this->simambilmk_m->get_khs($nim, $data['thakad']);
 			$data['dpa'] = $this->simdosenwali_m->get_namadpa($this->session->userdata('sesi_user_mhs'),$data['thakad']);
 			$this->load->view('mhs/laporan/ckrs_v2', $data);
 	}
@@ -151,6 +151,7 @@ Class Simambilmk extends Controller{
 		$data['detail_mahasiswa'] = $this->simkrs_m->detail_mhs($nim, $data['thakad']);
 		$data['browse_thajar'] = $this->simsetting_m->select();
 		$data['browse_transkrip'] = $this->simambilmk_m->get_transkrip_bythajaran($data['nim'], $data['thakad']);
+		$data['browse_matrikulasi'] = $this->simtranskrip_m->get_onetranskrip($data['nim']);
 		$dpa = $this->simdosenwali_m->get_namakaprodi($nim, $data['thakad']);
 		$cek = $this->simambilmk_m->get_idkrs_bynim($nim, $data['thakad']);
 		$data['cek_khs'] = $cek['idkrsnya'];

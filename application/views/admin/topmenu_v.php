@@ -3,7 +3,7 @@
 		<a href="javascript:void(0)" onclick='show("admin/main/home","#center-column")'>Home</a>
 	</span></span></li>
 	<?php
-		if($this->session->userdata('sesi_status') == 'admin' || $this->session->userdata('sesi_status') == 'dosen' || $this->session->userdata('sesi_status') == 'keuangan'){
+		if($this->session->userdata('sesi_status') == 'admin' || $this->session->userdata('sesi_status') == 'dosen' || $this->session->userdata('sesi_status') == 'keuangan' || $this->session->userdata('sesi_status') == 'pimpinan'){
 			foreach($menu as $mn){
 	?>
 	<li class=""><span><span>

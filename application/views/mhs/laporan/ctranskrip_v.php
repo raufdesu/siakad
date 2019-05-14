@@ -121,6 +121,62 @@
 			<td class="first"><?php echo "<center>".$js."</center>";?></td>
 	</tr>
 <?php $jumsks = $jumsks+$bk->jumlahsks; $skor = $skor+$js; endforeach;?>
+<?php
+	foreach($browse_matrikulasi->result() as $bm):
+	if($kodeprodi == 70233 or $kodeprodi == 88204 or $kodeprodi == 86232){
+		if($bm->nilai == "A+"){
+			$bobot = 4;
+		}elseif($bm->nilai == "A"){
+			$bobot = 3.75;
+		}elseif($bm->nilai == "A-"){
+			$bobot = 3.5;
+		}elseif($bm->nilai == "B+"){
+			$bobot = 3.25;
+		}elseif($bm->nilai == "B"){
+			$bobot = 3;
+		}elseif($bm->nilai == "B-"){
+			$bobot = 2.75;
+		}elseif($bm->nilai == "C+"){
+			$bobot = 2.5;
+		}elseif($bm->nilai == "C"){
+			$bobot = 2.25;
+		}elseif($bm->nilai == "C-"){
+			$bobot = 2;
+		}elseif($bm->nilai == "D"){
+			$bobot = 1.75;
+		}else{
+			$bobot = 0;
+		}
+	}
+	else {
+		if($bm->nilai == "A"){
+			$bobot = 4;
+		}elseif($bm->nilai == "B"){
+			$bobot = 3;
+		}elseif($bm->nilai == "C"){
+			$bobot = 2;
+		}elseif($bm->nilai == "D"){
+			$bobot = 1;
+		}else{
+			$bobot = 0;
+		}
+	}
+		$js = $bm->sks * $bobot;
+		$jums = $jums+$js;
+?>
+		<tr>
+			<td class="first"><?php echo $i++;?></td>
+			<td class="first"><?php echo $bm->kodemk;?></td>
+			<td class="first"><?php echo $bm->nama; if($bm->status=='matrikulasi') echo '<div style="float:right;color:#ababab;"><small>matrikulasi</small></div>';?></td>
+			<td class="first"><?php echo "<center>".$bm->sks."</center>";?></td>
+			<td class="first"><?php echo "<center>".$bm->nilai."</center>";?></td>
+			<td class="first"><?php echo "<center>".$js."</center>";?></td>
+		</tr>
+<?php
+		$jumsks = $jumsks+$bm->sks;
+		$skor = $skor+$js;
+	endforeach;
+?>
 	<tr>
 		<td>&nbsp;</td><td align="right" colspan="3">Total SKS/Skor</td>
 		<td class="numeric" align='center'><?php echo $jumsks;?></td><td align="center"><?php echo $skor;?></td>

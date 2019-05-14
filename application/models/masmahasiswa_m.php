@@ -152,9 +152,10 @@
 		}
 		function select($limit1, $limit2, $prodi = '', $angkatan = ''){
 			$data = array();
-			$sql = "SELECT *, kodeprodi kdprod,
-						(SELECT namaprodi FROM simprodi WHERE kodeprodi = kdprod) AS nama_prodi
-					FROM masmahasiswa mhs WHERE nim <> '' ";
+			$sql = "SELECT *, kodeprodi kdprod, nim nm,
+						(SELECT namaprodi FROM simprodi WHERE kodeprodi = kdprod) AS nama_prodi,
+						(SELECT status from simaktifsemester WHERE nim = nm ORDER BY thajaran DESC LIMIT 1) AS status
+						FROM masmahasiswa mhs WHERE nim <> ''";
 			if($angkatan){
 				$sql .= " AND angkatan = '".$angkatan."'";
 			}

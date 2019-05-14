@@ -83,6 +83,7 @@
 </div>&nbsp;
 </form>
 </div>
+<!--
 <?php
 	echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('admin/simkrs/simpan'), 'update'=>'#center-column', 'name'=>'pilih', 'id'=>'form',	'type'=>'post'));
@@ -95,6 +96,7 @@
 	<input type='radio' name='status' checked value='baru'> Baru |
 	<input type='radio' name='status' value='mengulang'> Mengulang
 </form>
+-->
 <?php
 	echo $this->pquery->form_remote_tag(array(
 	'url'=>site_url('admin/simkrs/simpan_tabel'), 'update'=>'#center-column', 'name'=>'pilih', 'id'=>'form', 'type'=>'post'));

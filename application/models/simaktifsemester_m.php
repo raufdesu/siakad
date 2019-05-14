@@ -98,6 +98,25 @@
 				return false;
 			}
 		}
+		function get_totjumstatus($thajaran, $status){
+			$res = '';
+			$arnim = $this->nim_aktifsemester($thajaran, $status);
+			foreach($arnim as $a){
+				$res  .= "'".$a->nim."',";
+			};
+			if($res){
+				$res=substr($res,0,strlen($res)-1);
+			}else{
+				$res = "''";
+			}
+			$sql = "SELECT COUNT(nim)jumstatus FROM masmahasiswa WHERE nim IN(".$res.")";
+			$hasil = $this->db->query($sql);
+			if($hasil->num_rows()){
+				return $hasil->row()->jumstatus;
+			}else{
+				return false;
+			}
+		}
 		function cek_aktifsemester($nim, $thajaran = ''){
 			if(!$thajaran){
 				$act = $this->thajaran_active();

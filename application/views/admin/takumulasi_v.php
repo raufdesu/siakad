@@ -48,7 +48,30 @@
 						</td>
 					</td>
 				</tr>
+				
 			<?php } ?>
+		</tr>
+		<tr>
+			<td align="right" colspan="1">Total</td>
+					<td>
+						
+							<?php echo $this->simaktifsemester_m->get_totjumstatus($thajaran, 'Aktif');?></a>
+						</td>
+					<td>
+						
+							<?php echo $this->simaktifsemester_m->get_totjumstatus($thajaran, 'Non Aktif');?></a>
+						</td>
+					</td>
+					<td>
+						
+							<?php echo $this->simaktifsemester_m->get_totjumstatus($thajaran, 'Cuti');?></a>
+						</td>
+					</td>
+					<td>
+						
+							<?php echo $this->simaktifsemester_m->get_totjumstatus($thajaran, 'Keluar');?></a>
+						</td>
+					</td>
 		</tr>
 	</table>
 </div>

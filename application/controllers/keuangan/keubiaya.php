@@ -46,7 +46,7 @@ Class Keubiaya extends Controller{
 		$data_sesi = array(
 			'cari_pembayaran' => '',
 			'sesi_thajaranpembayaran' => '',
-			'sesi_prodipembayaran' => '',
+			'sesi_prodipembayaran' => '1',
 			'sesi_statuspembayaran' => '',
 			'sesi_angkatanpembayaran' => ''
 		);

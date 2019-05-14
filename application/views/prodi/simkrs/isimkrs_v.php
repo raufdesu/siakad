@@ -103,7 +103,7 @@
 <table class="listing form" cellpadding="0" cellspacing="0">
 	<tr>
 		<th class='first' style='text-align:center'>No</th><th>Kode</th>
-		<th>Nama Matakuliah</th><th>SKS</th><th class='last' style='text-align:center'>Del</th>
+		<th>Nama Matakuliah</th><th>SKS</th><!--<th class='last' style='text-align:center'>Del</th>-->
 	</tr>
 	<?php
 	$no=1; $fix_sks=0;
@@ -113,8 +113,8 @@
 			<td><?php echo $no++?></td><td><?php echo $bk->kodemk?></td>
 			<td class='first'><?php echo $bk->nama_mk?></td><td><?php echo $bk->sks?></td>
 			<td>
-				<a href="javascript:void(0)" onclick='show("prodi/simkrs/delete2/<?php echo $bk->idkrs.'/'.$bk->kodemk?>","#center-column")'>
-					<?php echo img('asset/images/design/hr.gif')?>
+				<!--<a href="javascript:void(0)" onclick='show("prodi/simkrs/delete2/<?php echo $bk->idkrs.'/'.$bk->kodemk?>","#center-column")'>-->
+					<?php /*echo img('asset/images/design/hr.gif')*/?>
 				</a>
 			</td>
 		</tr>
@@ -134,8 +134,8 @@
 		?></td>
 		<td><?php echo $items['qty']; ?></td>
 		<td>
-		<a href="javascript:void(0)" onclick='show("prodi/simkrs/delete/<?php echo $items['rowid']?>","#center-column")'>
-			<?php echo img('asset/images/design/hr.gif')?>
+		<!--<a href="javascript:void(0)" onclick='show("prodi/simkrs/delete/<?php echo $items['rowid']?>","#center-column")'>-->
+			<?php /*echo img('asset/images/design/hr.gif')*/?>
 		</a>
 		</td>
 	</tr>
